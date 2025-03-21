@@ -7,8 +7,6 @@ public record LetterCommand (
         String description,
         Integer idUser,
         String creationDate,
-        Integer idGroup,
-        String sendDate,
         List<ProductCommand> products
 ) {
 }
