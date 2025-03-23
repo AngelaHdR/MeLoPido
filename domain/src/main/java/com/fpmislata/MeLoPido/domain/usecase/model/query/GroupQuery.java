@@ -3,7 +3,7 @@ package com.fpmislata.MeLoPido.domain.usecase.model.query;
 import java.util.List;
 
 public class GroupQuery {
-    Integer idGroup;
+    String idGroup;
     String name;
     String icon;
     List<String> users;
@@ -12,13 +12,13 @@ public class GroupQuery {
     public GroupQuery() {
     }
 
-    public GroupQuery(Integer idGroup, String name, String icon) {
+    public GroupQuery(String idGroup, String name, String icon) {
         this.idGroup = idGroup;
         this.name = name;
         this.icon = icon;
     }
 
-    public GroupQuery(Integer idGroup, String name, String icon, List<String> users, List<LetterBasicQuery> letters) {
+    public GroupQuery(String idGroup, String name, String icon, List<String> users, List<LetterBasicQuery> letters) {
         this.idGroup = idGroup;
         this.name = name;
         this.icon = icon;
@@ -26,7 +26,7 @@ public class GroupQuery {
         this.letters = letters;
     }
 
-    public Integer getIdGroup() {
+    public String getIdGroup() {
         return idGroup;
     }
 

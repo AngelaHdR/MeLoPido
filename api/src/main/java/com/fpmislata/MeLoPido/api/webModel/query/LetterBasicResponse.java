@@ -1,7 +1,7 @@
 package com.fpmislata.MeLoPido.api.webModel.query;
 
 public record LetterBasicResponse(
-        Integer idLetter,
+        String idLetter,
         String description,
         String user,
         String group,

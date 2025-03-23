@@ -1,7 +1,7 @@
 package com.fpmislata.MeLoPido.api.webModel.command;
 
 public record UserRequest(
-        Integer idUser,
+        String idUser,
         String name,
         String surname1,
         String surname2,

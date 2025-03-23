@@ -1,7 +1,7 @@
 package com.fpmislata.MeLoPido.api.webModel.command;
 
 public record GroupRequest(
-        Integer idGroup,
+        String idGroup,
         String name,
         String icon,
         String theme,

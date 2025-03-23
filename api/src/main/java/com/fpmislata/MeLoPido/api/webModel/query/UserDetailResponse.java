@@ -3,7 +3,7 @@ package com.fpmislata.MeLoPido.api.webModel.query;
 import java.util.List;
 
 public record UserDetailResponse (
-        Integer idUser,
+        String idUser,
         String nameComplete,
         String email,
         String birthDate,

@@ -3,7 +3,7 @@ package com.fpmislata.MeLoPido.domain.usecase.model.query;
 import java.util.List;
 
 public record ChatQuery(
-        Integer idChat,
+        String idChat,
         List<MessageBasicQuery> messages
 ) {
 }

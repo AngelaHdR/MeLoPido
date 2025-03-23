@@ -1,7 +1,7 @@
 package com.fpmislata.MeLoPido.domain.usecase.model.command;
 
 public record UserCommand(
-        Integer idUser,
+        String idUser,
         String name,
         String surname1,
         String surname2,
