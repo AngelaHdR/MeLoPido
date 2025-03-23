@@ -24,17 +24,25 @@ public class UserWebModelMapper {
     }
 
     public static UserDetailResponse toUserDetailQuery(UserQuery userQuery) {
+        if (userQuery == null) {
+            return null;
+        }
         return new UserDetailResponse(
-                userQuery.idUser(),
-                userQuery.nameComplete(),
-                userQuery.email(),
-                userQuery.birthDate(),
-                LetterWebModelMapper.toLetterBasicResponseList(userQuery.letters()),
-                ProductWebModelMapper.toProductBasicResponseList(userQuery.products())
+                userQuery.getIdUser(),
+                userQuery.getNameComplete(),
+                userQuery.getEmail(),
+                userQuery.getBirthDate(),
+                userQuery.getUsername(),
+                userQuery.getPassword(),
+                LetterWebModelMapper.toLetterBasicResponseList(userQuery.getLetters()),
+                ProductWebModelMapper.toProductBasicResponseList(userQuery.getProducts())
         );
     }
 
     public static UserCommand toUserCommand(UserRequest userRequest) {
+        if (userRequest == null) {
+            return null;
+        }
         return new UserCommand(
                 userRequest.idUser(),
                 userRequest.name(),
@@ -47,7 +55,7 @@ public class UserWebModelMapper {
         );
     }
 
-    private static String generateLink(Integer idUser){
+    private static String generateLink(String idUser) {
         return "http://localhost:8080/api/users/" + idUser;
     }
 }

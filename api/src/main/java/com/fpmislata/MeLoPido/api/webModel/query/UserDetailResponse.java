@@ -7,6 +7,8 @@ public record UserDetailResponse (
         String nameComplete,
         String email,
         String birthDate,
+        String username,
+        String password,
         List<LetterBasicResponse> letters,
         List<ProductBasicResponse> products
 ) {

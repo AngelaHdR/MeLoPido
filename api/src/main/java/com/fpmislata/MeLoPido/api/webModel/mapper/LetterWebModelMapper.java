@@ -10,21 +10,27 @@ import com.fpmislata.MeLoPido.domain.usecase.model.query.LetterQuery;
 import java.util.List;
 
 public class LetterWebModelMapper {
-    public static LetterDetailResponse toLetterDetailResponse(LetterQuery letterQuery){
+    public static LetterDetailResponse toLetterDetailResponse(LetterQuery letterQuery) {
+        if (letterQuery == null) {
+            return null;
+        }
         return new LetterDetailResponse(
                 letterQuery.idLetter(),
                 letterQuery.description(),
                 letterQuery.user(),
                 letterQuery.group(),
-                ProductWebModelMapper.toProductCollectionResponseList(letterQuery.products())
+                ProductWebModelMapper.toProductBasicResponseList(letterQuery.products())
         );
     }
 
-    public static List<LetterDetailResponse> toLetterDetailResponseList(List<LetterQuery> letterQueryList){
+    public static List<LetterDetailResponse> toLetterDetailResponseList(List<LetterQuery> letterQueryList) {
         return letterQueryList.stream().map(LetterWebModelMapper::toLetterDetailResponse).toList();
     }
 
-    public static LetterBasicResponse toLetterBasicResponse(LetterBasicQuery letterBasicQuery){
+    public static LetterBasicResponse toLetterBasicResponse(LetterBasicQuery letterBasicQuery) {
+        if (letterBasicQuery == null) {
+            return null;
+        }
         return new LetterBasicResponse(
                 letterBasicQuery.idLetter(),
                 letterBasicQuery.description(),
@@ -34,24 +40,25 @@ public class LetterWebModelMapper {
         );
     }
 
-    public static List<LetterBasicResponse> toLetterBasicResponseList(List<LetterBasicQuery> letterBasicQueryList){
+    public static List<LetterBasicResponse> toLetterBasicResponseList(List<LetterBasicQuery> letterBasicQueryList) {
         return letterBasicQueryList.stream().map(LetterWebModelMapper::toLetterBasicResponse).toList();
     }
 
 
-    public static LetterCommand toLetterCommand(LetterRequest letterRequest){
+    public static LetterCommand toLetterCommand(LetterRequest letterRequest) {
+        if (letterRequest == null) {
+            return null;
+        }
         return new LetterCommand(
                 letterRequest.idLetter(),
                 letterRequest.description(),
                 letterRequest.idUser(),
                 letterRequest.creationDate(),
-                letterRequest.idGroup(),
-                letterRequest.sendDate(),
                 ProductWebModelMapper.toProductCommandList(letterRequest.products())
         );
     }
 
-    private static String generateLink(Integer idLetter){
+    private static String generateLink(String idLetter) {
         return "http://localhost:8080/api/letters/" + idLetter;
     }
 }

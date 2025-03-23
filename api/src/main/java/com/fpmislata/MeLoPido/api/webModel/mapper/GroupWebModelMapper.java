@@ -11,35 +11,44 @@ import java.util.List;
 
 public class GroupWebModelMapper {
 
-    public static GroupDetailResponse toGroupDetailResponse(GroupQuery groupQuery){
+    public static GroupDetailResponse toGroupDetailResponse(GroupQuery groupQuery) {
+        if (groupQuery == null) {
+            return null;
+        }
         return new GroupDetailResponse(
-                groupQuery.idGroup(),
-                groupQuery.name(),
-                groupQuery.icon(),
-                UserWebModelMapper.toUserBasicResponseList(groupQuery.users()),
-                LetterWebModelMapper.toLetterBasicResponseList(groupQuery.letters())
+                groupQuery.getIdGroup(),
+                groupQuery.getName(),
+                groupQuery.getIcon(),
+                groupQuery.getUsers(),
+                LetterWebModelMapper.toLetterBasicResponseList(groupQuery.getLetters())
         );
     }
 
-    public static List<GroupDetailResponse> toGroupDetailResponseList(List<GroupQuery> groupQueryList){
+    public static List<GroupDetailResponse> toGroupDetailResponseList(List<GroupQuery> groupQueryList) {
         return groupQueryList.stream().map(GroupWebModelMapper::toGroupDetailResponse).toList();
     }
 
-    public static GroupBasicResponse toGroupBasicResponse(GroupBasicQuery groupBasicQuery){
+    public static GroupBasicResponse toGroupBasicResponse(GroupBasicQuery groupBasicQuery) {
+        if (groupBasicQuery == null) {
+            return null;
+        }
         return new GroupBasicResponse(
-                groupBasicQuery.idGroup(),
-                groupBasicQuery.name(),
-                groupBasicQuery.icon(),
-                groupBasicQuery.users(),
-                generateLink(groupBasicQuery.idGroup())
+                groupBasicQuery.getIdGroup(),
+                groupBasicQuery.getName(),
+                groupBasicQuery.getIcon(),
+                groupBasicQuery.getUsers(),
+                generateLink(groupBasicQuery.getIdGroup())
         );
     }
 
-    public static List<GroupBasicResponse> toGroupBasicResponseList(List<GroupBasicQuery> groupBasicQueryList){
+    public static List<GroupBasicResponse> toGroupBasicResponseList(List<GroupBasicQuery> groupBasicQueryList) {
         return groupBasicQueryList.stream().map(GroupWebModelMapper::toGroupBasicResponse).toList();
     }
 
     public static GroupCommand toGroupCommand(GroupRequest groupRequest) {
+        if (groupRequest == null) {
+            return null;
+        }
         return new GroupCommand(
                 groupRequest.idGroup(),
                 groupRequest.name(),
@@ -49,7 +58,7 @@ public class GroupWebModelMapper {
         );
     }
 
-    private static String generateLink(Integer idGroup){
+    private static String generateLink(String idGroup) {
         return "http://localhost:8080/api/groups/" + idGroup;
     }
 }

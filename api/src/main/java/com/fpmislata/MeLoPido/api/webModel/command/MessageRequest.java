@@ -4,6 +4,6 @@ public record MessageRequest(
         String idMessage,
         String sendDate,
         String content,
-        Integer idUser
+        String idUser
 ) {
 }

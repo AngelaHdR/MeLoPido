@@ -9,6 +9,9 @@ import java.util.List;
 
 public class ProductWebModelMapper {
     public static ProductBasicResponse toProductBasicResponse(ProductBasicQuery productBasicQuery) {
+        if (productBasicQuery == null) {
+            return null;
+        }
         return new ProductBasicResponse(
                 productBasicQuery.idProduct(),
                 productBasicQuery.name(),
@@ -23,6 +26,9 @@ public class ProductWebModelMapper {
     }
 
     public static ProductCommand toProductCommand(ProductRequest productRequest) {
+        if (productRequest == null) {
+            return null;
+        }
         return new ProductCommand(
                 productRequest.idProduct(),
                 productRequest.name(),

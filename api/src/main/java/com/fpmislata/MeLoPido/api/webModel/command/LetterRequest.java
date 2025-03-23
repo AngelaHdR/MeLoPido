@@ -5,10 +5,8 @@ import java.util.List;
 public record LetterRequest(
         String idLetter,
         String description,
-        Integer idUser,
+        String idUser,
         String creationDate,
-        Integer idGroup,
-        String sendDate,
         List<ProductRequest> products
 ) {
 }
