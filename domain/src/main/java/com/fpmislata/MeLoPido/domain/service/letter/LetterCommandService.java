@@ -1,10 +1,12 @@
 package com.fpmislata.MeLoPido.domain.service.letter;
 
 import com.fpmislata.MeLoPido.domain.model.Letter;
+import com.fpmislata.MeLoPido.domain.repository.LetterRepository;
 import com.fpmislata.MeLoPido.domain.usecase.letter.command.DeleteLetter;
 import com.fpmislata.MeLoPido.domain.usecase.letter.command.InsertLetter;
 import com.fpmislata.MeLoPido.domain.usecase.letter.command.UpdateLetter;
 import com.fpmislata.MeLoPido.domain.usecase.model.command.LetterCommand;
+import com.fpmislata.MeLoPido.domain.usecase.model.mapper.LetterQueryMapper;
 import com.fpmislata.MeLoPido.domain.usecase.model.mapper.ProductQueryMapper;
 
 public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateLetter {
@@ -25,7 +27,7 @@ public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateL
 
     @Override
     public void insert(LetterCommand letter) {
-        letterRepository.save(letter);
+        letterRepository.save(LetterQueryMapper.toLetter(letter));
         //Guardar los productos, luego guardar la carta y asignar los productos a la carta
     }
 
@@ -41,6 +43,6 @@ public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateL
         if (letterExisting.getProducts().size() != letter.products().size()) {
             letterExisting.setProducts(ProductQueryMapper.toProductList(letter.products()));
         }
-        letterRepository.save(idLetter, letter);
+        letterRepository.save(LetterQueryMapper.toLetter(letter));
     }
 }
