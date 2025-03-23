@@ -20,7 +20,7 @@ public class LetterQueryMapper {
         );
     }
 
-    public static LetterBasicQuery toLetterCollectionQuery(Letter letter) {
+    public static LetterBasicQuery toLetterBasicQuery(Letter letter) {
         if (letter == null) {
             return null;
         }
