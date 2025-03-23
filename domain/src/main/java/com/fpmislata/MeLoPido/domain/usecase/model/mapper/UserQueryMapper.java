@@ -7,17 +7,23 @@ import com.fpmislata.MeLoPido.domain.usecase.model.query.UserQuery;
 
 public class UserQueryMapper {
     public static UserQuery toUserQuery(User user){
+        if(user == null){
+            return null;
+        }
         return new UserQuery(
                 user.getIdUser(),
                 user.getNameComplete(),
                 user.getEmail(),
-                user.getBirthDate()
-                //añadir cartas en caso de uso
-                //añadir productos en caso de uso
+                user.getBirthDate(),
+                user.getUsername(),
+                user.getPassword()
         );
     }
 
-    public static UserBasicQuery toUserCollectionQuery(User user){
+    public static UserBasicQuery toUserBasicQuery(User user){
+        if(user == null){
+            return null;
+        }
         return new UserBasicQuery(
                 user.getIdUser(),
                 user.getNameComplete()
@@ -25,6 +31,9 @@ public class UserQueryMapper {
     }
 
     public static User toUser(UserCommand userCommand){
+        if(userCommand == null){
+            return null;
+        }
         return new User(
                 userCommand.idUser(),
                 userCommand.name(),

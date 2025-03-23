@@ -1,13 +1,14 @@
 package com.fpmislata.MeLoPido.domain.usecase.model.mapper;
 
+import com.fpmislata.MeLoPido.domain.model.User;
 import com.fpmislata.MeLoPido.domain.usecase.model.command.LetterCommand;
 import com.fpmislata.MeLoPido.domain.usecase.model.query.LetterBasicQuery;
 import com.fpmislata.MeLoPido.domain.usecase.model.query.LetterQuery;
 import com.fpmislata.MeLoPido.domain.model.Letter;
 
 public class LetterQueryMapper {
-    public static LetterQuery toLetterQuery(Letter letter){
-        if(letter == null){
+    public static LetterQuery toLetterQuery(Letter letter) {
+        if (letter == null) {
             return null;
         }
         return new LetterQuery(
@@ -15,12 +16,12 @@ public class LetterQueryMapper {
                 letter.getDescription(),
                 letter.getUser().getNameComplete(),
                 letter.getGroup().getName(),
-                ProductQueryMapper.toProductCollectionQueryList(letter.getProducts())
+                ProductQueryMapper.toProductBasicQueryList(letter.getProducts())
         );
     }
 
-    public static LetterBasicQuery toLetterCollectionQuery(Letter letter){
-        if(letter == null){
+    public static LetterBasicQuery toLetterCollectionQuery(Letter letter) {
+        if (letter == null) {
             return null;
         }
         return new LetterBasicQuery(
@@ -31,12 +32,15 @@ public class LetterQueryMapper {
         );
     }
 
-    public static Letter toLetter(LetterCommand letterCommand){
+    public static Letter toLetter(LetterCommand letterCommand) {
+        if (letterCommand == null) {
+            return null;
+        }
         return new Letter(
                 letterCommand.idLetter(),
                 letterCommand.description(),
                 letterCommand.creationDate(),
-                letterCommand.idUser(),
+                new User(letterCommand.idUser()),
                 ProductQueryMapper.toProductList(letterCommand.products())
         );
     }

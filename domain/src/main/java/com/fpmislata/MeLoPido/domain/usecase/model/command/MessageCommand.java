@@ -4,6 +4,6 @@ public record MessageCommand (
         String idMessage,
         String sendDate,
         String content,
-        Integer idUser
+        String idUser
 ){
 }

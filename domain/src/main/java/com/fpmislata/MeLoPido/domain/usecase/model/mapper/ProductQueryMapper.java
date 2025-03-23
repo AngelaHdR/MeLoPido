@@ -7,33 +7,35 @@ import com.fpmislata.MeLoPido.domain.usecase.model.query.ProductBasicQuery;
 import java.util.List;
 
 public class ProductQueryMapper {
-    public static List<ProductBasicQuery> toProductCollectionQueryList(List<Product> products){
-        if(products == null){
+    public static List<ProductBasicQuery> toProductBasicQueryList(List<Product> products) {
+        if (products == null) {
             return null;
         }
-        return products.stream().map(ProductQueryMapper::toProductCollectionQuery).toList();
+        return products.stream().map(ProductQueryMapper::toProductBasicQuery).toList();
     }
-    public static ProductBasicQuery toProductCollectionQuery(Product product){
+
+    public static ProductBasicQuery toProductBasicQuery(Product product) {
         return new ProductBasicQuery(
                 product.getIdProduct(),
                 product.getName(),
                 product.getDetail(),
                 product.getUrl(),
-                UserQueryMapper.toUserCollectionQuery(product.getAsignado())
+                UserQueryMapper.toUserBasicQuery(product.getAsignado())
         );
     }
-    public static List<String> toProductNameCollection(List<Product> products){
-        if(products == null){
+
+    public static List<String> toProductNameCollection(List<Product> products) {
+        if (products == null) {
             return null;
         }
         return products.stream().map(ProductQueryMapper::toProductName).toList();
     }
 
-    public static String toProductName(Product product){
+    public static String toProductName(Product product) {
         return product.getName();
     }
 
-    public static Product toProduct(ProductCommand productCommand){
+    public static Product toProduct(ProductCommand productCommand) {
         return new Product(
                 productCommand.idProduct(),
                 productCommand.name(),
@@ -42,8 +44,8 @@ public class ProductQueryMapper {
         );
     }
 
-    public static List<Product> toProductList(List<ProductCommand> productCommands){
-        if(productCommands == null){
+    public static List<Product> toProductList(List<ProductCommand> productCommands) {
+        if (productCommands == null) {
             return null;
         }
         return productCommands.stream().map(ProductQueryMapper::toProduct).toList();

@@ -5,7 +5,7 @@ import java.util.List;
 public record LetterCommand (
         String idLetter,
         String description,
-        Integer idUser,
+        String idUser,
         String creationDate,
         List<ProductCommand> products
 ) {

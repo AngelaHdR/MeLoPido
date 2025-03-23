@@ -7,23 +7,29 @@ public class UserQuery {
     String nameComplete;
     String email;
     String birthDate;
+    String username;
+    String password;
     List<LetterBasicQuery> letters;
     List<ProductBasicQuery> products;
 
-    public UserQuery(String idUser, String nameComplete, String email, String birthDate, List<LetterBasicQuery> letters, List<ProductBasicQuery> products) {
+    public UserQuery(String idUser, String nameComplete, String email, String birthDate, String username, String password,List<LetterBasicQuery> letters, List<ProductBasicQuery> products) {
         this.idUser = idUser;
         this.nameComplete = nameComplete;
         this.email = email;
         this.birthDate = birthDate;
+        this.username = username;
+        this.password = password;
         this.letters = letters;
         this.products = products;
     }
 
-    public UserQuery(String idUser, String nameComplete, String email, String birthDate) {
+    public UserQuery(String idUser, String nameComplete, String email, String birthDate,String username, String password) {
         this.idUser = idUser;
         this.nameComplete = nameComplete;
         this.email = email;
         this.birthDate = birthDate;
+        this.username = username;
+        this.password = password;
     }
 
     public UserQuery() {
@@ -43,6 +49,14 @@ public class UserQuery {
 
     public String getBirthDate() {
         return birthDate;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public List<LetterBasicQuery> getLetters() {
