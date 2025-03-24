@@ -5,5 +5,5 @@ import com.fpmislata.MeLoPido.util.pagination.Page;
 
 public interface FindAllChatByCriterial {
     Page<Chat> findAll(int page, int pageSize);
-    Page<Chat> findAllByUser(int page, int pageSize, Integer idUser);
+    Page<Chat> findAllByUser(int page, int pageSize, String idUser);
 }

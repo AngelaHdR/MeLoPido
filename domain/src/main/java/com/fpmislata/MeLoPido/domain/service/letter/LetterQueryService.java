@@ -27,7 +27,7 @@ public class LetterQueryService implements FindAllLetterByCriterial, FindLetterB
     }
 
     @Override
-    public Page<LetterBasicQuery> findAllByUser(int page, int pageSize, Integer idUser) {
+    public Page<LetterBasicQuery> findAllByUser(int page, int pageSize, String idUser) {
         if(page<=0 || pageSize<=0){
             throw new RuntimeException("Page number and size must be greater than 0");
         }
@@ -36,7 +36,7 @@ public class LetterQueryService implements FindAllLetterByCriterial, FindLetterB
     }
 
     @Override
-    public Page<LetterBasicQuery> findAllByGroup(int page, int pageSize, Integer idGroup) {
+    public Page<LetterBasicQuery> findAllByGroup(int page, int pageSize, String idGroup) {
         if(page<=0 || pageSize<=0){
             throw new RuntimeException("Page number and size must be greater than 0");
         }
@@ -45,7 +45,7 @@ public class LetterQueryService implements FindAllLetterByCriterial, FindLetterB
     }
 
     @Override
-    public LetterQuery findById(Integer idLetter) {
+    public LetterQuery findById(String idLetter) {
         return LetterQueryMapper.toLetterQuery(letterRepository.findById(idLetter));
     }
 }

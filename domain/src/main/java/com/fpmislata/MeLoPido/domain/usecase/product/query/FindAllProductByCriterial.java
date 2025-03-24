@@ -5,6 +5,6 @@ import com.fpmislata.MeLoPido.util.pagination.Page;
 
 public interface FindAllProductByCriterial {
     Page<ProductBasicQuery> findAll(int page, int pageSize);
-    Page<ProductBasicQuery> findAllAssignedToUser(int page, int pageSize, Integer idUser);
+    Page<ProductBasicQuery> findAllAssignedToUser(int page, int pageSize, String idUser);
 
 }

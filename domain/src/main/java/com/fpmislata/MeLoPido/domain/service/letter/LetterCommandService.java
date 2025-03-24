@@ -17,7 +17,7 @@ public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateL
     }
 
     @Override
-    public void delete(Integer idLetter) {
+    public void delete(String idLetter) {
         Letter letter = letterRepository.findById(idLetter);
         if (letter == null) {
             throw new RuntimeException("Letter not found");
@@ -32,7 +32,7 @@ public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateL
     }
 
     @Override
-    public void update(Integer idLetter, LetterCommand letter) {
+    public void update(String idLetter, LetterCommand letter) {
         Letter letterExisting = letterRepository.findById(idLetter);
         if (letter == null) {
             throw new RuntimeException("Letter not found");

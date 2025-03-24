@@ -5,5 +5,5 @@ import com.fpmislata.MeLoPido.util.pagination.Page;
 
 public interface FindAllUserByCriterial {
     Page<UserBasicQuery> findAll(int page, int pageSize);
-    Page<UserBasicQuery> findAllByGroup(int page, int pageSize, Integer idGroup);
+    Page<UserBasicQuery> findAllByGroup(int page, int pageSize, String idGroup);
 }
