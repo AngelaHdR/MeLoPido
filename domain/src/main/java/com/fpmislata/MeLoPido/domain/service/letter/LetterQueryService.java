@@ -1,6 +1,8 @@
 package com.fpmislata.MeLoPido.domain.service.letter;
 
 import com.fpmislata.MeLoPido.domain.model.Letter;
+import com.fpmislata.MeLoPido.util.exception.PagedCollectionException;
+import com.fpmislata.MeLoPido.util.exception.UnauthorizedAccessException;
 import com.fpmislata.MeLoPido.util.pagination.ListWithCount;
 import com.fpmislata.MeLoPido.domain.repository.LetterRepository;
 import com.fpmislata.MeLoPido.domain.usecase.letter.query.FindAllLetterByCriterial;
@@ -22,33 +24,26 @@ public class LetterQueryService implements FindAllLetterByCriterial, FindLetterB
 
     @Override
     public ListWithCount<LetterBasicQuery> findAll(int page, int pageSize) {
-        if (page <= 0 || pageSize <= 0) {
-            throw new RuntimeException("Page number and size must be greater than 0");
-        }
+        verifyPageAndSize(page, pageSize);
+
         ListWithCount<Letter> letterList = letterRepository.findAll(page, pageSize);
         return new ListWithCount<>(letterList.getList().stream().map(LetterQueryMapper::toLetterBasicQuery).toList(), letterList.getCount());
     }
 
     @Override
     public ListWithCount<LetterBasicQuery> findAllByUser(int page, int pageSize, String idUser) {
-        if (page <= 0 || pageSize <= 0) {
-            throw new RuntimeException("Page number and size must be greater than 0");
-        }
-        if(!isFromCurrentUser(idUser)){
-            throw new RuntimeException("The user hasn't the right permits");
-        }
+        verifyPageAndSize(page, pageSize);
+        verifyCurrentUser(idUser);
+
         ListWithCount<Letter> letterList = letterRepository.findAllByUser(page, pageSize, idUser);
         return new ListWithCount<>(letterList.getList().stream().map(LetterQueryMapper::toLetterBasicQuery).toList(), letterList.getCount());
     }
 
     @Override
     public ListWithCount<LetterBasicQuery> findAllByGroup(int page, int pageSize, String idGroup) {
-        if (page <= 0 || pageSize <= 0) {
-            throw new RuntimeException("Page number and size must be greater than 0"); //TODO: create a custom exception for pagination errors
-        }
-        if (!isFromAvailableGroup(idGroup)) {
-            throw new RuntimeException("The user hasn't the right permits");
-        }
+        verifyPageAndSize(page, pageSize);
+        verifyAvailableGroup(idGroup);
+
         ListWithCount<Letter> letterList = letterRepository.findAllByGroup(page, pageSize, idGroup);
         return new ListWithCount<>(letterList.getList().stream().map(LetterQueryMapper::toLetterBasicQuery).toList(), letterList.getCount());
     }
@@ -56,22 +51,30 @@ public class LetterQueryService implements FindAllLetterByCriterial, FindLetterB
     @Override
     public LetterQuery findById(String idLetter) {
         LetterQuery letterQuery = LetterQueryMapper.toLetterQuery(letterRepository.findById(idLetter));
-        if (isFromCurrentUser(letterQuery.user()) || isFromAvailableGroup(letterQuery.group())) {
-            return letterQuery;
+        verifyCurrentUser(letterQuery.user());
+        verifyAvailableGroup(letterQuery.group());
+        return letterQuery;
+
+    }
+
+    private void verifyCurrentUser(String idUser) {
+        if (idUser.equals(currentUser)) {
+            throw new UnauthorizedAccessException("The user hasn't the right permits");
         }
-        throw new RuntimeException("The user hasn't the right permits"); //TODO: create a custom exception for permissions errors
     }
 
-    private boolean isFromCurrentUser(String idUser) {
-        return idUser.equals(currentUser);
-    }
-
-    private boolean isFromAvailableGroup(String idGroup) {
+    private void verifyAvailableGroup(String idGroup) {
         for (String group : currentGroup) {
             if (group.equals(idGroup)) {
-                return true;
+                return;
             }
         }
-        return false;
+        throw new UnauthorizedAccessException("The user hasn't the right permits");
+    }
+
+    private void verifyPageAndSize(int page, int pageSize) {
+        if (page <= 0 || pageSize <= 0) {
+            throw new PagedCollectionException("Page number and size must be greater than 0");
+        }
     }
 }

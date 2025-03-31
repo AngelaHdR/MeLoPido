@@ -10,6 +10,10 @@ public class Group {
     public Group() {
     }
 
+    public Group(String idGroup) {
+        this.idGroup = idGroup;
+    }
+
     public Group(String idGroup, String name, String icon, String theme, String description) {
         this.idGroup = idGroup;
         this.name = name;

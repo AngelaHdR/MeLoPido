@@ -10,9 +10,10 @@ import com.fpmislata.MeLoPido.domain.usecase.letter.command.InsertLetter;
 import com.fpmislata.MeLoPido.domain.usecase.letter.command.UpdateLetter;
 import com.fpmislata.MeLoPido.domain.usecase.model.command.LetterCommand;
 import com.fpmislata.MeLoPido.domain.usecase.model.command.ProductCommand;
-import com.fpmislata.MeLoPido.domain.usecase.model.mapper.GroupQueryMapper;
 import com.fpmislata.MeLoPido.domain.usecase.model.mapper.LetterQueryMapper;
 import com.fpmislata.MeLoPido.domain.usecase.model.mapper.ProductQueryMapper;
+import com.fpmislata.MeLoPido.util.exception.RessourceNotFoundException;
+import com.fpmislata.MeLoPido.util.exception.UnauthorizedAccessException;
 
 import java.util.Date;
 import java.util.List;
@@ -32,14 +33,15 @@ public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateL
     public void delete(String idLetter) {
         Letter letter = letterRepository.findById(idLetter);
         verifyLetter(letter);
+        verifyCurrentUser(letter.getUser().getIdUser());
+
         letterRepository.delete(idLetter);
     }
 
     @Override
     public void insert(LetterCommand letter) {
-        if (!isFromCurrentUser(letter.idUser())) {
-            throw new RuntimeException("The user hasn't the right permits");
-        }
+        verifyCurrentUser(letter.idUser());
+
         letter.products().forEach(product -> productRepository.save(ProductQueryMapper.toProduct(product)));
         letterRepository.save(LetterQueryMapper.toLetter(letter));
     }
@@ -48,6 +50,7 @@ public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateL
     public void update(String idLetter, LetterCommand letter) {
         Letter letterExisting = letterRepository.findById(idLetter);
         verifyLetter(letterExisting);
+        verifyCurrentUser(letterExisting.getUser().getIdUser());
 
         if (!letterExisting.getDescription().equals(letter.description())) {
             letterExisting.setDescription(letter.description());
@@ -104,6 +107,8 @@ public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateL
     public void asignGroup(String idLetter, String idGroup) {
         Letter letter = letterRepository.findById(idLetter);
         verifyLetter(letter);
+        verifyCurrentUser(letter.getUser().getIdUser());
+
         if (letter.getGroup() != null) {
             throw new RuntimeException("The letter already has a group");
         }
@@ -114,14 +119,13 @@ public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateL
 
     private void verifyLetter(Letter letter) {
         if (letter == null) {
-            throw new RuntimeException("Letter not found");
-        }
-        if (!isFromCurrentUser(letter.getUser().getIdUser())) {
-            throw new RuntimeException("The user hasn't the right permits");
+            throw new RessourceNotFoundException("Letter not found");
         }
     }
 
-    private boolean isFromCurrentUser(String idUser) {
-        return idUser.equals(currentUser);
+    private void verifyCurrentUser(String idUser) {
+        if (idUser.equals(currentUser)) {
+            throw new UnauthorizedAccessException("The user hasn't the right permits");
+        }
     }
 }
