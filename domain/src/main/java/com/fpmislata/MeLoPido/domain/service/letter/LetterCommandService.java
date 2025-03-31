@@ -1,48 +1,127 @@
 package com.fpmislata.MeLoPido.domain.service.letter;
 
+import com.fpmislata.MeLoPido.domain.model.Group;
 import com.fpmislata.MeLoPido.domain.model.Letter;
+import com.fpmislata.MeLoPido.domain.model.Product;
 import com.fpmislata.MeLoPido.domain.repository.LetterRepository;
+import com.fpmislata.MeLoPido.domain.repository.ProductRepository;
 import com.fpmislata.MeLoPido.domain.usecase.letter.command.DeleteLetter;
 import com.fpmislata.MeLoPido.domain.usecase.letter.command.InsertLetter;
 import com.fpmislata.MeLoPido.domain.usecase.letter.command.UpdateLetter;
 import com.fpmislata.MeLoPido.domain.usecase.model.command.LetterCommand;
+import com.fpmislata.MeLoPido.domain.usecase.model.command.ProductCommand;
+import com.fpmislata.MeLoPido.domain.usecase.model.mapper.GroupQueryMapper;
 import com.fpmislata.MeLoPido.domain.usecase.model.mapper.LetterQueryMapper;
 import com.fpmislata.MeLoPido.domain.usecase.model.mapper.ProductQueryMapper;
 
+import java.util.Date;
+import java.util.List;
+
 public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateLetter {
     private final LetterRepository letterRepository;
+    private final ProductRepository productRepository;
+    private final String currentUser = "1";
+    private final List<String> currentGroup = List.of("1", "2");
 
     public LetterCommandService(LetterRepository letterRepository) {
         this.letterRepository = letterRepository;
+        this.productRepository = productRepository; //product ioc get repository
     }
 
     @Override
     public void delete(String idLetter) {
         Letter letter = letterRepository.findById(idLetter);
-        if (letter == null) {
-            throw new RuntimeException("Letter not found");
-        }
+        verifyLetter(letter);
         letterRepository.delete(idLetter);
     }
 
     @Override
     public void insert(LetterCommand letter) {
+        if (!isFromCurrentUser(letter.idUser())) {
+            throw new RuntimeException("The user hasn't the right permits");
+        }
+        letter.products().forEach(product -> productRepository.save(ProductQueryMapper.toProduct(product)));
         letterRepository.save(LetterQueryMapper.toLetter(letter));
-        //Guardar los productos, luego guardar la carta y asignar los productos a la carta
     }
 
     @Override
     public void update(String idLetter, LetterCommand letter) {
         Letter letterExisting = letterRepository.findById(idLetter);
-        if (letter == null) {
-            throw new RuntimeException("Letter not found");
-        }
+        verifyLetter(letterExisting);
+
         if (!letterExisting.getDescription().equals(letter.description())) {
             letterExisting.setDescription(letter.description());
         }
-        if (letterExisting.getProducts().size() != letter.products().size()) {
-            letterExisting.setProducts(ProductQueryMapper.toProductList(letter.products()));
+        if (diferentProducts(letterExisting.getProducts(), letter.products())) {
+            if (letterExisting.getGroup() != null) {
+                letterExisting.setProducts(addProducts(letterExisting.getProducts(), letter.products()));
+            } else {
+                letterExisting.setProducts(addProducts(letterExisting.getProducts(), letter.products()));
+                letterExisting.setProducts(removeProducts(letterExisting.getProducts(), letter.products()));
+            }
         }
-        letterRepository.save(LetterQueryMapper.toLetter(letter));
+        letterRepository.save(letterExisting);
+    }
+
+    private boolean diferentProducts(List<Product> productsExisting, List<ProductCommand> products) {
+        List<Product> newProducts = ProductQueryMapper.toProductList(products);
+
+        if (productsExisting.size() != newProducts.size()) {
+            return true;
+        }
+        for (Product product : newProducts) {
+            if (productsExisting.stream().noneMatch(productExisting ->
+                    productExisting.getIdProduct().equals(product.getIdProduct()))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private List<Product> addProducts(List<Product> productsExisting, List<ProductCommand> products) {
+        List<Product> newProducts = ProductQueryMapper.toProductList(products);
+        newProducts.forEach(product -> {
+            if (productsExisting.stream().noneMatch(productExisting -> productExisting.getIdProduct().equals(product.getIdProduct()))) {
+                productsExisting.add(product);
+                productRepository.save(product);
+            }
+        });
+        return productsExisting;
+    }
+
+    private List<Product> removeProducts(List<Product> productsExisting, List<ProductCommand> products) {
+        List<Product> newProducts = ProductQueryMapper.toProductList(products);
+        productsExisting.forEach(product -> {
+            if (newProducts.stream().noneMatch(productNew -> productNew.getIdProduct().equals(product.getIdProduct()))) {
+                productsExisting.remove(product);
+                productRepository.delete(product.getIdProduct());
+            }
+        });
+        return productsExisting;
+    }
+
+    @Override
+    public void asignGroup(String idLetter, String idGroup) {
+        Letter letter = letterRepository.findById(idLetter);
+        verifyLetter(letter);
+        if (letter.getGroup() != null) {
+            throw new RuntimeException("The letter already has a group");
+        }
+        letter.setSendDate(new Date().toString());
+        letter.setGroup(new Group(idGroup));
+        letterRepository.save(letter);
+    }
+
+    private void verifyLetter(Letter letter) {
+        if (letter == null) {
+            throw new RuntimeException("Letter not found");
+        }
+        if (!isFromCurrentUser(letter.getUser().getIdUser())) {
+            throw new RuntimeException("The user hasn't the right permits");
+        }
+    }
+
+    private boolean isFromCurrentUser(String idUser) {
+        return idUser.equals(currentUser);
     }
 }
