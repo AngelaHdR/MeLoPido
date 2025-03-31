@@ -1,9 +1,9 @@
 package com.fpmislata.MeLoPido.domain.usecase.group.query;
 
+import com.fpmislata.MeLoPido.util.pagination.ListWithCount;
 import com.fpmislata.MeLoPido.domain.usecase.model.query.GroupBasicQuery;
-import com.fpmislata.MeLoPido.util.pagination.Page;
 
 public interface FindAllGroupByCriterial {
-    Page<GroupBasicQuery> findAll(int page, int pageSize);
-    Page<GroupBasicQuery> findAllByUser(int page, int pageSize, String idUser);
+    ListWithCount<GroupBasicQuery> findAll(int page, int pageSize);
+    ListWithCount<GroupBasicQuery> findAllByUser(int page, int pageSize, String idUser);
 }
