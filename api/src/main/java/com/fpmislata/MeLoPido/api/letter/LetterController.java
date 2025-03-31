@@ -3,7 +3,7 @@ package com.fpmislata.MeLoPido.api.letter;
 import com.fpmislata.MeLoPido.api.webModel.mapper.LetterWebModelMapper;
 import com.fpmislata.MeLoPido.api.webModel.query.LetterBasicResponse;
 import com.fpmislata.MeLoPido.api.webModel.query.LetterDetailResponse;
-import com.fpmislata.MeLoPido.domain.model.ListWithCount;
+import com.fpmislata.MeLoPido.util.pagination.ListWithCount;
 import com.fpmislata.MeLoPido.domain.usecase.letter.query.FindAllLetterByCriterial;
 import com.fpmislata.MeLoPido.domain.usecase.letter.query.FindLetterByCriterial;
 import com.fpmislata.MeLoPido.domain.usecase.model.query.LetterBasicQuery;
@@ -40,7 +40,14 @@ public class LetterController {
         return new ResponseEntity<>(pageResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/users/idUser")
+    @GetMapping("/id")
+    public ResponseEntity<LetterDetailResponse> findById(@PathVariable String id) {
+        return new ResponseEntity<>(LetterWebModelMapper.toLetterDetailResponse(findLetterByCriterial.findById(id)), HttpStatus.OK);
+    }
+
+
+    //Estos dos endpoints no son necesarios porque ya se devuelven en los objetos Group y User
+    /*@GetMapping("/users/idUser")
     public ResponseEntity<Page<LetterBasicResponse>> findAllByUser(@RequestParam(defaultValue = "1") int page, @RequestParam(required = false) Integer size, @PathVariable String idUser) {
         int pageSize = (size != null) ? size : Integer.parseInt((defaultPageSize));
 
@@ -56,10 +63,5 @@ public class LetterController {
         ListWithCount<LetterBasicQuery> letterBasicQuery = findAllLetterByCriterial.findAllByGroup(page, pageSize, idGroup);
         Page<LetterBasicResponse> pageResponse = new Page<>(letterBasicQuery.getList().stream().map(LetterWebModelMapper::toLetterBasicResponse).toList(), page, pageSize, letterBasicQuery.getCount());
         return new ResponseEntity<>(pageResponse, HttpStatus.OK);
-    }
-
-    @GetMapping("/id")
-    public ResponseEntity<LetterDetailResponse> findById(@PathVariable String id) {
-        return new ResponseEntity<>(LetterWebModelMapper.toLetterDetailResponse(findLetterByCriterial.findById(id)), HttpStatus.OK);
-    }
+    }*/
 }
