@@ -14,6 +14,9 @@ public class LetterQueryMapper {
         return new LetterQuery(
                 letter.getIdLetter(),
                 letter.getDescription(),
+                letter.getCreationDate(),
+                letter.getSendDate(),
+                letter.getExpirationDate(),
                 letter.getUser().getNameComplete(),
                 letter.getGroup().getName(),
                 ProductQueryMapper.toProductBasicQueryList(letter.getProducts())

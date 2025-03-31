@@ -6,16 +6,20 @@ public class GroupQuery {
     String idGroup;
     String name;
     String icon;
+    String theme;
+    String description;
     List<String> users;
     List<LetterBasicQuery> letters;
 
     public GroupQuery() {
     }
 
-    public GroupQuery(String idGroup, String name, String icon) {
+    public GroupQuery(String idGroup, String name, String icon, String theme, String description) {
         this.idGroup = idGroup;
         this.name = name;
         this.icon = icon;
+        this.theme = theme;
+        this.description = description;
     }
 
     public GroupQuery(String idGroup, String name, String icon, List<String> users, List<LetterBasicQuery> letters) {
@@ -52,5 +56,13 @@ public class GroupQuery {
 
     public void setLetters(List<LetterBasicQuery> letters) {
         this.letters = letters;
+    }
+
+    public String getTheme() {
+        return theme;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

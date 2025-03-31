@@ -7,6 +7,7 @@ public class Letter {
     String description;
     String creationDate;
     String sendDate;
+    String expirationDate;
     User user;
     Group group;
     List<Product> products;
@@ -86,5 +87,13 @@ public class Letter {
 
     public void setProducts(List<Product> products) {
         this.products = products;
+    }
+
+    public String getExpirationDate() {
+        return expirationDate;
+    }
+
+    public void setExpirationDate(String expirationDate) {
+        this.expirationDate = expirationDate;
     }
 }

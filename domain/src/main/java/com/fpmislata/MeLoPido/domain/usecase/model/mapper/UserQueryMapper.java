@@ -16,7 +16,8 @@ public class UserQueryMapper {
                 user.getEmail(),
                 user.getBirthDate(),
                 user.getUsername(),
-                user.getPassword()
+                user.getPassword(),
+                user.getGroups().stream().map(GroupQueryMapper::toGroupBasicQuery).toList()
         );
     }
 

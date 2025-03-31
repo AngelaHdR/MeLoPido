@@ -13,7 +13,9 @@ public class GroupQueryMapper {
         return new GroupQuery(
                 group.getIdGroup(),
                 group.getName(),
-                group.getIcon()
+                group.getIcon(),
+                group.getTheme(),
+                group.getDescription()
         );
     }
 

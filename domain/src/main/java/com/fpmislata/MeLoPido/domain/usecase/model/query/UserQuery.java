@@ -11,8 +11,9 @@ public class UserQuery {
     String password;
     List<LetterBasicQuery> letters;
     List<ProductBasicQuery> products;
+    List<GroupBasicQuery> groups;
 
-    public UserQuery(String idUser, String nameComplete, String email, String birthDate, String username, String password,List<LetterBasicQuery> letters, List<ProductBasicQuery> products) {
+    public UserQuery(String idUser, String nameComplete, String email, String birthDate, String username, String password,List<LetterBasicQuery> letters, List<ProductBasicQuery> products, List<GroupBasicQuery> groups) {
         this.idUser = idUser;
         this.nameComplete = nameComplete;
         this.email = email;
@@ -21,15 +22,17 @@ public class UserQuery {
         this.password = password;
         this.letters = letters;
         this.products = products;
+        this.groups = groups;
     }
 
-    public UserQuery(String idUser, String nameComplete, String email, String birthDate,String username, String password) {
+    public UserQuery(String idUser, String nameComplete, String email, String birthDate,String username, String password,List<GroupBasicQuery> groups) {
         this.idUser = idUser;
         this.nameComplete = nameComplete;
         this.email = email;
         this.birthDate = birthDate;
         this.username = username;
         this.password = password;
+        this.groups = groups;
     }
 
     public UserQuery() {
@@ -73,5 +76,9 @@ public class UserQuery {
 
     public void setProducts(List<ProductBasicQuery> products) {
         this.products = products;
+    }
+
+    public List<GroupBasicQuery> getGroups() {
+        return groups;
     }
 }
