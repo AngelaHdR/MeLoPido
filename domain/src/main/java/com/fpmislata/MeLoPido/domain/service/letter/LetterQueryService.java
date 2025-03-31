@@ -9,8 +9,12 @@ import com.fpmislata.MeLoPido.domain.usecase.model.mapper.LetterQueryMapper;
 import com.fpmislata.MeLoPido.domain.usecase.model.query.LetterBasicQuery;
 import com.fpmislata.MeLoPido.domain.usecase.model.query.LetterQuery;
 
+import java.util.List;
+
 public class LetterQueryService implements FindAllLetterByCriterial, FindLetterByCriterial {
     private final LetterRepository letterRepository;
+    private final String currentUser = "1";
+    private final List<String> currentGroup = List.of("1", "2");
 
     public LetterQueryService(LetterRepository letterRepository) {
         this.letterRepository = letterRepository;
@@ -30,6 +34,9 @@ public class LetterQueryService implements FindAllLetterByCriterial, FindLetterB
         if (page <= 0 || pageSize <= 0) {
             throw new RuntimeException("Page number and size must be greater than 0");
         }
+        if(!isFromCurrentUser(idUser)){
+            throw new RuntimeException("The user hasn't the right permits");
+        }
         ListWithCount<Letter> letterList = letterRepository.findAllByUser(page, pageSize, idUser);
         return new ListWithCount<>(letterList.getList().stream().map(LetterQueryMapper::toLetterBasicQuery).toList(), letterList.getCount());
     }
@@ -37,7 +44,10 @@ public class LetterQueryService implements FindAllLetterByCriterial, FindLetterB
     @Override
     public ListWithCount<LetterBasicQuery> findAllByGroup(int page, int pageSize, String idGroup) {
         if (page <= 0 || pageSize <= 0) {
-            throw new RuntimeException("Page number and size must be greater than 0");
+            throw new RuntimeException("Page number and size must be greater than 0"); //TODO: create a custom exception for pagination errors
+        }
+        if (!isFromAvailableGroup(idGroup)) {
+            throw new RuntimeException("The user hasn't the right permits");
         }
         ListWithCount<Letter> letterList = letterRepository.findAllByGroup(page, pageSize, idGroup);
         return new ListWithCount<>(letterList.getList().stream().map(LetterQueryMapper::toLetterBasicQuery).toList(), letterList.getCount());
@@ -45,6 +55,23 @@ public class LetterQueryService implements FindAllLetterByCriterial, FindLetterB
 
     @Override
     public LetterQuery findById(String idLetter) {
-        return LetterQueryMapper.toLetterQuery(letterRepository.findById(idLetter));
+        LetterQuery letterQuery = LetterQueryMapper.toLetterQuery(letterRepository.findById(idLetter));
+        if (isFromCurrentUser(letterQuery.user()) || isFromAvailableGroup(letterQuery.group())) {
+            return letterQuery;
+        }
+        throw new RuntimeException("The user hasn't the right permits"); //TODO: create a custom exception for permissions errors
+    }
+
+    private boolean isFromCurrentUser(String idUser) {
+        return idUser.equals(currentUser);
+    }
+
+    private boolean isFromAvailableGroup(String idGroup) {
+        for (String group : currentGroup) {
+            if (group.equals(idGroup)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
