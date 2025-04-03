@@ -23,11 +23,12 @@ public class Letter {
         this.products = products;
     }
 
-    public Letter(String idLetter, String description, String creationDate, String sendDate, User user, Group group, List<Product> products) {
+    public Letter(String idLetter, String description, String creationDate, String sendDate, String expirationDate, User user, Group group, List<Product> products) {
         this.idLetter = idLetter;
         this.description = description;
         this.sendDate = sendDate;
         this.creationDate = creationDate;
+        this.expirationDate = expirationDate;
         this.user = user;
         this.group = group;
         this.products = products;

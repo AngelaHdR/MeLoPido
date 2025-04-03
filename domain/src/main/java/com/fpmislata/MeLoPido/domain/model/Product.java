@@ -5,19 +5,18 @@ public class Product {
     String name;
     String detail;
     String url;
+    String state; //Enum: available, selected, delivered
     User asignado;
     Chat chat;
 
-    public Product() {
-        this.chat = new Chat();
-    }
+    public Product() {}
 
-    public Product(String idProduct, String name, String detail, String url) {
+    public Product(String idProduct, String name, String detail, String url, String state) {
         this.idProduct = idProduct;
         this.url = url;
         this.name = name;
         this.detail = detail;
-        this.chat = new Chat();
+        this.state = state;
     }
 
     public String getIdProduct() {
@@ -66,5 +65,13 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 }

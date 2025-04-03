@@ -5,6 +5,8 @@ import com.fpmislata.MeLoPido.domain.usecase.model.command.UserCommand;
 import com.fpmislata.MeLoPido.domain.usecase.model.query.UserBasicQuery;
 import com.fpmislata.MeLoPido.domain.usecase.model.query.UserQuery;
 
+import java.util.List;
+
 public class UserQueryMapper {
     public static UserQuery toUserQuery(User user){
         if(user == null){
@@ -29,6 +31,15 @@ public class UserQueryMapper {
                 user.getIdUser(),
                 user.getNameComplete()
         );
+    }
+
+    public static List<UserBasicQuery> toUserBasicQueryList(List<User> users){
+        if(users == null){
+            return null;
+        }
+        return users.stream()
+                .map(UserQueryMapper::toUserBasicQuery)
+                .toList();
     }
 
     public static User toUser(UserCommand userCommand){

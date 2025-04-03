@@ -12,6 +12,9 @@ import java.util.List;
 public class UserWebModelMapper {
 
     public static UserBasicResponse toUserBasicResponse(UserBasicQuery userBasicQuery) {
+        if (userBasicQuery == null) {
+            return null;
+        }
         return new UserBasicResponse(
                 userBasicQuery.idUser(),
                 userBasicQuery.nameComplete(),
@@ -20,6 +23,9 @@ public class UserWebModelMapper {
     }
 
     public static List<UserBasicResponse> toUserBasicResponseList(List<UserBasicQuery> userBasicQueryList) {
+        if (userBasicQueryList == null) {
+            return null;
+        }
         return userBasicQueryList.stream().map(UserWebModelMapper::toUserBasicResponse).toList();
     }
 
@@ -35,7 +41,8 @@ public class UserWebModelMapper {
                 userQuery.getUsername(),
                 userQuery.getPassword(),
                 LetterWebModelMapper.toLetterBasicResponseList(userQuery.getLetters()),
-                ProductWebModelMapper.toProductBasicResponseList(userQuery.getProducts())
+                ProductWebModelMapper.toProductBasicResponseList(userQuery.getProducts()),
+                GroupWebModelMapper.toGroupBasicResponseList(userQuery.getGroups())
         );
     }
 

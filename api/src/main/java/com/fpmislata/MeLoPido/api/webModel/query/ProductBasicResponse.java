@@ -5,6 +5,7 @@ public record ProductBasicResponse(
         String name,
         String detail,
         String url,
+        String state,
         UserBasicResponse asignado
 ) {
 }

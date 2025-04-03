@@ -5,6 +5,7 @@ public record ProductBasicQuery(
         String name,
         String detail,
         String url,
+        String state,
         UserBasicQuery asignado
 ){
 }

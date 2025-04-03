@@ -5,6 +5,8 @@ import com.fpmislata.MeLoPido.domain.usecase.model.command.GroupCommand;
 import com.fpmislata.MeLoPido.domain.usecase.model.query.GroupBasicQuery;
 import com.fpmislata.MeLoPido.domain.usecase.model.query.GroupQuery;
 
+import java.util.List;
+
 public class GroupQueryMapper {
     public static GroupQuery toGroupQuery(Group group){
         if(group == null){
@@ -19,6 +21,15 @@ public class GroupQueryMapper {
         );
     }
 
+    public static List<GroupQuery> toGroupQueryList(List<Group> groups){
+        if(groups == null){
+            return null;
+        }
+        return groups.stream()
+                .map(GroupQueryMapper::toGroupQuery)
+                .toList();
+    }
+
     public static GroupBasicQuery toGroupBasicQuery(Group group){
         if(group == null){
             return null;
@@ -28,6 +39,15 @@ public class GroupQueryMapper {
                 group.getName(),
                 group.getIcon()
         );
+    }
+
+    public static List<GroupBasicQuery> toGroupBasicQueryList(List<Group> groups){
+        if(groups == null){
+            return null;
+        }
+        return groups.stream()
+                .map(GroupQueryMapper::toGroupBasicQuery)
+                .toList();
     }
 
     public static Group toGroup(GroupCommand groupCommand){

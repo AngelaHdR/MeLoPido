@@ -19,12 +19,17 @@ public class GroupWebModelMapper {
                 groupQuery.getIdGroup(),
                 groupQuery.getName(),
                 groupQuery.getIcon(),
+                groupQuery.getTheme(),
+                groupQuery.getDescription(),
                 groupQuery.getUsers(),
                 LetterWebModelMapper.toLetterBasicResponseList(groupQuery.getLetters())
         );
     }
 
     public static List<GroupDetailResponse> toGroupDetailResponseList(List<GroupQuery> groupQueryList) {
+        if (groupQueryList == null) {
+            return null;
+        }
         return groupQueryList.stream().map(GroupWebModelMapper::toGroupDetailResponse).toList();
     }
 
@@ -42,6 +47,9 @@ public class GroupWebModelMapper {
     }
 
     public static List<GroupBasicResponse> toGroupBasicResponseList(List<GroupBasicQuery> groupBasicQueryList) {
+        if (groupBasicQueryList == null) {
+            return null;
+        }
         return groupBasicQueryList.stream().map(GroupWebModelMapper::toGroupBasicResponse).toList();
     }
 

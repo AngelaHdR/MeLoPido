@@ -17,6 +17,9 @@ public class LetterWebModelMapper {
         return new LetterDetailResponse(
                 letterQuery.idLetter(),
                 letterQuery.description(),
+                letterQuery.creationDate(),
+                letterQuery.sendDate(),
+                letterQuery.expirationDate(),
                 letterQuery.user(),
                 letterQuery.group(),
                 ProductWebModelMapper.toProductBasicResponseList(letterQuery.products())
@@ -24,6 +27,9 @@ public class LetterWebModelMapper {
     }
 
     public static List<LetterDetailResponse> toLetterDetailResponseList(List<LetterQuery> letterQueryList) {
+        if (letterQueryList == null) {
+            return null;
+        }
         return letterQueryList.stream().map(LetterWebModelMapper::toLetterDetailResponse).toList();
     }
 
@@ -41,6 +47,9 @@ public class LetterWebModelMapper {
     }
 
     public static List<LetterBasicResponse> toLetterBasicResponseList(List<LetterBasicQuery> letterBasicQueryList) {
+        if (letterBasicQueryList == null) {
+            return null;
+        }
         return letterBasicQueryList.stream().map(LetterWebModelMapper::toLetterBasicResponse).toList();
     }
 

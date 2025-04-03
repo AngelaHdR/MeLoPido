@@ -6,6 +6,8 @@ public record GroupDetailResponse(
         String idGroup,
         String name,
         String icon,
+        String theme,
+        String description,
         List<String> users,
         List<LetterBasicResponse> letters
 ) {

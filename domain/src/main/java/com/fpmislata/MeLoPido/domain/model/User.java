@@ -32,7 +32,7 @@ public class User {
         this.password = password;
     }
 
-    public User(String idUser, String name, String surname1, String surname2, String email, String birthDate, List<Group> groups) {
+    public User(String idUser, String name, String surname1, String surname2, String email, String birthDate, List<Group> groups, String username, String password) {
         this.idUser = idUser;
         this.name = name;
         this.surname1 = surname1;
@@ -40,6 +40,8 @@ public class User {
         this.email = email;
         this.birthDate = birthDate;
         this.groups = groups;
+        this.username = username;
+        this.password = password;
     }
 
     public String getIdUser() {

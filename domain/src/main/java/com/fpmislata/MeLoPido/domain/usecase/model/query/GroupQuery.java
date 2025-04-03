@@ -22,10 +22,12 @@ public class GroupQuery {
         this.description = description;
     }
 
-    public GroupQuery(String idGroup, String name, String icon, List<String> users, List<LetterBasicQuery> letters) {
+    public GroupQuery(String idGroup, String name, String icon, String theme, String description, List<String> users, List<LetterBasicQuery> letters) {
         this.idGroup = idGroup;
         this.name = name;
         this.icon = icon;
+        this.theme = theme;
+        this.description = description;
         this.users = users;
         this.letters = letters;
     }

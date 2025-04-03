@@ -17,11 +17,15 @@ public class ProductWebModelMapper {
                 productBasicQuery.name(),
                 productBasicQuery.detail(),
                 productBasicQuery.url(),
+                productBasicQuery.state(),
                 UserWebModelMapper.toUserBasicResponse(productBasicQuery.asignado())
         );
     }
 
     public static List<ProductBasicResponse> toProductBasicResponseList(List<ProductBasicQuery> productBasicQueryList) {
+        if (productBasicQueryList == null) {
+            return null;
+        }
         return productBasicQueryList.stream().map(ProductWebModelMapper::toProductBasicResponse).toList();
     }
 
@@ -33,11 +37,15 @@ public class ProductWebModelMapper {
                 productRequest.idProduct(),
                 productRequest.name(),
                 productRequest.detail(),
-                productRequest.url()
+                productRequest.url(),
+                productRequest.state()
         );
     }
 
     public static List<ProductCommand> toProductCommandList(List<ProductRequest> productRequestList) {
+        if (productRequestList == null) {
+            return null;
+        }
         return productRequestList.stream().map(ProductWebModelMapper::toProductCommand).toList();
     }
 }

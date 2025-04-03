@@ -23,7 +23,6 @@ public class Chat {
     public Chat(String idChat, String creationDate) {
         this.idChat = idChat;
         this.creationDate = creationDate;
-        this.messages = new ArrayList<>();
     }
 
     public Chat(String idChat, String creationDate, List<Message> messages) {

@@ -6,6 +6,8 @@ import com.fpmislata.MeLoPido.domain.usecase.model.query.LetterBasicQuery;
 import com.fpmislata.MeLoPido.domain.usecase.model.query.LetterQuery;
 import com.fpmislata.MeLoPido.domain.model.Letter;
 
+import java.util.List;
+
 public class LetterQueryMapper {
     public static LetterQuery toLetterQuery(Letter letter) {
         if (letter == null) {
@@ -23,6 +25,15 @@ public class LetterQueryMapper {
         );
     }
 
+    public static List<LetterQuery> toLetterQueryList(List<Letter> letters) {
+        if (letters == null) {
+            return null;
+        }
+        return letters.stream()
+                .map(LetterQueryMapper::toLetterQuery)
+                .toList();
+    }
+
     public static LetterBasicQuery toLetterBasicQuery(Letter letter) {
         if (letter == null) {
             return null;
@@ -33,6 +44,15 @@ public class LetterQueryMapper {
                 letter.getUser().getNameComplete(),
                 letter.getGroup().getName()
         );
+    }
+
+    public static List<LetterBasicQuery> toLetterBasicQueryList(List<Letter> letters) {
+        if (letters == null) {
+            return null;
+        }
+        return letters.stream()
+                .map(LetterQueryMapper::toLetterBasicQuery)
+                .toList();
     }
 
     public static Letter toLetter(LetterCommand letterCommand) {
