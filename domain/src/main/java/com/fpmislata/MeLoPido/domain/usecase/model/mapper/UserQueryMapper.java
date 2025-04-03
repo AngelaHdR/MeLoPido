@@ -8,8 +8,8 @@ import com.fpmislata.MeLoPido.domain.usecase.model.query.UserQuery;
 import java.util.List;
 
 public class UserQueryMapper {
-    public static UserQuery toUserQuery(User user){
-        if(user == null){
+    public static UserQuery toUserQuery(User user) {
+        if (user == null) {
             return null;
         }
         return new UserQuery(
@@ -17,14 +17,15 @@ public class UserQueryMapper {
                 user.getNameComplete(),
                 user.getEmail(),
                 user.getBirthDate(),
+                user.getGroups().stream().map(GroupQueryMapper::toGroupBasicQuery).toList(),
                 user.getUsername(),
-                user.getPassword(),
-                user.getGroups().stream().map(GroupQueryMapper::toGroupBasicQuery).toList()
+                user.getPassword()
+
         );
     }
 
-    public static UserBasicQuery toUserBasicQuery(User user){
-        if(user == null){
+    public static UserBasicQuery toUserBasicQuery(User user) {
+        if (user == null) {
             return null;
         }
         return new UserBasicQuery(
@@ -33,8 +34,8 @@ public class UserQueryMapper {
         );
     }
 
-    public static List<UserBasicQuery> toUserBasicQueryList(List<User> users){
-        if(users == null){
+    public static List<UserBasicQuery> toUserBasicQueryList(List<User> users) {
+        if (users == null) {
             return null;
         }
         return users.stream()
@@ -42,8 +43,8 @@ public class UserQueryMapper {
                 .toList();
     }
 
-    public static User toUser(UserCommand userCommand){
-        if(userCommand == null){
+    public static User toUser(UserCommand userCommand) {
+        if (userCommand == null) {
             return null;
         }
         return new User(

@@ -7,13 +7,13 @@ public class UserQuery {
     String nameComplete;
     String email;
     String birthDate;
+    List<GroupBasicQuery> groups;
     String username;
     String password;
     List<LetterBasicQuery> letters;
     List<ProductBasicQuery> products;
-    List<GroupBasicQuery> groups;
 
-    public UserQuery(String idUser, String nameComplete, String email, String birthDate, String username, String password,List<LetterBasicQuery> letters, List<ProductBasicQuery> products, List<GroupBasicQuery> groups) {
+    public UserQuery(String idUser, String nameComplete, String email, String birthDate, List<GroupBasicQuery> groups, String username, String password,List<LetterBasicQuery> letters, List<ProductBasicQuery> products) {
         this.idUser = idUser;
         this.nameComplete = nameComplete;
         this.email = email;
@@ -25,7 +25,7 @@ public class UserQuery {
         this.groups = groups;
     }
 
-    public UserQuery(String idUser, String nameComplete, String email, String birthDate,String username, String password,List<GroupBasicQuery> groups) {
+    public UserQuery(String idUser, String nameComplete, String email, String birthDate,List<GroupBasicQuery> groups,String username, String password) {
         this.idUser = idUser;
         this.nameComplete = nameComplete;
         this.email = email;

@@ -9,8 +9,8 @@ public class MessageEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_message")
     private String idMessage;
-    private String content;
     private String sendDate;
+    private String content;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sender")
     private UserEntity sender;
@@ -21,14 +21,14 @@ public class MessageEntity {
     public MessageEntity() {
     }
 
-    public MessageEntity(String idMessage, String content, String sendDate, UserEntity sender) {
+    public MessageEntity(String idMessage, String sendDate, String content, UserEntity sender) {
         this.idMessage = idMessage;
         this.content = content;
         this.sendDate = sendDate;
         this.sender = sender;
     }
 
-    public MessageEntity(String idMessage, String content, String sendDate, UserEntity sender, ChatEntity chat) {
+    public MessageEntity(String idMessage, String sendDate, String content, UserEntity sender, ChatEntity chat) {
         this.idMessage = idMessage;
         this.content = content;
         this.sendDate = sendDate;

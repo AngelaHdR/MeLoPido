@@ -18,7 +18,8 @@ public class ProductWebModelMapper {
                 productBasicQuery.detail(),
                 productBasicQuery.url(),
                 productBasicQuery.state(),
-                UserWebModelMapper.toUserBasicResponse(productBasicQuery.asignado())
+                UserWebModelMapper.toUserBasicResponse(productBasicQuery.asignado()),
+                productBasicQuery.idChat()
         );
     }
 

@@ -6,6 +6,7 @@ public record ProductBasicQuery(
         String detail,
         String url,
         String state,
-        UserBasicQuery asignado
+        UserBasicQuery asignado,
+        String idChat
 ){
 }

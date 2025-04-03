@@ -8,12 +8,12 @@ import java.util.List;
 
 public class UserDataUC {
     private static final List<UserQuery> usersQuery = List.of(
-            new UserQuery("1","User 1 Surname1 1 Surname2 1", "email 1", "2000-04-21", "username 1", "password 1", GroupDataUC.getGroupsBasicQuery()),
-            new UserQuery("2","User 2 Surname1 2 Surname2 2", "email 2", "2000-04-22", "username 2", "password 2", GroupDataUC.getGroupsBasicQuery()),
-            new UserQuery("3","User 3 Surname1 3 Surname2 3", "email 3", "2000-04-23", "username 3", "password 3", GroupDataUC.getGroupsBasicQuery())
+            new UserQuery("1","User 1 Surname1 1 Surname2 1", "email 1", "2000-04-21", GroupDataUC.getGroupsBasicQuery(), "username 1", "password 1"),
+            new UserQuery("2","User 2 Surname1 2 Surname2 2", "email 2", "2000-04-22", GroupDataUC.getGroupsBasicQuery(), "username 2", "password 2"),
+            new UserQuery("3","User 3 Surname1 3 Surname2 3", "email 3", "2000-04-23", GroupDataUC.getGroupsBasicQuery(), "username 3", "password 3")
     );
 
-    private static final List<UserBasicQuery> usersBasic = List.of(
+    private static final List<UserBasicQuery> usersBasicQuery = List.of(
             new UserBasicQuery("1", "User 1 Surname1 1 Surname2 1"),
             new UserBasicQuery("2", "User 2 Surname1 2 Surname2 2"),
             new UserBasicQuery("3", "User 3 Surname1 3 Surname2 3")
@@ -30,7 +30,7 @@ public class UserDataUC {
     }
 
     public static List<UserBasicQuery> getUsersBasicQuery(){
-        return usersBasic;
+        return usersBasicQuery;
     }
 
     public static List<UserCommand> getUsersCommand(){

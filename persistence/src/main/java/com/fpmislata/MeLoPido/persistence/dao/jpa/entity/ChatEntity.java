@@ -12,11 +12,11 @@ public class ChatEntity {
     @Column(name = "id_chat")
     private String idChat;
     private String creationDate;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "chat")
+    private List<MessageEntity> messages;
     @OneToOne
     @JoinColumn(name = "id_product")
     private ProductEntity product;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "chat")
-    private List<MessageEntity> messages;
 
     public ChatEntity() {
     }
@@ -27,7 +27,7 @@ public class ChatEntity {
         this.messages = messages;
     }
 
-    public ChatEntity(String idChat, String creationDate, ProductEntity product, List<MessageEntity> messages) {
+    public ChatEntity(String idChat, String creationDate, List<MessageEntity> messages, ProductEntity product) {
         this.idChat = idChat;
         this.creationDate = creationDate;
         this.product = product;

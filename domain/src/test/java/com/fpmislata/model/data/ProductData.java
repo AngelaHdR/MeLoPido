@@ -1,7 +1,6 @@
 package com.fpmislata.model.data;
 
 import com.fpmislata.MeLoPido.domain.model.Product;
-import com.fpmislata.MeLoPido.domain.usecase.model.query.ProductBasicQuery;
 
 import java.util.List;
 

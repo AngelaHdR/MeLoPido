@@ -6,6 +6,7 @@ public record ProductBasicResponse(
         String detail,
         String url,
         String state,
-        UserBasicResponse asignado
+        UserBasicResponse asignado,
+        String idChat
 ) {
 }

@@ -4,7 +4,7 @@ public record ProductCommand (
         String idProduct,
         String name,
         String detail,
-        String state,
-        String url
+        String url,
+        String state
 ) {
 }

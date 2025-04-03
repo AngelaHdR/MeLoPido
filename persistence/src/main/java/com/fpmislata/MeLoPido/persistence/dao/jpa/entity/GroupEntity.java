@@ -1,6 +1,5 @@
 package com.fpmislata.MeLoPido.persistence.dao.jpa.entity;
 
-import com.fpmislata.MeLoPido.domain.model.Group;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -13,9 +12,9 @@ public class GroupEntity {
     @Column(name = "id_group")
     private String idGroup;
     private String name;
-    private String description;
     private String icon;
     private String theme;
+    private String description;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_group",
@@ -27,7 +26,7 @@ public class GroupEntity {
     public GroupEntity() {
     }
 
-    public GroupEntity(String idGroup, String name, String description, String icon, String theme) {
+    public GroupEntity(String idGroup, String name, String icon, String theme, String description) {
         this.idGroup = idGroup;
         this.name = name;
         this.description = description;
@@ -35,7 +34,7 @@ public class GroupEntity {
         this.theme = theme;
     }
 
-    public GroupEntity(String idGroup, String name, String description, String icon, String theme, List<UserEntity> users) {
+    public GroupEntity(String idGroup, String name, String icon, String theme, List<UserEntity> users, String description) {
         this.idGroup = idGroup;
         this.name = name;
         this.description = description;

@@ -1,7 +1,6 @@
 package com.fpmislata.model.data;
 
 import com.fpmislata.MeLoPido.domain.model.Letter;
-import com.fpmislata.MeLoPido.domain.usecase.model.query.LetterQuery;
 
 import java.util.List;
 

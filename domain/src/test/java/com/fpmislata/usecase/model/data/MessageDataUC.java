@@ -6,7 +6,7 @@ import com.fpmislata.MeLoPido.domain.usecase.model.query.MessageBasicQuery;
 import java.util.List;
 
 public class MessageDataUC {
-    private static final List<MessageBasicQuery> messages = List.of(
+    private static final List<MessageBasicQuery> messagesBasicQuery = List.of(
             new MessageBasicQuery("1", "2021-01-01", "Hello, how are you?", UserDataUC.getUsersBasicQuery().get(0)),
             new MessageBasicQuery("2", "2021-01-02", "I'm fine, thank you!", UserDataUC.getUsersBasicQuery().get(0)),
             new MessageBasicQuery("3", "2021-01-03", "What about you?", UserDataUC.getUsersBasicQuery().get(0))
@@ -19,7 +19,7 @@ public class MessageDataUC {
     );
 
     public static List<MessageBasicQuery> getMessagesBasicQuery() {
-        return messages;
+        return messagesBasicQuery;
     }
 
     public static List<MessageCommand> getMessagesCommand() {

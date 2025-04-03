@@ -6,10 +6,10 @@ import com.fpmislata.MeLoPido.domain.usecase.model.query.ProductBasicQuery;
 import java.util.List;
 
 public class ProductDataUC {
-    private static final List<ProductBasicQuery> productsCollectionQuery = List.of(
-            new ProductBasicQuery("1", "Product 1", "Detail 1", "URL 1", "available", UserDataUC.getUsersBasicQuery().get(0)),
-            new ProductBasicQuery("2", "Product 2", "Detail 2", "URL 2", "available", UserDataUC.getUsersBasicQuery().get(1)),
-            new ProductBasicQuery("3", "Product 3", "Detail 3", "URL 3", "available", UserDataUC.getUsersBasicQuery().get(2))
+    private static final List<ProductBasicQuery> productsBasicQuery = List.of(
+            new ProductBasicQuery("1", "Product 1", "Detail 1", "URL 1", "available", UserDataUC.getUsersBasicQuery().get(0),"1"),
+            new ProductBasicQuery("2", "Product 2", "Detail 2", "URL 2", "available", UserDataUC.getUsersBasicQuery().get(1),"2"),
+            new ProductBasicQuery("3", "Product 3", "Detail 3", "URL 3", "available", UserDataUC.getUsersBasicQuery().get(2),"3")
     );
 
     private static final List<ProductCommand> productCommand = List.of(
@@ -19,7 +19,7 @@ public class ProductDataUC {
     );
 
     public static List<ProductBasicQuery> getProductsBasicQuery(){
-        return productsCollectionQuery;
+        return productsBasicQuery;
     }
 
     public static List<ProductCommand> getProductsCommand(){

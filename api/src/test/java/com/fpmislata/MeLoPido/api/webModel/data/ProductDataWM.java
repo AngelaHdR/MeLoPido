@@ -7,9 +7,9 @@ import java.util.List;
 
 public class ProductDataWM {
     private static final List<ProductBasicResponse> productsBasicResponse = List.of(
-            new ProductBasicResponse("1", "Product 1", "Detail 1", "URL 1", "available", UserDataWM.getUsersBasicResponse().get(0)),
-            new ProductBasicResponse("2", "Product 2", "Detail 2", "URL 2", "available", UserDataWM.getUsersBasicResponse().get(1)),
-            new ProductBasicResponse("3", "Product 3", "Detail 3", "URL 3", "available", UserDataWM.getUsersBasicResponse().get(2))
+            new ProductBasicResponse("1", "Product 1", "Detail 1", "URL 1", "available", UserDataWM.getUsersBasicResponse().get(0),"1"),
+            new ProductBasicResponse("2", "Product 2", "Detail 2", "URL 2", "available", UserDataWM.getUsersBasicResponse().get(1),"2"),
+            new ProductBasicResponse("3", "Product 3", "Detail 3", "URL 3", "available", UserDataWM.getUsersBasicResponse().get(2),"3")
     );
 
     private static final List<ProductRequest> productCommand = List.of(

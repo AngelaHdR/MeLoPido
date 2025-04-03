@@ -38,11 +38,11 @@ public class UserWebModelMapper {
                 userQuery.getNameComplete(),
                 userQuery.getEmail(),
                 userQuery.getBirthDate(),
+                GroupWebModelMapper.toGroupBasicResponseList(userQuery.getGroups()),
                 userQuery.getUsername(),
                 userQuery.getPassword(),
                 LetterWebModelMapper.toLetterBasicResponseList(userQuery.getLetters()),
-                ProductWebModelMapper.toProductBasicResponseList(userQuery.getProducts()),
-                GroupWebModelMapper.toGroupBasicResponseList(userQuery.getGroups())
+                ProductWebModelMapper.toProductBasicResponseList(userQuery.getProducts())
         );
     }
 

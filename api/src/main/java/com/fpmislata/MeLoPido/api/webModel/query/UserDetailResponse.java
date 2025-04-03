@@ -7,10 +7,10 @@ public record UserDetailResponse (
         String nameComplete,
         String email,
         String birthDate,
+        List<GroupBasicResponse> groups,
         String username,
         String password,
         List<LetterBasicResponse> letters,
-        List<ProductBasicResponse> products,
-        List<GroupBasicResponse> groups
+        List<ProductBasicResponse> products
 ) {
 }

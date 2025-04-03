@@ -14,13 +14,13 @@ public class ProductEntity {
     private String url;
     private String state; //TODO: add state
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_letter")
-    private LetterEntity letter;
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "assigned_to")
     private UserEntity asignado;
     @OneToOne(mappedBy = "product", fetch = FetchType.LAZY)
     private ChatEntity chat;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_letter")
+    private LetterEntity letter;
 
     public ProductEntity() {
     }

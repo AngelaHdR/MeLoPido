@@ -19,6 +19,25 @@ public class Product {
         this.state = state;
     }
 
+    public Product(String idProduct, String name, String detail, String url, String state, User asignado) {
+        this.idProduct = idProduct;
+        this.name = name;
+        this.detail = detail;
+        this.url = url;
+        this.state = state;
+        this.asignado = asignado;
+    }
+
+    public Product(String idProduct, String name, String detail, String url, String state, User asignado, Chat chat) {
+        this.idProduct = idProduct;
+        this.name = name;
+        this.detail = detail;
+        this.url = url;
+        this.state = state;
+        this.asignado = asignado;
+        this.chat = chat;
+    }
+
     public String getIdProduct() {
         return idProduct;
     }
