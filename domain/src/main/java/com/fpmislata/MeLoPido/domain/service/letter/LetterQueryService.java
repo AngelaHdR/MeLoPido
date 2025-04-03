@@ -2,6 +2,7 @@ package com.fpmislata.MeLoPido.domain.service.letter;
 
 import com.fpmislata.MeLoPido.domain.model.Letter;
 import com.fpmislata.MeLoPido.util.exception.PagedCollectionException;
+import com.fpmislata.MeLoPido.util.exception.RessourceNotFoundException;
 import com.fpmislata.MeLoPido.util.exception.UnauthorizedAccessException;
 import com.fpmislata.MeLoPido.util.pagination.ListWithCount;
 import com.fpmislata.MeLoPido.domain.repository.LetterRepository;
@@ -50,7 +51,8 @@ public class LetterQueryService implements FindAllLetterByCriterial, FindLetterB
 
     @Override
     public LetterQuery findById(String idLetter) {
-        LetterQuery letterQuery = LetterQueryMapper.toLetterQuery(letterRepository.findById(idLetter));
+        LetterQuery letterQuery = LetterQueryMapper.toLetterQuery(letterRepository.findById(idLetter).orElseThrow(() -> new RessourceNotFoundException("Letter not found")));
+
         verifyCurrentUser(letterQuery.user());
         verifyAvailableGroup(letterQuery.group());
         return letterQuery;

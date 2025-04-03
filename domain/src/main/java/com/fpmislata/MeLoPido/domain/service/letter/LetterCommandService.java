@@ -24,15 +24,14 @@ public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateL
     private final String currentUser = "1";
     private final List<String> currentGroup = List.of("1", "2");
 
-    public LetterCommandService(LetterRepository letterRepository) {
+    public LetterCommandService(LetterRepository letterRepository, ProductRepository productRepository) {
         this.letterRepository = letterRepository;
         this.productRepository = productRepository; //product ioc get repository
     }
 
     @Override
     public void delete(String idLetter) {
-        Letter letter = letterRepository.findById(idLetter);
-        verifyLetter(letter);
+        Letter letter = letterRepository.findById(idLetter).orElseThrow(() -> new RessourceNotFoundException("Letter not found"));
         verifyCurrentUser(letter.getUser().getIdUser());
 
         letterRepository.delete(idLetter);
@@ -48,8 +47,7 @@ public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateL
 
     @Override
     public void update(String idLetter, LetterCommand letter) {
-        Letter letterExisting = letterRepository.findById(idLetter);
-        verifyLetter(letterExisting);
+        Letter letterExisting = letterRepository.findById(idLetter).orElseThrow(() -> new RessourceNotFoundException("Letter not found"));
         verifyCurrentUser(letterExisting.getUser().getIdUser());
 
         if (!letterExisting.getDescription().equals(letter.description())) {
@@ -104,23 +102,17 @@ public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateL
     }
 
     @Override
-    public void asignGroup(String idLetter, String idGroup) {
-        Letter letter = letterRepository.findById(idLetter);
-        verifyLetter(letter);
+    public void sendToGroup(String idLetter, String idGroup, String expirationDate) {
+        Letter letter = letterRepository.findById(idLetter).orElseThrow(() -> new RessourceNotFoundException("Letter not found"));
         verifyCurrentUser(letter.getUser().getIdUser());
 
         if (letter.getGroup() != null) {
             throw new RuntimeException("The letter already has a group");
         }
+        letter.setExpirationDate(expirationDate);
         letter.setSendDate(new Date().toString());
         letter.setGroup(new Group(idGroup));
         letterRepository.save(letter);
-    }
-
-    private void verifyLetter(Letter letter) {
-        if (letter == null) {
-            throw new RessourceNotFoundException("Letter not found");
-        }
     }
 
     private void verifyCurrentUser(String idUser) {
