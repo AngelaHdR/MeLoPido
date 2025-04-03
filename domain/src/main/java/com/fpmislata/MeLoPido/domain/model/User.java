@@ -1,6 +1,7 @@
 package com.fpmislata.MeLoPido.domain.model;
 
 import java.util.List;
+import java.util.Objects;
 
 public class User {
     String idUser;
@@ -118,5 +119,17 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(idUser, user.idUser);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(idUser);
     }
 }

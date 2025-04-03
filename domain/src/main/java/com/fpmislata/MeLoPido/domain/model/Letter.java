@@ -1,6 +1,7 @@
 package com.fpmislata.MeLoPido.domain.model;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Letter {
     String idLetter;
@@ -96,5 +97,17 @@ public class Letter {
 
     public void setExpirationDate(String expirationDate) {
         this.expirationDate = expirationDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Letter letter = (Letter) o;
+        return Objects.equals(idLetter, letter.idLetter);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(idLetter);
     }
 }

@@ -1,6 +1,7 @@
 package com.fpmislata.MeLoPido.domain.usecase.model.query;
 
 import java.util.List;
+import java.util.Objects;
 
 public class UserQuery {
     String idUser;
@@ -80,5 +81,17 @@ public class UserQuery {
 
     public List<GroupBasicQuery> getGroups() {
         return groups;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        UserQuery userQuery = (UserQuery) o;
+        return Objects.equals(idUser, userQuery.idUser);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(idUser);
     }
 }

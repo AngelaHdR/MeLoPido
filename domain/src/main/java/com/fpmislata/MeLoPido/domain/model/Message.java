@@ -1,5 +1,7 @@
 package com.fpmislata.MeLoPido.domain.model;
 
+import java.util.Objects;
+
 public class Message {
     String idMessage;
     String sendDate;
@@ -46,5 +48,17 @@ public class Message {
 
     public void setSender(User sender) {
         this.sender = sender;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Message message = (Message) o;
+        return Objects.equals(idMessage, message.idMessage);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(idMessage);
     }
 }

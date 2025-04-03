@@ -1,5 +1,7 @@
 package com.fpmislata.MeLoPido.domain.model;
 
+import java.util.Objects;
+
 public class Product {
     String idProduct;
     String name;
@@ -92,5 +94,17 @@ public class Product {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(idProduct, product.idProduct);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(idProduct);
     }
 }

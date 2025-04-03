@@ -1,5 +1,7 @@
 package com.fpmislata.MeLoPido.domain.model;
 
+import java.util.Objects;
+
 public class Group {
     String idGroup;
     String name;
@@ -60,5 +62,17 @@ public class Group {
 
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Group group = (Group) o;
+        return Objects.equals(idGroup, group.idGroup);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(idGroup);
     }
 }

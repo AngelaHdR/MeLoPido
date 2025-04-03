@@ -1,7 +1,6 @@
 package com.fpmislata.MeLoPido.api.data;
 
 import com.fpmislata.MeLoPido.domain.model.Letter;
-import com.fpmislata.model.data.GroupData;
 
 import java.util.List;
 

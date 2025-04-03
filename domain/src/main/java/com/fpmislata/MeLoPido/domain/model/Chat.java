@@ -2,6 +2,7 @@ package com.fpmislata.MeLoPido.domain.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Chat {
     String idChat;
@@ -53,5 +54,17 @@ public class Chat {
 
     public void setMessages(List<Message> messages) {
         this.messages = messages;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Chat chat = (Chat) o;
+        return Objects.equals(idChat, chat.idChat);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(idChat);
     }
 }
