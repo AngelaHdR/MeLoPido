@@ -6,4 +6,5 @@ import com.fpmislata.MeLoPido.util.pagination.ListWithCount;
 import java.util.List;
 
 public interface GroupRepository extends GenericRepository<Group> {
+    ListWithCount<Group> findAllByUser(int page, int pageSize, String idUser);
 }

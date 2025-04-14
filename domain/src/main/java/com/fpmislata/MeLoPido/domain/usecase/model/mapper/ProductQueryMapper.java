@@ -14,7 +14,7 @@ public class ProductQueryMapper {
                 product.getDetail(),
                 product.getUrl(),
                 product.getState(),
-                UserQueryMapper.toUserBasicQuery(product.getAsignado()),
+                UserQueryMapper.toUserBasicQuery(product.getAssigned()),
                 product.getChat().getIdChat()
         );
     }

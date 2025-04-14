@@ -13,7 +13,7 @@ public class ProductEntityMapper {
         product.setDetail(productEntity.getDetail());
         product.setUrl(productEntity.getUrl());
         product.setState(productEntity.getState());
-        product.setAsignado(UserEntityMapper.toUser(productEntity.getAsignado()));
+        product.setAssigned(UserEntityMapper.toUser(productEntity.getAsignado()));
         product.setChat(ChatEntityMapper.toChat(productEntity.getChat()));
         //TODO: como añadir letter?
         return product;
@@ -30,7 +30,7 @@ public class ProductEntityMapper {
         productEntity.setDetail(product.getDetail());
         productEntity.setUrl(product.getUrl());
         productEntity.setState(product.getState());
-        productEntity.setAsignado(UserEntityMapper.toUserEntity(product.getAsignado()));
+        productEntity.setAsignado(UserEntityMapper.toUserEntity(product.getAssigned()));
         productEntity.setChat(ChatEntityMapper.toChatEntity(product.getChat()));
         return productEntity;
     }

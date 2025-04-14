@@ -1,12 +1,13 @@
 package com.fpmislata.MeLoPido.domain.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Chat {
     String idChat;
-    String creationDate;
+    String creationDate; //TODO: mejor cambiar a LocalDateTime ?
     List<Message> messages;
 
     void addMessage(Message message) {

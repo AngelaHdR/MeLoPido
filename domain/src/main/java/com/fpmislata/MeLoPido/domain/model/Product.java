@@ -8,10 +8,11 @@ public class Product {
     String detail;
     String url;
     String state; //Enum: available, selected, delivered
-    User asignado;
+    User assigned;
     Chat chat;
 
-    public Product() {}
+    public Product() {
+    }
 
     public Product(String idProduct, String name, String detail, String url, String state) {
         this.idProduct = idProduct;
@@ -21,22 +22,22 @@ public class Product {
         this.state = state;
     }
 
-    public Product(String idProduct, String name, String detail, String url, String state, User asignado) {
+    public Product(String idProduct, String name, String detail, String url, String state, User assigned) {
         this.idProduct = idProduct;
         this.name = name;
         this.detail = detail;
         this.url = url;
         this.state = state;
-        this.asignado = asignado;
+        this.assigned = assigned;
     }
 
-    public Product(String idProduct, String name, String detail, String url, String state, User asignado, Chat chat) {
+    public Product(String idProduct, String name, String detail, String url, String state, User assigned, Chat chat) {
         this.idProduct = idProduct;
         this.name = name;
         this.detail = detail;
         this.url = url;
         this.state = state;
-        this.asignado = asignado;
+        this.assigned = assigned;
         this.chat = chat;
     }
 
@@ -72,12 +73,12 @@ public class Product {
         this.chat = chat;
     }
 
-    public User getAsignado() {
-        return asignado;
+    public User getAssigned() {
+        return assigned;
     }
 
-    public void setAsignado(User asignado) {
-        this.asignado = asignado;
+    public void setAssigned(User assigned) {
+        this.assigned = assigned;
     }
 
     public String getName() {

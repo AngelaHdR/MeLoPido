@@ -13,12 +13,9 @@ import org.springframework.data.domain.Pageable;
 import java.util.Optional;
 
 public class LetterRepositoryImpl implements LetterRepository {
-    private final LetterJpaRepository letterJpaRepository;
+    private LetterJpaRepository letterJpaRepository;
 
-    public LetterRepositoryImpl(LetterJpaRepository letterJpaRepository) {
-        this.letterJpaRepository = letterJpaRepository;
-    }
-
+    //TODO: como se haria el UUID
     @Override
     public ListWithCount<Letter> findAll(int page, int pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
