@@ -13,6 +13,8 @@ import com.fpmislata.MeLoPido.persistence.repository.impl.user.UserRepositoryImp
 public class UserIoC {
     private static UserQueryService userQueryService = new UserQueryService(getUserRepository());
 
+    private static UserCommandService userCommandService = new UserCommandService(getUserRepository());
+
     private static UserRepository userRepository;
 
     public static FindAllUserByCriterial getFindAllUserByCriterial() {
@@ -21,6 +23,18 @@ public class UserIoC {
 
     public static FindUserByCriterial getFindUserByCriterial() {
         return userQueryService;
+    }
+
+    public static DeleteUser getDeleteUser() {
+        return userCommandService;
+    }
+
+    public UpdateUser getUpdateUser() {
+        return userCommandService;
+    }
+
+    public InsertUser getInsertUser() {
+        return userCommandService;
     }
 
     public static UserRepository getUserRepository() {
@@ -34,12 +48,17 @@ public class UserIoC {
         UserIoC.userQueryService = userService;
     }
 
+    public static void setUserCommandService(UserCommandService userCommandService) {
+        UserIoC.userCommandService = userCommandService;
+    }
+
     public static void setUserRepository(UserRepository userRepository) {
         UserIoC.userRepository = userRepository;
     }
 
     public static void reset() {
         userQueryService = null;
+        userCommandService = null;
         userRepository = null;
     }
 }

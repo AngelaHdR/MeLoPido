@@ -1,13 +1,8 @@
 package com.fpmislata.MeLoPido.api.container;
 
 import com.fpmislata.MeLoPido.domain.repository.ProductRepository;
-import com.fpmislata.MeLoPido.domain.service.product.ProductCommandService;
 import com.fpmislata.MeLoPido.domain.service.product.ProductQueryService;
-import com.fpmislata.MeLoPido.domain.usecase.product.command.DeleteProduct;
-import com.fpmislata.MeLoPido.domain.usecase.product.command.InsertProduct;
-import com.fpmislata.MeLoPido.domain.usecase.product.command.UpdateProduct;
 import com.fpmislata.MeLoPido.domain.usecase.product.query.FindAllProductByCriterial;
-import com.fpmislata.MeLoPido.domain.usecase.product.query.FindProductByCriterial;
 import com.fpmislata.MeLoPido.persistence.repository.impl.product.ProductRepositoryImpl;
 
 public class ProductIoC {
