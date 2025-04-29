@@ -44,14 +44,15 @@ public class LetterRepositoryImpl implements LetterRepository {
 
     @Override
     public ListWithCount<Letter> findAllByUser(int page, int pageSize, String idUser) {
-        Page<LetterEntity> pages = letterJpaRepository.findAllByUser(page, pageSize, idUser);
+        Pageable pageable = PageRequest.of(page,pageSize);
+        Page<LetterEntity> pages = letterJpaRepository.findAllByUser(pageable, idUser);
         return new ListWithCount<>(pages.stream().map(LetterEntityMapper::toLetter).toList(), pages.getTotalElements());
     }
 
     @Override
     public ListWithCount<Letter> findAllByGroup(int page, int pageSize, String idGroup) {
         Pageable pageable = PageRequest.of(page, pageSize);
-        Page<LetterEntity> pages = letterJpaRepository.findAllByGroup(page, pageSize, idGroup);
+        Page<LetterEntity> pages = letterJpaRepository.findAllByGroup(pageable, idGroup);
         return new ListWithCount<>(pages.stream().map(LetterEntityMapper::toLetter).toList(), pages.getTotalElements());
     }
 }
