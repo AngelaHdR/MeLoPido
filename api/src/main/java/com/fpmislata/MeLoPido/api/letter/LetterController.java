@@ -1,5 +1,6 @@
 package com.fpmislata.MeLoPido.api.letter;
 
+import com.fpmislata.MeLoPido.api.container.LetterIoC;
 import com.fpmislata.MeLoPido.api.webModel.mapper.LetterWebModelMapper;
 import com.fpmislata.MeLoPido.api.webModel.query.LetterBasicResponse;
 import com.fpmislata.MeLoPido.api.webModel.query.LetterDetailResponse;
@@ -14,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping()
+@RequestMapping(LetterController.URL)
 public class LetterController {
     public static final String URL = "/api/letters";
     @Value("${app.base.url}")
@@ -26,13 +27,16 @@ public class LetterController {
     private final FindAllLetterByCriterial findAllLetterByCriterial;
     private final FindLetterByCriterial findLetterByCriterial;
 
-    public LetterController(FindAllLetterByCriterial findAllLetterByCriterial, FindLetterByCriterial findLetterByCriterial) {
-        this.findAllLetterByCriterial = findAllLetterByCriterial;
-        this.findLetterByCriterial = findLetterByCriterial;
+    public LetterController() {
+        this.findAllLetterByCriterial = LetterIoC.getFindAllLetterByCriterial();
+        this.findLetterByCriterial = LetterIoC.getFindLetterByCriterial();
     }
 
     @GetMapping()
-    public ResponseEntity<Page<LetterBasicResponse>> findAll(@RequestParam(defaultValue = "1") int page, @RequestParam(required = false) Integer size) {
+    public ResponseEntity<Page<LetterBasicResponse>> findAll(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(required = false) Integer size
+    ) {
         int pageSize = (size != null) ? size : Integer.parseInt((defaultPageSize));
 
         ListWithCount<LetterBasicQuery> letterBasicQuery = findAllLetterByCriterial.findAll(page, pageSize);
