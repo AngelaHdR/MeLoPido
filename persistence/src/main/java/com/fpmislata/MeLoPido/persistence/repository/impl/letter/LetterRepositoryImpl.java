@@ -15,6 +15,10 @@ import java.util.Optional;
 public class LetterRepositoryImpl implements LetterRepository {
     private LetterJpaRepository letterJpaRepository;
 
+    public LetterRepositoryImpl(LetterJpaRepository letterJpaRepository) {
+        this.letterJpaRepository = letterJpaRepository;
+    }
+
     //TODO: como se haria el UUID
     @Override
     public ListWithCount<Letter> findAll(int page, int pageSize) {
@@ -44,7 +48,7 @@ public class LetterRepositoryImpl implements LetterRepository {
 
     @Override
     public ListWithCount<Letter> findAllByUser(int page, int pageSize, String idUser) {
-        Pageable pageable = PageRequest.of(page,pageSize);
+        Pageable pageable = PageRequest.of(page, pageSize);
         Page<LetterEntity> pages = letterJpaRepository.findAllByUser(pageable, idUser);
         return new ListWithCount<>(pages.stream().map(LetterEntityMapper::toLetter).toList(), pages.getTotalElements());
     }

@@ -24,8 +24,8 @@ public class LetterController {
     @Value("${app.pageSize.default}")
     private String defaultPageSize;
 
-    private final FindAllLetterByCriterial findAllLetterByCriterial;
-    private final FindLetterByCriterial findLetterByCriterial;
+    private FindAllLetterByCriterial findAllLetterByCriterial;
+    private FindLetterByCriterial findLetterByCriterial;
 
     public LetterController() {
         this.findAllLetterByCriterial = LetterIoC.getFindAllLetterByCriterial();

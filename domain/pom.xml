@@ -9,7 +9,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.example</groupId>
+    <groupId>com.fpmislata</groupId>
     <artifactId>domain</artifactId>
 
     <properties>
