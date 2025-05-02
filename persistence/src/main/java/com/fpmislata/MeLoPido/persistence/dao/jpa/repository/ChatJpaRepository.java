@@ -31,4 +31,6 @@ public interface ChatJpaRepository extends JpaRepository<ChatEntity, String> {
             countQuery = "SELECT COUNT(*) FROM letters WHERE id_product= :idProduct",
             nativeQuery = true)
     Optional<ChatEntity> findByIdProduct(String idProduct);
+
+
 }
