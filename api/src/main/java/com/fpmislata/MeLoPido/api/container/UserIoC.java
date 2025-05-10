@@ -29,11 +29,11 @@ public class UserIoC {
         return userCommandService;
     }
 
-    public UpdateUser getUpdateUser() {
+    public static UpdateUser getUpdateUser() {
         return userCommandService;
     }
 
-    public InsertUser getInsertUser() {
+    public static InsertUser getInsertUser() {
         return userCommandService;
     }
 

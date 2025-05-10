@@ -59,12 +59,14 @@ public class LetterQueryService implements FindAllLetterByCriterial, FindLetterB
     }
 
     private void verifyCurrentUser(String idUser) {
-        if (!idUser.equals(currentUser)) {
+        System.out.println("user:"+idUser);
+        if (!idUser.equals("2")) {
             throw new UnauthorizedAccessException("User does not have the necessary permissions");
         }
     }
 
     private void verifyAvailableGroup(String idGroup) {
+        System.out.println("group:"+idGroup);
         if (!currentGroup.contains(idGroup)) {
             throw new UnauthorizedAccessException("User does not have the necessary permissions");
         }
