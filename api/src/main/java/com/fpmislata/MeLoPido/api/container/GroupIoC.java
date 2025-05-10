@@ -16,8 +16,11 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import org.springframework.data.jpa.repository.support.JpaRepositoryFactory;
 
+import static com.fpmislata.MeLoPido.api.container.LetterIoC.getLetterRepository;
+import static com.fpmislata.MeLoPido.api.container.UserIoC.getUserRepository;
+
 public class GroupIoC {
-    private static GroupQueryService groupQueryService = new GroupQueryService(getGroupRepository());
+    private static GroupQueryService groupQueryService = new GroupQueryService(getGroupRepository(), getUserRepository(), getLetterRepository());
     private static GroupCommandService groupCommandService = new GroupCommandService(getGroupRepository());
 
     private static GroupRepository groupRepository;
