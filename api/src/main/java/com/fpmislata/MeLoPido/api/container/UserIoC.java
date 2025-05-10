@@ -15,8 +15,11 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import org.springframework.data.jpa.repository.support.JpaRepositoryFactory;
 
+import static com.fpmislata.MeLoPido.api.container.LetterIoC.getLetterRepository;
+import static com.fpmislata.MeLoPido.api.container.ProductIoC.getProductRepository;
+
 public class UserIoC {
-    private static UserQueryService userQueryService = new UserQueryService(getUserRepository());
+    private static UserQueryService userQueryService = new UserQueryService(getUserRepository(), getProductRepository(), getLetterRepository());
 
     private static UserCommandService userCommandService = new UserCommandService(getUserRepository());
 

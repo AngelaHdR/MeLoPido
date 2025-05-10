@@ -8,9 +8,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface ProductJpaRepository extends JpaRepository<ProductEntity,String> {
-    @Query(value = "SELECT * FROM products WHERE assigned_to = :idUser",
-            countQuery = "SELECT COUNT(*) FROM products WHERE assigned_to = :idUser",
-            nativeQuery = true)
-    Page<ProductEntity> findAllAssignedToUser(Pageable pageable, @Param("idUser") String idUser);
+    @Query(value = "SELECT * FROM products WHERE assigned_to = :idUser", nativeQuery = true)
+    List<ProductEntity> findAllAssignedToUser(@Param("idUser") String idUser);
 }

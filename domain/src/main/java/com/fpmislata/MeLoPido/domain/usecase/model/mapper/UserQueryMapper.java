@@ -34,6 +34,13 @@ public class UserQueryMapper {
         );
     }
 
+    public static String toUserName(User user){
+        if (user == null) {
+            return null;
+        }
+        return user.getNameComplete();
+    }
+
     public static List<UserBasicQuery> toUserBasicQueryList(List<User> users) {
         if (users == null) {
             return null;
@@ -43,6 +50,14 @@ public class UserQueryMapper {
                 .toList();
     }
 
+    public static List<String> toUserNameList(List<User> users){
+        if (users == null) {
+            return null;
+        }
+        return users.stream()
+                .map(UserQueryMapper::toUserName)
+                .toList();
+    }
     public static User toUser(UserCommand userCommand) {
         if (userCommand == null) {
             return null;
