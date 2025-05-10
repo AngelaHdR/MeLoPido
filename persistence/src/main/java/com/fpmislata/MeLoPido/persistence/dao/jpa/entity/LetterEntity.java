@@ -18,13 +18,13 @@ public class LetterEntity {
     private String sendDate;
     @Column(name = "expiration_date")
     private String expirationDate;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_user")
     private UserEntity user;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_group")
     private GroupEntity group;
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "letter")
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "letter")
     private List<ProductEntity> products;
 
     public LetterEntity() {

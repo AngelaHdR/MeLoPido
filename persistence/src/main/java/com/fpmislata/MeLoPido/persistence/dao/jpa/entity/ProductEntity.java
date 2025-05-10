@@ -16,7 +16,7 @@ public class ProductEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "assigned_to")
     private UserEntity asignado;
-    @OneToOne(mappedBy = "product", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "product", fetch = FetchType.EAGER)
     private ChatEntity chat;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_letter")

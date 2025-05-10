@@ -12,7 +12,7 @@ public class ChatEntity {
     @Column(name = "id_chat")
     private String idChat;
     private String creationDate;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "chat")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "chat")
     private List<MessageEntity> messages;
     @OneToOne
     @JoinColumn(name = "id_product")

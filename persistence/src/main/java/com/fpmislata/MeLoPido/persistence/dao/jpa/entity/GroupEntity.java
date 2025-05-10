@@ -15,13 +15,6 @@ public class GroupEntity {
     private String icon;
     private String theme;
     private String description;
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "user_group",
-            joinColumns = @JoinColumn(name = "id_group"),
-            inverseJoinColumns = @JoinColumn(name = "id_user")
-    )
-    private List<UserEntity> users;
 
     public GroupEntity() {
     }
