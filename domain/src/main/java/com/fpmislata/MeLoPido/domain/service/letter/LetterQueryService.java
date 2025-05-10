@@ -34,18 +34,19 @@ public class LetterQueryService implements FindAllLetterByCriterial, FindLetterB
     @Override
     public ListWithCount<LetterBasicQuery> findAllByUser(int page, int pageSize, String idUser) {
         verifyPageAndSize(page, pageSize);
-        verifyCurrentUser(idUser);
+        //verifyCurrentUser(idUser);
 
         ListWithCount<Letter> letterList = letterRepository.findAllByUser(page, pageSize, idUser);
+        verifyCurrentUser(letterList.getList().get(0).getUser().getNameComplete());
         return new ListWithCount<>(letterList.getList().stream().map(LetterQueryMapper::toLetterBasicQuery).toList(), letterList.getCount());
     }
 
     @Override
     public ListWithCount<LetterBasicQuery> findAllByGroup(int page, int pageSize, String idGroup) {
         verifyPageAndSize(page, pageSize);
-        verifyAvailableGroup(idGroup);
 
         ListWithCount<Letter> letterList = letterRepository.findAllByGroup(page, pageSize, idGroup);
+        verifyAvailableGroup(letterList.getList().get(0).getGroup().getName());
         return new ListWithCount<>(letterList.getList().stream().map(LetterQueryMapper::toLetterBasicQuery).toList(), letterList.getCount());
     }
 
@@ -60,7 +61,7 @@ public class LetterQueryService implements FindAllLetterByCriterial, FindLetterB
 
     private void verifyCurrentUser(String idUser) {
         System.out.println("user:"+idUser);
-        if (!idUser.equals("2")) {
+        if (!idUser.equals(currentUser)) {
             throw new UnauthorizedAccessException("User does not have the necessary permissions");
         }
     }

@@ -48,8 +48,8 @@ public class UserQueryService implements FindAllUserByCriterial, FindUserByCrite
     public UserQuery findById(String idUser) {
         UserQuery userQuery = UserQueryMapper.toUserQuery(userRepository.findById(idUser).orElseThrow(() -> new RessourceNotFoundException("User not found")));
 
-        verifyCurrentUser(idUser);
-        return null;
+        verifyCurrentUser(userQuery.getNameComplete());
+        return userQuery;
     }
 
     @Override
