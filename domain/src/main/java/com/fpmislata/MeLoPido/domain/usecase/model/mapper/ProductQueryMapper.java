@@ -11,6 +11,7 @@ public class ProductQueryMapper {
         if (product == null) {
             return null;
         }
+        String idChat = product.getChat() != null ? product.getChat().getIdChat() : null;
         return new ProductBasicQuery(
                 product.getIdProduct(),
                 product.getName(),
@@ -18,7 +19,7 @@ public class ProductQueryMapper {
                 product.getUrl(),
                 product.getState(),
                 UserQueryMapper.toUserBasicQuery(product.getAssigned()),
-                product.getChat().getIdChat()
+                idChat
         );
     }
 
