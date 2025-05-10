@@ -17,6 +17,10 @@ import java.util.Optional;
 public class ChatRepositoryImpl implements ChatRepository {
     private ChatJpaRepository chatJpaRepository;
     private MessageJpaRepository messageJpaRepository;
+
+    public ChatRepositoryImpl(ChatJpaRepository chatJpaRepository) {
+        this.chatJpaRepository = chatJpaRepository;
+    }
     //TODO: hacer con el message repository o mezclar la consulta con la de chat
 
     @Override

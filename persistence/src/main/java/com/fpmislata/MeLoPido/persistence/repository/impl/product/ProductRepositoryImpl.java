@@ -15,6 +15,10 @@ import java.util.Optional;
 public class ProductRepositoryImpl implements ProductRepository {
     private ProductJpaRepository productJpaRepository;
 
+    public ProductRepositoryImpl(ProductJpaRepository productJpaRepository) {
+        this.productJpaRepository = productJpaRepository;
+    }
+
     @Override
     public ListWithCount<Product> findAllAssignedToUser(int page, int pageSize, String idUser) {
         Pageable pageable = PageRequest.of(page, pageSize);
