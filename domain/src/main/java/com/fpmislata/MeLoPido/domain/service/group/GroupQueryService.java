@@ -1,14 +1,23 @@
 package com.fpmislata.MeLoPido.domain.service.group;
 
+import com.fpmislata.MeLoPido.domain.model.Group;
 import com.fpmislata.MeLoPido.domain.repository.GroupRepository;
 import com.fpmislata.MeLoPido.domain.usecase.group.query.FindAllGroupByCriterial;
 import com.fpmislata.MeLoPido.domain.usecase.group.query.FindGroupByCriterial;
+import com.fpmislata.MeLoPido.domain.usecase.model.mapper.GroupQueryMapper;
 import com.fpmislata.MeLoPido.domain.usecase.model.query.GroupBasicQuery;
 import com.fpmislata.MeLoPido.domain.usecase.model.query.GroupQuery;
+import com.fpmislata.MeLoPido.util.exception.PagedCollectionException;
+import com.fpmislata.MeLoPido.util.exception.RessourceNotFoundException;
+import com.fpmislata.MeLoPido.util.exception.UnauthorizedAccessException;
 import com.fpmislata.MeLoPido.util.pagination.ListWithCount;
+
+import java.util.List;
 
 public class GroupQueryService implements FindAllGroupByCriterial, FindGroupByCriterial {
     private final GroupRepository groupRepository;
+    private final String currentUser = "Ana Ortiz Gomez";
+    private final List<String> currentGroup = List.of("Reyes Familia Ortiz");
 
     public GroupQueryService(GroupRepository groupRepository) {
         this.groupRepository = groupRepository;
@@ -16,16 +25,50 @@ public class GroupQueryService implements FindAllGroupByCriterial, FindGroupByCr
 
     @Override
     public ListWithCount<GroupBasicQuery> findAll(int page, int pageSize) {
-        return null;
+        verifyPageAndSize(page, pageSize);
+        ListWithCount<Group> groupList = groupRepository.findAll(page, pageSize);
+        return new ListWithCount<>(groupList.getList().stream().map(GroupQueryMapper::toGroupBasicQuery).toList(), groupList.getCount());
     }
 
     @Override
     public ListWithCount<GroupBasicQuery> findAllByUser(int page, int pageSize, String idUser) {
-        return null;
+        verifyPageAndSize(page, pageSize);
+
+        ListWithCount<Group> groupList = groupRepository.findAllByUser(page, pageSize, idUser);
+        return new ListWithCount<>(groupList.getList().stream().map(GroupQueryMapper::toGroupBasicQuery).toList(), groupList.getCount());
     }
 
     @Override
     public GroupQuery findById(String idGroup) {
-        return null;
+        GroupQuery groupQuery = GroupQueryMapper.toGroupQuery(groupRepository.findById(idGroup).orElseThrow(() -> new RessourceNotFoundException("Group not found")));
+        verifyAvailableGroup(groupQuery.getName());
+        return groupQuery;
+    }
+
+    private void verifyCurrentUser(String idUser) {
+        System.out.println("user:"+idUser);
+        if (!idUser.equals(currentUser)) {
+            throw new UnauthorizedAccessException("User does not have the necessary permissions");
+        }
+    }
+
+    private void verifyAvailableGroup(String idGroup) {
+        System.out.println("group:"+idGroup);
+        if (!currentGroup.contains(idGroup)) {
+            throw new UnauthorizedAccessException("User does not have the necessary permissions");
+        }
+    }
+
+    private void verifyCurrentUserOrGroup(String idUser, String idGroup) {
+        System.out.println("user:"+idUser+"group:"+idGroup);
+        if (!idUser.equals(currentUser) && !currentGroup.contains(idGroup)) {
+            throw new UnauthorizedAccessException("User does not have the necessary permissions");
+        }
+    }
+
+    private void verifyPageAndSize(int page, int pageSize) {
+        if (page < 0 || pageSize <= 0) {
+            throw new PagedCollectionException("Page number and size must be greater than 0");
+        }
     }
 }
