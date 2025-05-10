@@ -8,6 +8,10 @@ import java.util.List;
 
 public class ProductQueryMapper {
     public static ProductBasicQuery toProductBasicQuery(Product product) {
+        if (product == null) {
+            return null;
+        }
+        String idChat = product.getChat() != null ? product.getChat().getIdChat() : null;
         return new ProductBasicQuery(
                 product.getIdProduct(),
                 product.getName(),
@@ -15,7 +19,7 @@ public class ProductQueryMapper {
                 product.getUrl(),
                 product.getState(),
                 UserQueryMapper.toUserBasicQuery(product.getAssigned()),
-                product.getChat().getIdChat()
+                idChat
         );
     }
 
@@ -27,6 +31,9 @@ public class ProductQueryMapper {
     }
 
     public static String toProductName(Product product) {
+        if (product == null) {
+            return null;
+        }
         return product.getName();
     }
 

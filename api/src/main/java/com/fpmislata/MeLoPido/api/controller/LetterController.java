@@ -1,9 +1,13 @@
-package com.fpmislata.MeLoPido.api.letter;
+package com.fpmislata.MeLoPido.api.controller;
 
 import com.fpmislata.MeLoPido.api.container.LetterIoC;
+import com.fpmislata.MeLoPido.api.webModel.command.LetterRequest;
 import com.fpmislata.MeLoPido.api.webModel.mapper.LetterWebModelMapper;
 import com.fpmislata.MeLoPido.api.webModel.query.LetterBasicResponse;
 import com.fpmislata.MeLoPido.api.webModel.query.LetterDetailResponse;
+import com.fpmislata.MeLoPido.domain.usecase.letter.command.DeleteLetter;
+import com.fpmislata.MeLoPido.domain.usecase.letter.command.InsertLetter;
+import com.fpmislata.MeLoPido.domain.usecase.letter.command.UpdateLetter;
 import com.fpmislata.MeLoPido.util.pagination.ListWithCount;
 import com.fpmislata.MeLoPido.domain.usecase.letter.query.FindAllLetterByCriterial;
 import com.fpmislata.MeLoPido.domain.usecase.letter.query.FindLetterByCriterial;
@@ -24,12 +28,18 @@ public class LetterController {
     @Value("${app.pageSize.default}")
     private String defaultPageSize;
 
-    private FindAllLetterByCriterial findAllLetterByCriterial;
-    private FindLetterByCriterial findLetterByCriterial;
+    private final FindAllLetterByCriterial findAllLetterByCriterial;
+    private final FindLetterByCriterial findLetterByCriterial;
+    private final DeleteLetter deleteLetter;
+    private final UpdateLetter updateLetter;
+    private final InsertLetter insertLetter;
 
     public LetterController() {
         this.findAllLetterByCriterial = LetterIoC.getFindAllLetterByCriterial();
         this.findLetterByCriterial = LetterIoC.getFindLetterByCriterial();
+        this.deleteLetter = LetterIoC.getDeleteLetter();
+        this.updateLetter = LetterIoC.getUpdateLetter();
+        this.insertLetter = LetterIoC.getInsertLetter();
     }
 
     @GetMapping()
@@ -39,33 +49,41 @@ public class LetterController {
     ) {
         int pageSize = (size != null) ? size : Integer.parseInt((defaultPageSize));
 
-        ListWithCount<LetterBasicQuery> letterBasicQuery = findAllLetterByCriterial.findAll(page, pageSize);
+        ListWithCount<LetterBasicQuery> letterBasicQuery = findAllLetterByCriterial.findAll(page - 1, pageSize);
         Page<LetterBasicResponse> pageResponse = new Page<>(letterBasicQuery.getList().stream().map(LetterWebModelMapper::toLetterBasicResponse).toList(), page, pageSize, letterBasicQuery.getCount());
         return new ResponseEntity<>(pageResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     public ResponseEntity<LetterDetailResponse> findById(@PathVariable String id) {
         return new ResponseEntity<>(LetterWebModelMapper.toLetterDetailResponse(findLetterByCriterial.findById(id)), HttpStatus.OK);
     }
 
-
-    //Estos dos endpoints no son necesarios porque ya se devuelven en los objetos Group y User
-    /*@GetMapping("/users/idUser")
-    public ResponseEntity<Page<LetterBasicResponse>> findAllByUser(@RequestParam(defaultValue = "1") int page, @RequestParam(required = false) Integer size, @PathVariable String idUser) {
-        int pageSize = (size != null) ? size : Integer.parseInt((defaultPageSize));
-
-        ListWithCount<LetterBasicQuery> letterBasicQuery = findAllLetterByCriterial.findAllByUser(page, pageSize, idUser);
-        Page<LetterBasicResponse> pageResponse = new Page<>(letterBasicQuery.getList().stream().map(LetterWebModelMapper::toLetterBasicResponse).toList(), page, pageSize, letterBasicQuery.getCount());
-        return new ResponseEntity<>(pageResponse, HttpStatus.OK);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable String id) {
+        deleteLetter.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/groups/idGroup")
-    public ResponseEntity<Page<LetterBasicResponse>> findAllByGroup(@RequestParam(defaultValue = "1") int page, @RequestParam(required = false) Integer size, @PathVariable String idGroup) {
-        int pageSize = (size != null) ? size : Integer.parseInt((defaultPageSize));
+    @PostMapping()
+    public ResponseEntity<Void> insert(@RequestBody LetterRequest letterRequest) {
+        insertLetter.insert(LetterWebModelMapper.toLetterCommand(letterRequest));
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 
-        ListWithCount<LetterBasicQuery> letterBasicQuery = findAllLetterByCriterial.findAllByGroup(page, pageSize, idGroup);
-        Page<LetterBasicResponse> pageResponse = new Page<>(letterBasicQuery.getList().stream().map(LetterWebModelMapper::toLetterBasicResponse).toList(), page, pageSize, letterBasicQuery.getCount());
-        return new ResponseEntity<>(pageResponse, HttpStatus.OK);
-    }*/
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@PathVariable String id, @RequestBody LetterRequest letterRequest) {
+        updateLetter.update(id, LetterWebModelMapper.toLetterCommand(letterRequest));
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping("/{id}/group/{idGroup}")
+    public ResponseEntity<Void> sendoToGroup(
+            @PathVariable String id,
+            @PathVariable String idGroup,
+            @RequestBody String expirationDate
+    ) {
+        updateLetter.sendToGroup(id, idGroup, expirationDate);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

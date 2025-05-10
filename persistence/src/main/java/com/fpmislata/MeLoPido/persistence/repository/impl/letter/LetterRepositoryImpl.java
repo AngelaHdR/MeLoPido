@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 public class LetterRepositoryImpl implements LetterRepository {
@@ -24,7 +25,8 @@ public class LetterRepositoryImpl implements LetterRepository {
     public ListWithCount<Letter> findAll(int page, int pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
         Page<LetterEntity> pages = letterJpaRepository.findAll(pageable);
-        return new ListWithCount<>(pages.stream().map(LetterEntityMapper::toLetter).toList(), pages.getTotalElements());
+        List<LetterEntity> letterEntities = pages.getContent();
+        return new ListWithCount<>(letterEntities.stream().map(LetterEntityMapper::toLetter).toList(), pages.getTotalElements());
     }
 
     @Override

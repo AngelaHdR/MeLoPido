@@ -11,10 +11,10 @@ public class MessageEntity {
     private String idMessage;
     private String sendDate;
     private String content;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sender")
     private UserEntity sender;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_chat")
     private ChatEntity chat;
 

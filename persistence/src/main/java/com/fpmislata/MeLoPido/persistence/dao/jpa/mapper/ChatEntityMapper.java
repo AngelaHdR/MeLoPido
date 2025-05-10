@@ -5,6 +5,9 @@ import com.fpmislata.MeLoPido.persistence.dao.jpa.entity.ChatEntity;
 
 public class ChatEntityMapper {
     public static ChatEntity toChatEntity(Chat chat){
+        if (chat == null) {
+            return null;
+        }
         ChatEntity chatEntity = new ChatEntity();
         chatEntity.setIdChat(chat.getIdChat());
         chatEntity.setCreationDate(chat.getCreationDate());
@@ -14,6 +17,9 @@ public class ChatEntityMapper {
     }
 
     public static Chat toChat(ChatEntity chatEntity){
+        if (chatEntity == null) {
+            return null;
+        }
         Chat chat = new Chat();
         chat.setIdChat(chatEntity.getIdChat());
         chat.setCreationDate(chatEntity.getCreationDate());

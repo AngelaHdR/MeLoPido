@@ -5,6 +5,9 @@ import com.fpmislata.MeLoPido.persistence.dao.jpa.entity.UserEntity;
 
 public class UserEntityMapper {
     public static User toUser(UserEntity userEntity){
+        if (userEntity == null) {
+            return null;
+        }
         User user = new User();
         user.setIdUser(userEntity.getIdUser());
         user.setName(userEntity.getName());
@@ -14,10 +17,14 @@ public class UserEntityMapper {
         user.setBirthDate(userEntity.getBirthDate());
         user.setUsername(userEntity.getUsername());
         user.setPassword(userEntity.getPassword());
+        user.setGroups(GroupEntityMapper.toGroupList(userEntity.getGroups()));
         return user;
     }
 
     public static UserEntity toUserEntity(User user){
+        if (user == null) {
+            return null;
+        }
         UserEntity userEntity = new UserEntity();
         userEntity.setIdUser(user.getIdUser());
         userEntity.setName(user.getName());

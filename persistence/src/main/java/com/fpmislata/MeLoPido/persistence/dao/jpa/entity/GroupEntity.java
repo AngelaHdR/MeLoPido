@@ -15,13 +15,6 @@ public class GroupEntity {
     private String icon;
     private String theme;
     private String description;
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "user_group",
-            joinColumns = @JoinColumn(name = "id_group"),
-            inverseJoinColumns = @JoinColumn(name = "id_user")
-    )
-    private List<UserEntity> users;
 
     public GroupEntity() {
     }
@@ -32,15 +25,6 @@ public class GroupEntity {
         this.description = description;
         this.icon = icon;
         this.theme = theme;
-    }
-
-    public GroupEntity(String idGroup, String name, String icon, String theme, List<UserEntity> users, String description) {
-        this.idGroup = idGroup;
-        this.name = name;
-        this.description = description;
-        this.icon = icon;
-        this.theme = theme;
-        this.users = users;
     }
 
     public String getIdGroup() {
@@ -81,13 +65,5 @@ public class GroupEntity {
 
     public void setTheme(String theme) {
         this.theme = theme;
-    }
-
-    public List<UserEntity> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<UserEntity> users) {
-        this.users = users;
     }
 }
