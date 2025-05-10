@@ -23,7 +23,7 @@ public class LetterRepositoryImpl implements LetterRepository {
     //TODO: como se haria el UUID
     @Override
     public ListWithCount<Letter> findAll(int page, int pageSize) {
-        Pageable pageable = PageRequest.of(page - 1, pageSize);
+        Pageable pageable = PageRequest.of(page, pageSize);
         Page<LetterEntity> pages = letterJpaRepository.findAll(pageable);
         List<LetterEntity> letterEntities = pages.getContent();
         return new ListWithCount<>(letterEntities.stream().map(LetterEntityMapper::toLetter).toList(), pages.getTotalElements());

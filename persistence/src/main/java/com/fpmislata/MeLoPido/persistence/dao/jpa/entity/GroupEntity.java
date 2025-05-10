@@ -27,15 +27,6 @@ public class GroupEntity {
         this.theme = theme;
     }
 
-    public GroupEntity(String idGroup, String name, String icon, String theme, List<UserEntity> users, String description) {
-        this.idGroup = idGroup;
-        this.name = name;
-        this.description = description;
-        this.icon = icon;
-        this.theme = theme;
-        this.users = users;
-    }
-
     public String getIdGroup() {
         return idGroup;
     }
@@ -74,13 +65,5 @@ public class GroupEntity {
 
     public void setTheme(String theme) {
         this.theme = theme;
-    }
-
-    public List<UserEntity> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<UserEntity> users) {
-        this.users = users;
     }
 }

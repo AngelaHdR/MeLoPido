@@ -75,7 +75,7 @@ public class LetterQueryService implements FindAllLetterByCriterial, FindLetterB
     }
 
     private void verifyPageAndSize(int page, int pageSize) {
-        if (page <= 0 || pageSize <= 0) {
+        if (page < 0 || pageSize <= 0) {
             throw new PagedCollectionException("Page number and size must be greater than 0");
         }
     }

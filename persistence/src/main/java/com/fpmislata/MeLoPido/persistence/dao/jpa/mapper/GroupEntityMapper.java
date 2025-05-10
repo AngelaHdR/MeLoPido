@@ -16,13 +16,12 @@ public class GroupEntityMapper {
         group.setDescription(groupEntity.getDescription());
         group.setIcon(groupEntity.getIcon());
         group.setTheme(groupEntity.getTheme());
-        //TODO: como se añaden los usuarios?
         return group;
     }
 
     public static List<Group> toGroupList(List<GroupEntity> groupEntityList){
         if (groupEntityList == null) {
-            return null
+            return null;
         }
         return groupEntityList.stream().map(GroupEntityMapper::toGroup).toList();
     }

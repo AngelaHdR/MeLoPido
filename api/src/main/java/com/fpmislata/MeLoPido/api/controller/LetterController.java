@@ -49,7 +49,7 @@ public class LetterController {
     ) {
         int pageSize = (size != null) ? size : Integer.parseInt((defaultPageSize));
 
-        ListWithCount<LetterBasicQuery> letterBasicQuery = findAllLetterByCriterial.findAll(page, pageSize);
+        ListWithCount<LetterBasicQuery> letterBasicQuery = findAllLetterByCriterial.findAll(page - 1, pageSize);
         Page<LetterBasicResponse> pageResponse = new Page<>(letterBasicQuery.getList().stream().map(LetterWebModelMapper::toLetterBasicResponse).toList(), page, pageSize, letterBasicQuery.getCount());
         return new ResponseEntity<>(pageResponse, HttpStatus.OK);
     }

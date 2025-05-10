@@ -3,7 +3,6 @@ package com.fpmislata.MeLoPido.persistence.repository.impl.group;
 import com.fpmislata.MeLoPido.domain.model.Group;
 import com.fpmislata.MeLoPido.domain.repository.GroupRepository;
 import com.fpmislata.MeLoPido.persistence.dao.jpa.entity.GroupEntity;
-import com.fpmislata.MeLoPido.persistence.dao.jpa.mapper.GroupEntityMapper;
 import com.fpmislata.MeLoPido.persistence.dao.jpa.repository.GroupJpaRepository;
 import com.fpmislata.MeLoPido.util.pagination.ListWithCount;
 import org.springframework.data.domain.Page;
