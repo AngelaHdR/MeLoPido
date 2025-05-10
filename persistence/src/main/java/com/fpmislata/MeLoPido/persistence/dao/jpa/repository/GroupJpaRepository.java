@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface GroupJpaRepository extends JpaRepository<GroupEntity, String> {
     @Query(value = """
@@ -21,5 +22,5 @@ public interface GroupJpaRepository extends JpaRepository<GroupEntity, String> {
             WHERE l.id_user = :idUser
             """,
             nativeQuery = true)
-    Page<GroupEntity> findAllByUser(Pageable pageable, String idUser);
+    Page<GroupEntity> findAllByUser(Pageable pageable, @Param("idUser") String idUser);
 }

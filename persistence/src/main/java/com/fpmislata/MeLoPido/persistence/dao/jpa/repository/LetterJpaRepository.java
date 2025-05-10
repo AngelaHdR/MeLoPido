@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
@@ -12,10 +13,10 @@ public interface LetterJpaRepository extends JpaRepository<LetterEntity, String>
     @Query(value = "SELECT * FROM letters WHERE id_user = :idUser",
             countQuery = "SELECT COUNT(*) FROM letters WHERE id_user = :idUser",
             nativeQuery = true)
-    Page<LetterEntity> findAllByUser(Pageable pageable, String idUser);
+    Page<LetterEntity> findAllByUser(Pageable pageable, @Param("idUser") String idUser);
 
     @Query(value = "SELECT * FROM letters WHERE id_group = :idGroup",
             countQuery = "SELECT COUNT(*) FROM letters WHERE id_group = :idGroup",
             nativeQuery = true)
-    Page<LetterEntity> findAllByGroup(Pageable pageable, String idGroup);
+    Page<LetterEntity> findAllByGroup(Pageable pageable, @Param("idGroup") String idGroup);
 }

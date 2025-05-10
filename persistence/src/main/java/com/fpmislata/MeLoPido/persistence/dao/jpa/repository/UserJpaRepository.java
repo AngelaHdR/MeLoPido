@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
@@ -24,7 +25,7 @@ public interface UserJpaRepository extends JpaRepository<UserEntity,String> {
             WHERE ug.id_group = :idGroup
             """,
             nativeQuery = true)
-    Page<UserEntity> findAllByGroup(Pageable pageable, String idGroup);
+    Page<UserEntity> findAllByGroup(Pageable pageable, @Param("idGroup") String idGroup);
 
     @Query(value = """
             SELECT u.*
@@ -35,5 +36,5 @@ public interface UserJpaRepository extends JpaRepository<UserEntity,String> {
             """,
             countQuery = "SELECT COUNT(*) FROM letters WHERE id_product= :idProduct",
             nativeQuery = true)
-    Optional<UserEntity> findByProductId(String idProduct);
+    Optional<UserEntity> findByProductId(@Param("idProduct") String idProduct);
 }
