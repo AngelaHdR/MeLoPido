@@ -8,6 +8,9 @@ import java.util.List;
 
 public class ProductQueryMapper {
     public static ProductBasicQuery toProductBasicQuery(Product product) {
+        if (product == null) {
+            return null;
+        }
         return new ProductBasicQuery(
                 product.getIdProduct(),
                 product.getName(),
@@ -27,6 +30,9 @@ public class ProductQueryMapper {
     }
 
     public static String toProductName(Product product) {
+        if (product == null) {
+            return null;
+        }
         return product.getName();
     }
 

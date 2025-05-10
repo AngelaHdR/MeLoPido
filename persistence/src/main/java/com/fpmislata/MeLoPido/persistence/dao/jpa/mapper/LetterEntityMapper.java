@@ -5,6 +5,9 @@ import com.fpmislata.MeLoPido.persistence.dao.jpa.entity.LetterEntity;
 
 public class LetterEntityMapper {
     public static Letter toLetter(LetterEntity letterEntity) {
+        if (letterEntity == null) {
+            return null;
+        }
         Letter letter = new Letter();
         letter.setIdLetter(letterEntity.getIdLetter());
         letter.setDescription(letterEntity.getDescription());
@@ -18,6 +21,9 @@ public class LetterEntityMapper {
     }
 
     public static LetterEntity toLetterEntity(Letter letter) {
+        if (letter == null) {
+            return null;
+        }
         LetterEntity letterEntity = new LetterEntity();
         letterEntity.setIdLetter(letter.getIdLetter());
         letterEntity.setDescription(letter.getDescription());

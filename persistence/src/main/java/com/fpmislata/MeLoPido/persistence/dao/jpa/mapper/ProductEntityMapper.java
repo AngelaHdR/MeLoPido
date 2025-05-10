@@ -7,6 +7,9 @@ import java.util.List;
 
 public class ProductEntityMapper {
     public static Product toProduct(ProductEntity productEntity){
+        if (productEntity == null) {
+            return null;
+        }
         Product product = new Product();
         product.setIdProduct(productEntity.getIdProduct());
         product.setName(productEntity.getName());
@@ -15,7 +18,6 @@ public class ProductEntityMapper {
         product.setState(productEntity.getState());
         product.setAssigned(UserEntityMapper.toUser(productEntity.getAsignado()));
         product.setChat(ChatEntityMapper.toChat(productEntity.getChat()));
-        //TODO: como añadir letter?
         return product;
     }
 
@@ -24,6 +26,9 @@ public class ProductEntityMapper {
     }
 
     public static ProductEntity toProductEntity(Product product){
+        if (product == null) {
+            return null;
+        }
         ProductEntity productEntity = new ProductEntity();
         productEntity.setIdProduct(product.getIdProduct());
         productEntity.setName(product.getName());
