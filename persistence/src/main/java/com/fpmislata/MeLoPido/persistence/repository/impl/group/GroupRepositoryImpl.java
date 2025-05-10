@@ -15,6 +15,10 @@ import java.util.Optional;
 public class GroupRepositoryImpl implements GroupRepository {
     private GroupJpaRepository groupJpaRepository;
 
+    public GroupRepositoryImpl(GroupJpaRepository groupJpaRepository) {
+        this.groupJpaRepository = groupJpaRepository;
+    }
+
     @Override
     public ListWithCount<Group> findAllByUser(int page, int pageSize, String idUser) {
         Pageable pageable = PageRequest.of(page, pageSize);

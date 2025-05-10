@@ -8,7 +8,12 @@ import com.fpmislata.MeLoPido.domain.usecase.user.command.InsertUser;
 import com.fpmislata.MeLoPido.domain.usecase.user.command.UpdateUser;
 import com.fpmislata.MeLoPido.domain.usecase.user.query.FindAllUserByCriterial;
 import com.fpmislata.MeLoPido.domain.usecase.user.query.FindUserByCriterial;
+import com.fpmislata.MeLoPido.persistence.dao.jpa.repository.UserJpaRepository;
 import com.fpmislata.MeLoPido.persistence.repository.impl.user.UserRepositoryImpl;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import org.springframework.data.jpa.repository.support.JpaRepositoryFactory;
 
 public class UserIoC {
     private static UserQueryService userQueryService = new UserQueryService(getUserRepository());
@@ -29,19 +34,27 @@ public class UserIoC {
         return userCommandService;
     }
 
-    public UpdateUser getUpdateUser() {
+    public static UpdateUser getUpdateUser() {
         return userCommandService;
     }
 
-    public InsertUser getInsertUser() {
+    public static InsertUser getInsertUser() {
         return userCommandService;
     }
 
     public static UserRepository getUserRepository() {
         if (userRepository == null) {
-            userRepository = new UserRepositoryImpl();
+            userRepository = new UserRepositoryImpl(getUserJpaRepository());
         }
         return userRepository;
+    }
+
+    public static UserJpaRepository getUserJpaRepository() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("meLoPidoUnit");
+        EntityManager em = emf.createEntityManager();
+
+        JpaRepositoryFactory factory = new JpaRepositoryFactory(em);
+        return factory.getRepository(UserJpaRepository.class);
     }
 
     public static void setUserQueryService(UserQueryService userService) {

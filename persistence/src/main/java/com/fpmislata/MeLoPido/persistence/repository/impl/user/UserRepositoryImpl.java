@@ -15,6 +15,10 @@ import java.util.Optional;
 public class UserRepositoryImpl implements UserRepository {
     private UserJpaRepository userJpaRepository;
 
+    public UserRepositoryImpl(UserJpaRepository userJpaRepository) {
+        this.userJpaRepository = userJpaRepository;
+    }
+
     @Override
     public ListWithCount<User> findAllByGroup(int page, int pageSize, String idGroup) {
         Pageable pageable = PageRequest.of(page, pageSize);
@@ -36,7 +40,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<User> findById(String id) {
-        return Optional.empty();
+        return userJpaRepository.findById(id).map(UserEntityMapper::toUser);
     }
 
     @Override
