@@ -60,7 +60,7 @@ public class UserQueryService implements FindAllUserByCriterial, FindUserByCrite
 
         verifyCurrentUser(userQuery.getNameComplete());
 
-        List<ProductBasicQuery> productsAssigned = ProductQueryMapper.toProductBasicQueryList(productRepository.findAllAssignedToUser(idUser));
+        List<ProductBasicQuery> productsAssigned = ProductQueryMapper.toProductBasicQueryList(productRepository.findAllAssignedToUser( 0, 15, idUser).getList());
         userQuery.setProducts(productsAssigned);
 
         List<LetterBasicQuery> letters = LetterQueryMapper.toLetterBasicQueryList(letterRepository.findAllByUser(0, 15, idUser).getList());

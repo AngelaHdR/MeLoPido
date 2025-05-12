@@ -34,8 +34,6 @@ public class LetterQueryService implements FindAllLetterByCriterial, FindLetterB
     @Override
     public ListWithCount<LetterBasicQuery> findAllByUser(int page, int pageSize, String idUser) {
         verifyPageAndSize(page, pageSize);
-        //verifyCurrentUser(idUser);
-
         ListWithCount<Letter> letterList = letterRepository.findAllByUser(page, pageSize, idUser);
         verifyCurrentUser(letterList.getList().get(0).getUser().getNameComplete());
         return new ListWithCount<>(letterList.getList().stream().map(LetterQueryMapper::toLetterBasicQuery).toList(), letterList.getCount());
@@ -44,7 +42,6 @@ public class LetterQueryService implements FindAllLetterByCriterial, FindLetterB
     @Override
     public ListWithCount<LetterBasicQuery> findAllByGroup(int page, int pageSize, String idGroup) {
         verifyPageAndSize(page, pageSize);
-
         ListWithCount<Letter> letterList = letterRepository.findAllByGroup(page, pageSize, idGroup);
         verifyAvailableGroup(letterList.getList().get(0).getGroup().getName());
         return new ListWithCount<>(letterList.getList().stream().map(LetterQueryMapper::toLetterBasicQuery).toList(), letterList.getCount());
@@ -53,28 +50,24 @@ public class LetterQueryService implements FindAllLetterByCriterial, FindLetterB
     @Override
     public LetterQuery findById(String idLetter) {
         LetterQuery letterQuery = LetterQueryMapper.toLetterQuery(letterRepository.findById(idLetter).orElseThrow(() -> new RessourceNotFoundException("Letter not found")));
-
         verifyCurrentUserOrGroup(letterQuery.user(),letterQuery.group());
         return letterQuery;
 
     }
 
     private void verifyCurrentUser(String idUser) {
-        System.out.println("user:"+idUser);
         if (!idUser.equals(currentUser)) {
             throw new UnauthorizedAccessException("User does not have the necessary permissions");
         }
     }
 
     private void verifyAvailableGroup(String idGroup) {
-        System.out.println("group:"+idGroup);
         if (!currentGroup.contains(idGroup)) {
             throw new UnauthorizedAccessException("User does not have the necessary permissions");
         }
     }
 
     private void verifyCurrentUserOrGroup(String idUser, String idGroup) {
-        System.out.println("user:"+idUser+"group:"+idGroup);
         if (!idUser.equals(currentUser) && !currentGroup.contains(idGroup)) {
             throw new UnauthorizedAccessException("User does not have the necessary permissions");
         }

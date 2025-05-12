@@ -4,7 +4,9 @@ import com.fpmislata.MeLoPido.domain.model.Chat;
 import com.fpmislata.MeLoPido.domain.repository.ChatRepository;
 import com.fpmislata.MeLoPido.domain.usecase.chat.query.FindAllChatByCriterial;
 import com.fpmislata.MeLoPido.domain.usecase.chat.query.FindChatByCriterial;
+import com.fpmislata.MeLoPido.domain.usecase.model.mapper.ChatQueryMapper;
 import com.fpmislata.MeLoPido.domain.usecase.model.query.ChatQuery;
+import com.fpmislata.MeLoPido.util.exception.RessourceNotFoundException;
 import com.fpmislata.MeLoPido.util.pagination.ListWithCount;
 
 public class ChatQueryService implements FindAllChatByCriterial, FindChatByCriterial {
@@ -15,22 +17,24 @@ public class ChatQueryService implements FindAllChatByCriterial, FindChatByCrite
     }
 
     @Override
-    public ListWithCount<Chat> findAll(int page, int pageSize) {
-        return null;
+    public ListWithCount<ChatQuery> findAll(int page, int pageSize) {
+        ListWithCount<Chat> chatList = chatRepository.findAll(page, pageSize);
+        return new ListWithCount<>(chatList.getList().stream().map(ChatQueryMapper::toChatQuery).toList(), chatList.getCount());
     }
 
     @Override
-    public ListWithCount<Chat> findAllByUser(int page, int pageSize, String idUser) {
-        return null;
+    public ListWithCount<ChatQuery> findAllByUser(int page, int pageSize, String idUser) {
+        ListWithCount<Chat> chatList = chatRepository.findAllByUser(page, pageSize, idUser);
+        return new ListWithCount<>(chatList.getList().stream().map(ChatQueryMapper::toChatQuery).toList(), chatList.getCount());
     }
 
     @Override
     public ChatQuery findById(String idChat) {
-        return null;
+        return ChatQueryMapper.toChatQuery(chatRepository.findById(idChat).orElseThrow(() -> new RessourceNotFoundException("Chat not found")));
     }
 
     @Override
     public ChatQuery findByProductId(String idProduct) {
-        return null;
+        return ChatQueryMapper.toChatQuery(chatRepository.findByIdProduct(idProduct).orElseThrow(() -> new RessourceNotFoundException("Chat not found")));
     }
 }
