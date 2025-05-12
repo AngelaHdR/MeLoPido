@@ -21,8 +21,8 @@ import java.util.List;
 public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateLetter {
     private final LetterRepository letterRepository;
     private final ProductRepository productRepository;
-    private final String currentUser = "1";
-    private final List<String> currentGroup = List.of("1", "2");
+    private final String currentUser = "2";
+    private final List<String> currentGroup = List.of("1");
 
     public LetterCommandService(LetterRepository letterRepository, ProductRepository productRepository) {
         this.letterRepository = letterRepository;
@@ -40,8 +40,10 @@ public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateL
     @Override
     public void insert(LetterCommand letter) {
         verifyCurrentUser(letter.idUser());
-        letter.products().forEach(product -> productRepository.save(ProductQueryMapper.toProduct(product)));
-        letterRepository.save(LetterQueryMapper.toLetter(letter));
+        letter.products().forEach(product -> productRepository.save(ProductQueryMapper.toProduct(product), letter.idLetter()));
+        Letter letter1 = LetterQueryMapper.toLetter(letter);
+        letter1.setProducts(List.of());
+        letterRepository.save(letter1);
     }
 
     @Override
