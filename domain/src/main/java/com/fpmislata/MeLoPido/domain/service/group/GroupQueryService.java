@@ -2,11 +2,17 @@ package com.fpmislata.MeLoPido.domain.service.group;
 
 import com.fpmislata.MeLoPido.domain.model.Group;
 import com.fpmislata.MeLoPido.domain.repository.GroupRepository;
+import com.fpmislata.MeLoPido.domain.repository.LetterRepository;
+import com.fpmislata.MeLoPido.domain.repository.UserRepository;
 import com.fpmislata.MeLoPido.domain.usecase.group.query.FindAllGroupByCriterial;
 import com.fpmislata.MeLoPido.domain.usecase.group.query.FindGroupByCriterial;
 import com.fpmislata.MeLoPido.domain.usecase.model.mapper.GroupQueryMapper;
+import com.fpmislata.MeLoPido.domain.usecase.model.mapper.LetterQueryMapper;
+import com.fpmislata.MeLoPido.domain.usecase.model.mapper.UserQueryMapper;
 import com.fpmislata.MeLoPido.domain.usecase.model.query.GroupBasicQuery;
 import com.fpmislata.MeLoPido.domain.usecase.model.query.GroupQuery;
+import com.fpmislata.MeLoPido.domain.usecase.model.query.LetterBasicQuery;
+import com.fpmislata.MeLoPido.domain.usecase.model.query.UserBasicQuery;
 import com.fpmislata.MeLoPido.util.exception.PagedCollectionException;
 import com.fpmislata.MeLoPido.util.exception.RessourceNotFoundException;
 import com.fpmislata.MeLoPido.util.exception.UnauthorizedAccessException;
@@ -16,11 +22,15 @@ import java.util.List;
 
 public class GroupQueryService implements FindAllGroupByCriterial, FindGroupByCriterial {
     private final GroupRepository groupRepository;
+    private final UserRepository userRepository;
+    private final LetterRepository letterRepository;
     private final String currentUser = "Ana Ortiz Gomez";
     private final List<String> currentGroup = List.of("Reyes Familia Ortiz");
 
-    public GroupQueryService(GroupRepository groupRepository) {
+    public GroupQueryService(GroupRepository groupRepository, UserRepository userRepository, LetterRepository letterRepository) {
         this.groupRepository = groupRepository;
+        this.userRepository = userRepository;
+        this.letterRepository = letterRepository;
     }
 
     @Override
@@ -42,6 +52,13 @@ public class GroupQueryService implements FindAllGroupByCriterial, FindGroupByCr
     public GroupQuery findById(String idGroup) {
         GroupQuery groupQuery = GroupQueryMapper.toGroupQuery(groupRepository.findById(idGroup).orElseThrow(() -> new RessourceNotFoundException("Group not found")));
         verifyAvailableGroup(groupQuery.getName());
+
+        List<String> users = UserQueryMapper.toUserNameList(userRepository.findAllByGroup(0, 15, idGroup).getList());
+        groupQuery.setUsers(users);
+
+        List<LetterBasicQuery> letters = LetterQueryMapper.toLetterBasicQueryList(letterRepository.findAllByGroup(0, 15, idGroup).getList());
+        groupQuery.setLetters(letters);
+
         return groupQuery;
     }
 

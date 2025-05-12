@@ -1,9 +1,15 @@
 package com.fpmislata.MeLoPido.domain.service.user;
 
 import com.fpmislata.MeLoPido.domain.model.User;
+import com.fpmislata.MeLoPido.domain.repository.LetterRepository;
+import com.fpmislata.MeLoPido.domain.repository.ProductRepository;
 import com.fpmislata.MeLoPido.domain.repository.UserRepository;
 import com.fpmislata.MeLoPido.domain.usecase.model.command.UserCommand;
+import com.fpmislata.MeLoPido.domain.usecase.model.mapper.LetterQueryMapper;
+import com.fpmislata.MeLoPido.domain.usecase.model.mapper.ProductQueryMapper;
 import com.fpmislata.MeLoPido.domain.usecase.model.mapper.UserQueryMapper;
+import com.fpmislata.MeLoPido.domain.usecase.model.query.LetterBasicQuery;
+import com.fpmislata.MeLoPido.domain.usecase.model.query.ProductBasicQuery;
 import com.fpmislata.MeLoPido.domain.usecase.model.query.UserBasicQuery;
 import com.fpmislata.MeLoPido.domain.usecase.model.query.UserQuery;
 import com.fpmislata.MeLoPido.domain.usecase.user.command.DeleteUser;
@@ -21,11 +27,15 @@ import java.util.List;
 
 public class UserQueryService implements FindAllUserByCriterial, FindUserByCriterial {
     private final UserRepository userRepository;
+    private final ProductRepository productRepository;
+    private final LetterRepository letterRepository;
     private final String currentUser = "Ana Ortiz Gomez";
     private final List<String> currentGroup = List.of("Reyes Familia Ortiz");
 
-    public UserQueryService(UserRepository userRepository) {
+    public UserQueryService(UserRepository userRepository, ProductRepository productRepository, LetterRepository letterRepository) {
         this.userRepository = userRepository;
+        this.productRepository = productRepository;
+        this.letterRepository = letterRepository;
     }
 
     @Override
@@ -49,6 +59,12 @@ public class UserQueryService implements FindAllUserByCriterial, FindUserByCrite
         UserQuery userQuery = UserQueryMapper.toUserQuery(userRepository.findById(idUser).orElseThrow(() -> new RessourceNotFoundException("User not found")));
 
         verifyCurrentUser(userQuery.getNameComplete());
+
+        List<ProductBasicQuery> productsAssigned = ProductQueryMapper.toProductBasicQueryList(productRepository.findAllAssignedToUser( 0, 15, idUser).getList());
+        userQuery.setProducts(productsAssigned);
+
+        List<LetterBasicQuery> letters = LetterQueryMapper.toLetterBasicQueryList(letterRepository.findAllByUser(0, 15, idUser).getList());
+        userQuery.setLetters(letters);
         return userQuery;
     }
 

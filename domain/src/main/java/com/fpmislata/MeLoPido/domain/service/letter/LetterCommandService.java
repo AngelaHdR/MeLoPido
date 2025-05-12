@@ -21,28 +21,29 @@ import java.util.List;
 public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateLetter {
     private final LetterRepository letterRepository;
     private final ProductRepository productRepository;
-    private final String currentUser = "1";
-    private final List<String> currentGroup = List.of("1", "2");
+    private final String currentUser = "2";
+    private final List<String> currentGroup = List.of("1");
 
     public LetterCommandService(LetterRepository letterRepository, ProductRepository productRepository) {
         this.letterRepository = letterRepository;
-        this.productRepository = productRepository; //product ioc get repository
+        this.productRepository = productRepository;
     }
 
     @Override
     public void delete(String idLetter) {
         Letter letter = letterRepository.findById(idLetter).orElseThrow(() -> new RessourceNotFoundException("Letter not found"));
         verifyCurrentUser(letter.getUser().getIdUser());
-
+        letter.getProducts().forEach(product -> productRepository.delete(product.getIdProduct()));
         letterRepository.delete(idLetter);
     }
 
     @Override
     public void insert(LetterCommand letter) {
         verifyCurrentUser(letter.idUser());
-
-        letter.products().forEach(product -> productRepository.save(ProductQueryMapper.toProduct(product)));
-        letterRepository.save(LetterQueryMapper.toLetter(letter));
+        letter.products().forEach(product -> productRepository.save(ProductQueryMapper.toProduct(product), letter.idLetter()));
+        Letter letter1 = LetterQueryMapper.toLetter(letter);
+        letter1.setProducts(List.of());
+        letterRepository.save(letter1);
     }
 
     @Override
@@ -116,7 +117,8 @@ public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateL
     }
 
     private void verifyCurrentUser(String idUser) {
-        if (idUser.equals(currentUser)) {
+        System.out.println("user:" + idUser);
+        if (!idUser.equals(currentUser)) {
             throw new UnauthorizedAccessException("The user hasn't the right permits");
         }
     }

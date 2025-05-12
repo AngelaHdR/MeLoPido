@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 public class ProductRepositoryImpl implements ProductRepository {
@@ -22,7 +23,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public ListWithCount<Product> findAllAssignedToUser(int page, int pageSize, String idUser) {
         Pageable pageable = PageRequest.of(page, pageSize);
-        Page<ProductEntity> pages = productJpaRepository.findAllAssignedToUser(pageable, idUser);
+        Page<ProductEntity> pages = productJpaRepository.findAllAssignedToUser(idUser, pageable);
         return new ListWithCount<>(pages.stream().map(ProductEntityMapper::toProduct).toList(), pages.getTotalElements());
     }
 
