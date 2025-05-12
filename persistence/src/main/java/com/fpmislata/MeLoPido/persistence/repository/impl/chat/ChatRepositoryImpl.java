@@ -27,7 +27,7 @@ public class ChatRepositoryImpl implements ChatRepository {
     public ListWithCount<Chat> findAllByUser(int page, int pageSize, String idUser) {
         Pageable pageable = PageRequest.of(page, pageSize);
         Page<ChatEntity> pages = chatJpaRepository.findAllByUser(pageable, idUser);
-        List<Chat> chats = pages.getContent().stream().map(this::completeChat).map(ChatEntityMapper::toChat).toList();
+        List<Chat> chats = pages.getContent().stream().map(ChatEntityMapper::toChat).toList();
         return new ListWithCount<>(chats, pages.getTotalElements());
     }
 
@@ -40,7 +40,7 @@ public class ChatRepositoryImpl implements ChatRepository {
     public ListWithCount<Chat> findAll(int page, int pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
         Page<ChatEntity> pages = chatJpaRepository.findAll(pageable);
-        List<Chat> chats = pages.getContent().stream().map(this::completeChat).map(ChatEntityMapper::toChat).toList();
+        List<Chat> chats = pages.getContent().stream().map(ChatEntityMapper::toChat).toList();
         return new ListWithCount<>(chats, pages.getTotalElements());
     }
 

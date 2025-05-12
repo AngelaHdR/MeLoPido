@@ -8,5 +8,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProductRepository extends GenericRepository<Product> {
-    List<Product> findAllAssignedToUser(String idUser);
+    ListWithCount<Product> findAllAssignedToUser(int page, int pageSize, String idUser);
 }

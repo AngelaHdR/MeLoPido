@@ -21,8 +21,10 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public List<Product> findAllAssignedToUser(String idUser) {
-        return productJpaRepository.findAllAssignedToUser(idUser).stream().map(ProductEntityMapper::toProduct).toList();
+    public ListWithCount<Product> findAllAssignedToUser(int page, int pageSize, String idUser) {
+        Pageable pageable = PageRequest.of(page, pageSize);
+        Page<ProductEntity> pages = productJpaRepository.findAllAssignedToUser(idUser, pageable);
+        return new ListWithCount<>(pages.stream().map(ProductEntityMapper::toProduct).toList(), pages.getTotalElements());
     }
 
     @Override
