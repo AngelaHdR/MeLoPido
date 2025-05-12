@@ -28,6 +28,11 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
+    public void save(Product product, String idLetter) {
+
+    }
+
+    @Override
     public ListWithCount<Product> findAll(int page, int pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
         Page<ProductEntity> pages = productJpaRepository.findAll(pageable);

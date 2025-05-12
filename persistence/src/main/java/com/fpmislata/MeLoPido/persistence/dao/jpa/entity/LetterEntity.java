@@ -8,6 +8,7 @@ import java.util.List;
 @Table(name = "letters")
 public class LetterEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_letter")
     private String idLetter;
     private String description;
