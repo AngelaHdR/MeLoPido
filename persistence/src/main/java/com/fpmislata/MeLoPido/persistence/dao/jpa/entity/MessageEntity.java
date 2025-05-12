@@ -9,6 +9,7 @@ public class MessageEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_message")
     private String idMessage;
+    @Column(name = "send_date")
     private String sendDate;
     private String content;
     @ManyToOne(fetch = FetchType.EAGER)
