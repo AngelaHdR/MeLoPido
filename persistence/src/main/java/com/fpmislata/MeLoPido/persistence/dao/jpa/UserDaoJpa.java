@@ -19,8 +19,8 @@ public class UserDaoJpa implements UserDao {
 
     @Override
     public ListWithCount<UserEntity> findAllByGroup(int page, int pageSize, String idGroup) {
-        String queryStr = "SELECT u FROM UserEntity u WHERE u.group.id = :idGroup";
-        String countStr = "SELECT COUNT(u) FROM UserEntity u WHERE u.group.id = :idGroup";
+        String queryStr = "SELECT u FROM UserEntity u JOIN u.groups g WHERE g.id = :idGroup";
+        String countStr = "SELECT COUNT(DISTINCT u) FROM UserEntity u JOIN u.groups g WHERE g.id = :idGroup";
 
         List<UserEntity> result = entityManager.createQuery(queryStr, UserEntity.class)
                 .setParameter("idGroup", idGroup)
