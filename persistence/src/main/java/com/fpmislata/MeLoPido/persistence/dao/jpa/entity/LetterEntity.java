@@ -30,6 +30,10 @@ public class LetterEntity {
     public LetterEntity() {
     }
 
+    public LetterEntity(String idLetter) {
+        this.idLetter = idLetter;
+    }
+
     public LetterEntity(String idLetter, String description, String creationDate, String sendDate, String expirationDate, UserEntity user, GroupEntity group, List<ProductEntity> products) {
         this.idLetter = idLetter;
         this.description = description;

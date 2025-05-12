@@ -4,20 +4,15 @@ import com.fpmislata.MeLoPido.persistence.dao.LetterDao;
 import com.fpmislata.MeLoPido.persistence.dao.jpa.entity.LetterEntity;
 import com.fpmislata.MeLoPido.util.pagination.ListWithCount;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-//import jakarta.transaction.Transactional;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import jakarta.persistence.EntityTransaction;
 
 import java.util.List;
 import java.util.Optional;
 
-@Repository
 public class LetterDaoJpa implements LetterDao {
-    @PersistenceContext
     private final EntityManager entityManager;
 
-    public LetterDaoJpa(EntityManager entityManager){
+    public LetterDaoJpa(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
@@ -89,27 +84,43 @@ public class LetterDaoJpa implements LetterDao {
     }
 
     @Override
-    @Transactional
     public void save(LetterEntity letter) {
-        if (letter.getIdLetter() == null) {
-            String sql = "INSERT INTO letters (description, creation_date, send_date, expiration_date, id_user, id_group) " +
-                    "VALUES (:description, :creationDate,  :idUser)";
-            entityManager.createNativeQuery(sql)
-                    .setParameter("description", letter.getDescription())
-                    .setParameter("creationDate", letter.getCreationDate())
-                    .setParameter("idUser", letter.getUser().getIdUser())
-                    .executeUpdate();
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
 
-        } else {
-            entityManager.merge(letter);
+            if (letter.getIdLetter() == null) {
+                entityManager.persist(letter);
+            } else {
+                entityManager.merge(letter);
+            }
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            throw e;
         }
     }
 
     @Override
     public void delete(String id) {
-        LetterEntity letter = entityManager.find(LetterEntity.class, id);
-        if (letter != null) {
-            entityManager.remove(letter);
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+
+            LetterEntity letter = entityManager.find(LetterEntity.class, id);
+            if (letter != null) {
+                entityManager.remove(letter);
+            }
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            throw e;
         }
     }
 }
