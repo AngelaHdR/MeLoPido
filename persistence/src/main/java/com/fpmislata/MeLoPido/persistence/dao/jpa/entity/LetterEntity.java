@@ -24,7 +24,7 @@ public class LetterEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_group")
     private GroupEntity group;
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "letter")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "letter", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductEntity> products;
 
     public LetterEntity() {

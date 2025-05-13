@@ -2,6 +2,8 @@ package com.fpmislata.MeLoPido.persistence.dao.jpa;
 
 import com.fpmislata.MeLoPido.persistence.dao.LetterDao;
 import com.fpmislata.MeLoPido.persistence.dao.jpa.entity.LetterEntity;
+import com.fpmislata.MeLoPido.persistence.dao.jpa.entity.ProductEntity;
+import com.fpmislata.MeLoPido.persistence.dao.jpa.entity.UserEntity;
 import com.fpmislata.MeLoPido.util.pagination.ListWithCount;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -88,8 +90,12 @@ public class LetterDaoJpa implements LetterDao {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
-
+            UserEntity userEntity = entityManager.getReference(UserEntity.class, letter.getUser().getIdUser());
+            letter.setUser(userEntity);
             if (letter.getIdLetter() == null) {
+                for (ProductEntity product : letter.getProducts()) {
+                    product.setLetter(letter);
+                }
                 entityManager.persist(letter);
             } else {
                 entityManager.merge(letter);
