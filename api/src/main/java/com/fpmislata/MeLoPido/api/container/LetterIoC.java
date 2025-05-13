@@ -8,6 +8,8 @@ import com.fpmislata.MeLoPido.domain.usecase.letter.command.InsertLetter;
 import com.fpmislata.MeLoPido.domain.usecase.letter.command.UpdateLetter;
 import com.fpmislata.MeLoPido.domain.usecase.letter.query.FindAllLetterByCriterial;
 import com.fpmislata.MeLoPido.domain.usecase.letter.query.FindLetterByCriterial;
+import com.fpmislata.MeLoPido.persistence.dao.LetterDao;
+import com.fpmislata.MeLoPido.persistence.dao.jpa.LetterDaoJpa;
 import com.fpmislata.MeLoPido.persistence.dao.jpa.repository.LetterJpaRepository;
 import com.fpmislata.MeLoPido.persistence.repository.impl.letter.LetterRepositoryImpl;
 import jakarta.persistence.EntityManager;
@@ -46,7 +48,8 @@ public class LetterIoC {
 
     public static LetterRepository getLetterRepository() {
         if (letterRepository == null) {
-            letterRepository = new LetterRepositoryImpl(getLetterJpaRepository());
+            //letterRepository = new LetterRepositoryImpl(getLetterJpaRepository());
+            letterRepository = new LetterRepositoryImpl(getLetterDao());
         }
         return letterRepository;
     }
@@ -57,6 +60,13 @@ public class LetterIoC {
 
         JpaRepositoryFactory factory = new JpaRepositoryFactory(em);
         return factory.getRepository(LetterJpaRepository.class);
+    }
+
+    public static LetterDao getLetterDao() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("meLoPidoUnit");
+        EntityManager em = emf.createEntityManager();
+
+        return new LetterDaoJpa(em);
     }
 
     public static void setLetterQueryService(LetterQueryService letterService) {

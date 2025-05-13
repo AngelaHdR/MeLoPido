@@ -16,8 +16,8 @@ import java.util.List;
 
 public class LetterQueryService implements FindAllLetterByCriterial, FindLetterByCriterial {
     private final LetterRepository letterRepository;
-    private final String currentUser = "1";
-    private final List<String> currentGroup = List.of("1", "2");
+    private final String currentUser = "Ana Ortiz Gomez";
+    private final List<String> currentGroup = List.of("Reyes Familia Ortiz");
 
     public LetterQueryService(LetterRepository letterRepository) {
         this.letterRepository = letterRepository;
@@ -34,48 +34,48 @@ public class LetterQueryService implements FindAllLetterByCriterial, FindLetterB
     @Override
     public ListWithCount<LetterBasicQuery> findAllByUser(int page, int pageSize, String idUser) {
         verifyPageAndSize(page, pageSize);
-        verifyCurrentUser(idUser);
-
         ListWithCount<Letter> letterList = letterRepository.findAllByUser(page, pageSize, idUser);
+        verifyCurrentUser(letterList.getList().get(0).getUser().getNameComplete());
         return new ListWithCount<>(letterList.getList().stream().map(LetterQueryMapper::toLetterBasicQuery).toList(), letterList.getCount());
     }
 
     @Override
     public ListWithCount<LetterBasicQuery> findAllByGroup(int page, int pageSize, String idGroup) {
         verifyPageAndSize(page, pageSize);
-        verifyAvailableGroup(idGroup);
-
         ListWithCount<Letter> letterList = letterRepository.findAllByGroup(page, pageSize, idGroup);
+        verifyAvailableGroup(letterList.getList().get(0).getGroup().getName());
         return new ListWithCount<>(letterList.getList().stream().map(LetterQueryMapper::toLetterBasicQuery).toList(), letterList.getCount());
     }
 
     @Override
     public LetterQuery findById(String idLetter) {
         LetterQuery letterQuery = LetterQueryMapper.toLetterQuery(letterRepository.findById(idLetter).orElseThrow(() -> new RessourceNotFoundException("Letter not found")));
-
-        verifyCurrentUser(letterQuery.user());
-        verifyAvailableGroup(letterQuery.group());
+        verifyCurrentUserOrGroup(letterQuery.user(),letterQuery.group());
         return letterQuery;
 
     }
 
     private void verifyCurrentUser(String idUser) {
-        if (idUser.equals(currentUser)) {
-            throw new UnauthorizedAccessException("The user hasn't the right permits");
+        if (!idUser.equals(currentUser)) {
+            throw new UnauthorizedAccessException("User does not have the necessary permissions");
         }
     }
 
     private void verifyAvailableGroup(String idGroup) {
-        for (String group : currentGroup) {
-            if (group.equals(idGroup)) {
-                return;
-            }
+        if (!currentGroup.contains(idGroup) || idGroup == null) {
+            throw new UnauthorizedAccessException("User does not have the necessary permissions");
         }
-        throw new UnauthorizedAccessException("The user hasn't the right permits");
+    }
+
+    private void verifyCurrentUserOrGroup(String idUser, String idGroup) {
+        System.out.println("user:"+idUser+"group:"+idGroup);
+        if (!idUser.equals(currentUser) && (!currentGroup.contains(idGroup) || idGroup == null)) {
+            throw new UnauthorizedAccessException("User does not have the necessary permissions");
+        }
     }
 
     private void verifyPageAndSize(int page, int pageSize) {
-        if (page <= 0 || pageSize <= 0) {
+        if (page < 0 || pageSize <= 0) {
             throw new PagedCollectionException("Page number and size must be greater than 0");
         }
     }

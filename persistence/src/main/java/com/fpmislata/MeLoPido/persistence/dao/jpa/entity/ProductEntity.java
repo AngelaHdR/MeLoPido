@@ -6,17 +6,17 @@ import jakarta.persistence.*;
 @Table(name = "products")
 public class ProductEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_product")
     private String idProduct;
     private String name;
     private String detail;
     private String url;
     private String state; //TODO: add state
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "assigned_to")
     private UserEntity asignado;
-    @OneToOne(mappedBy = "product", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private ChatEntity chat;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_letter")

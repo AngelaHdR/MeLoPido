@@ -8,19 +8,14 @@ import java.util.List;
 @Table(name = "groups_detail")
 public class GroupEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_group")
     private String idGroup;
     private String name;
     private String icon;
     private String theme;
     private String description;
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "user_group",
-            joinColumns = @JoinColumn(name = "id_group"),
-            inverseJoinColumns = @JoinColumn(name = "id_user")
-    )
+    @ManyToMany(mappedBy = "groups", cascade = CascadeType.ALL)
     private List<UserEntity> users;
 
     public GroupEntity() {
@@ -32,15 +27,6 @@ public class GroupEntity {
         this.description = description;
         this.icon = icon;
         this.theme = theme;
-    }
-
-    public GroupEntity(String idGroup, String name, String icon, String theme, List<UserEntity> users, String description) {
-        this.idGroup = idGroup;
-        this.name = name;
-        this.description = description;
-        this.icon = icon;
-        this.theme = theme;
-        this.users = users;
     }
 
     public String getIdGroup() {
@@ -81,13 +67,5 @@ public class GroupEntity {
 
     public void setTheme(String theme) {
         this.theme = theme;
-    }
-
-    public List<UserEntity> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<UserEntity> users) {
-        this.users = users;
     }
 }
