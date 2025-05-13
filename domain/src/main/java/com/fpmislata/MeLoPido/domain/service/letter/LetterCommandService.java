@@ -32,19 +32,24 @@ public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateL
     public void delete(String idLetter) {
         Letter letter = letterRepository.findById(idLetter).orElseThrow(() -> new RessourceNotFoundException("Letter not found"));
         verifyCurrentUser(letter.getUser().getIdUser());
-        //letter.getProducts().forEach(product -> productRepository.delete(product.getIdProduct()));
         letterRepository.delete(idLetter);
+    }
+
+    @Override
+    public void removeFromGroup(String id, String idGroup) {
+        Letter letterExisting = letterRepository.findById(id).orElseThrow(() -> new RessourceNotFoundException("Letter not found"));
+        if(!letterExisting.getGroup().getIdGroup().equals(idGroup)){
+            throw new UnauthorizedAccessException("User doesn't belong to group");
+        }
+        letterExisting.setGroup(null);
+        letterExisting.setExpirationDate(null);
+        letterRepository.save(letterExisting);
     }
 
     @Override
     public void insert(LetterCommand letter) {
         verifyCurrentUser(letter.idUser());
-        Letter letter1 = LetterQueryMapper.toLetter(letter);
-        //List<Product> products = letter1.getProducts();
-        //letter1.setProducts(List.of());
-        letterRepository.save(letter1);
-        //products.forEach(product -> productRepository.save(product, letter.idLetter()));
-
+        letterRepository.save(LetterQueryMapper.toLetter(letter));
     }
 
     @Override
@@ -102,7 +107,7 @@ public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateL
             existing.forEach(product -> {
                 if (incoming.stream().noneMatch(productNew -> productNew.getIdProduct().equals(product.getIdProduct()))) {
                     result.remove(product);
-                    productRepository.delete(product.getIdProduct());
+                    //productRepository.delete(product.getIdProduct());
                 }
             });
             /*Iterator<Product> iterator = result.iterator();

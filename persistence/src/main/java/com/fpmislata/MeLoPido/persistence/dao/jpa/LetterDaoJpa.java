@@ -92,10 +92,10 @@ public class LetterDaoJpa implements LetterDao {
             transaction.begin();
             UserEntity userEntity = entityManager.getReference(UserEntity.class, letter.getUser().getIdUser());
             letter.setUser(userEntity);
+            for (ProductEntity product : letter.getProducts()) {
+                product.setLetter(letter);
+            }
             if (letter.getIdLetter() == null) {
-                for (ProductEntity product : letter.getProducts()) {
-                    product.setLetter(letter);
-                }
                 entityManager.persist(letter);
             } else {
                 entityManager.merge(letter);
