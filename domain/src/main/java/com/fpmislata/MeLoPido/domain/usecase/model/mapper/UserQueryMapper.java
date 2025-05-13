@@ -1,10 +1,13 @@
 package com.fpmislata.MeLoPido.domain.usecase.model.mapper;
 
+import com.fpmislata.MeLoPido.domain.model.Group;
 import com.fpmislata.MeLoPido.domain.model.User;
 import com.fpmislata.MeLoPido.domain.usecase.model.command.UserCommand;
+import com.fpmislata.MeLoPido.domain.usecase.model.query.GroupBasicQuery;
 import com.fpmislata.MeLoPido.domain.usecase.model.query.UserBasicQuery;
 import com.fpmislata.MeLoPido.domain.usecase.model.query.UserQuery;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserQueryMapper {
@@ -12,12 +15,16 @@ public class UserQueryMapper {
         if (user == null) {
             return null;
         }
+        List<GroupBasicQuery> result = new ArrayList<>();
+        if (user.getGroups() != null) {
+            result = user.getGroups().stream().map(GroupQueryMapper::toGroupBasicQuery).toList();
+        }
         return new UserQuery(
                 user.getIdUser(),
                 user.getNameComplete(),
                 user.getEmail(),
                 user.getBirthDate(),
-                user.getGroups().stream().map(GroupQueryMapper::toGroupBasicQuery).toList(),
+                result,
                 user.getUsername(),
                 user.getPassword()
 
@@ -28,13 +35,10 @@ public class UserQueryMapper {
         if (user == null) {
             return null;
         }
-        return new UserBasicQuery(
-                user.getIdUser(),
-                user.getNameComplete()
-        );
+        return new UserBasicQuery(user.getIdUser(), user.getNameComplete());
     }
 
-    public static String toUserName(User user){
+    public static String toUserName(User user) {
         if (user == null) {
             return null;
         }
@@ -45,32 +49,20 @@ public class UserQueryMapper {
         if (users == null) {
             return null;
         }
-        return users.stream()
-                .map(UserQueryMapper::toUserBasicQuery)
-                .toList();
+        return users.stream().map(UserQueryMapper::toUserBasicQuery).toList();
     }
 
-    public static List<String> toUserNameList(List<User> users){
+    public static List<String> toUserNameList(List<User> users) {
         if (users == null) {
             return null;
         }
-        return users.stream()
-                .map(UserQueryMapper::toUserName)
-                .toList();
+        return users.stream().map(UserQueryMapper::toUserName).toList();
     }
+
     public static User toUser(UserCommand userCommand) {
         if (userCommand == null) {
             return null;
         }
-        return new User(
-                userCommand.idUser(),
-                userCommand.name(),
-                userCommand.surname1(),
-                userCommand.surname2(),
-                userCommand.email(),
-                userCommand.birthDate(),
-                userCommand.username(),
-                userCommand.password()
-        );
+        return new User(userCommand.idUser(), userCommand.name(), userCommand.surname1(), userCommand.surname2(), userCommand.email(), userCommand.birthDate(), userCommand.username(), userCommand.password());
     }
 }

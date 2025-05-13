@@ -12,6 +12,7 @@ import com.fpmislata.MeLoPido.domain.usecase.user.command.UpdateUser;
 import com.fpmislata.MeLoPido.util.exception.RessourceNotFoundException;
 import com.fpmislata.MeLoPido.util.exception.UnauthorizedAccessException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserCommandService implements DeleteUser, UpdateUser, InsertUser {
@@ -35,11 +36,15 @@ public class UserCommandService implements DeleteUser, UpdateUser, InsertUser {
         verifyCurrentUser(idUser);
         User user = userRepository.findById(idUser).orElseThrow(() -> new RessourceNotFoundException("User not found"));
         Group group = groupRepository.findById(idGroup).orElseThrow(() -> new RessourceNotFoundException("Group not found"));
+        List<Group> currentGroups = new ArrayList<>();
+        if (user.getGroups() != null) {
+            currentGroups.addAll(user.getGroups());
+        }
         if (!user.getGroups().contains(group)) {
             throw new RuntimeException("User doesn't belong to this group");
         }
-        user.getGroups().remove(group);
-        user.setGroups(user.getGroups());
+        currentGroups.remove(group);
+        user.setGroups(currentGroups);
         userRepository.save(user);
     }
 
@@ -75,6 +80,7 @@ public class UserCommandService implements DeleteUser, UpdateUser, InsertUser {
         if(user.surname2() != null) {
             userExisting.setSurname2(user.surname2());
         }
+        userRepository.save(userExisting);
     }
 
     public boolean verifyUsername(String username) {
@@ -103,11 +109,17 @@ public class UserCommandService implements DeleteUser, UpdateUser, InsertUser {
         verifyCurrentUser(idUser);
         User user = userRepository.findById(idUser).orElseThrow(() -> new RessourceNotFoundException("User not found"));
         Group group = groupRepository.findById(idGroup).orElseThrow(() -> new RessourceNotFoundException("Group not found"));
-        if (user.getGroups().contains(group)) {
+        List<Group> currentGroups = new ArrayList<>();
+        if (user.getGroups() != null) {
+            currentGroups.addAll(user.getGroups());
+        }
+
+        if (currentGroups.contains(group)) {
             throw new RuntimeException("User already belongs to this group");
         }
-        user.getGroups().add(group);
-        user.setGroups(user.getGroups());
+
+        currentGroups.add(group);
+        user.setGroups(currentGroups);
         userRepository.save(user);
     }
 
@@ -119,7 +131,6 @@ public class UserCommandService implements DeleteUser, UpdateUser, InsertUser {
     }
 
     private void verifyCurrentUserOrGroup(String idUser, String idGroup) {
-        System.out.println("user:" + idUser + "group:" + idGroup);
         if (!idUser.equals(currentUser) && !currentGroup.contains(idGroup)) {
             throw new UnauthorizedAccessException("User does not have the necessary permissions");
         }
