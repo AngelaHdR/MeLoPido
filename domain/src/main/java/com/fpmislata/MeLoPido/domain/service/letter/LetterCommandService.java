@@ -110,15 +110,6 @@ public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateL
                     //productRepository.delete(product.getIdProduct());
                 }
             });
-            /*Iterator<Product> iterator = result.iterator();
-            while (iterator.hasNext()) {
-                Product product = iterator.next();
-                boolean stillExists = incoming.stream().anyMatch(p -> Objects.equals(p.getIdProduct(), product.getIdProduct()));
-                if (!stillExists && product.getIdProduct() != null) {
-                    iterator.remove();
-                    productRepository.delete(product.getIdProduct());
-                }
-            }*/
         }
 
         return result;
