@@ -15,7 +15,7 @@ public class GroupEntity {
     private String icon;
     private String theme;
     private String description;
-    @ManyToMany(mappedBy = "groups")
+    @ManyToMany(mappedBy = "groups", cascade = CascadeType.ALL)
     private List<UserEntity> users;
 
     public GroupEntity() {

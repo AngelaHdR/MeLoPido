@@ -13,7 +13,7 @@ public class ProductEntity {
     private String detail;
     private String url;
     private String state; //TODO: add state
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "assigned_to")
     private UserEntity asignado;
     @OneToOne(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)

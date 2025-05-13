@@ -18,7 +18,7 @@ public class UserEntity {
     private String email;
     @Column(name = "birth_date")
     private String birthDate;
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_group",
             joinColumns = @JoinColumn(name = "id_user"),
