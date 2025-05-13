@@ -13,6 +13,7 @@ public class LetterQueryMapper {
         if (letter == null) {
             return null;
         }
+        String groupName = letter.getGroup() != null ? letter.getGroup().getName() : null;
         return new LetterQuery(
                 letter.getIdLetter(),
                 letter.getDescription(),
@@ -20,7 +21,7 @@ public class LetterQueryMapper {
                 letter.getSendDate(),
                 letter.getExpirationDate(),
                 letter.getUser().getNameComplete(),
-                letter.getGroup().getName(),
+                groupName,
                 ProductQueryMapper.toProductBasicQueryList(letter.getProducts())
         );
     }
@@ -38,11 +39,12 @@ public class LetterQueryMapper {
         if (letter == null) {
             return null;
         }
+        String groupName = letter.getGroup() != null ? letter.getGroup().getName() : null;
         return new LetterBasicQuery(
                 letter.getIdLetter(),
                 letter.getDescription(),
                 letter.getUser().getNameComplete(),
-                letter.getGroup().getName()
+                groupName
         );
     }
 

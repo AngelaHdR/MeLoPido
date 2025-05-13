@@ -58,6 +58,9 @@ public class User {
     }
 
     public String getNameComplete() {
+        if(surname2 == null || surname2.isEmpty()) {
+            return name + " " + surname1;
+        }
         return name + " " + surname1 + " " + surname2;
     }
 

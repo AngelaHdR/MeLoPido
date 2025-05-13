@@ -1,0 +1,524 @@
+{
+  "users": [
+    {
+      "id": "a",
+      "nameComplete": "Maria Lopez Romero",
+      "email": "maria_lo@example.com",
+      "birthDate": "1990-05-10",
+      "groups": [
+        {
+          "id": "1",
+          "name": "Reyes Familia Ortiz",
+          "icon": "fa-solid fa-face-smile",
+          "theme": "3_wise_men",
+          "description": "Regalos de reyes de la familia Ortiz",
+          "users": [
+            "Ana Ortiz Gomez",
+            "Carla Ortiz Mulero"
+          ],
+          "letters": [
+            {
+              "id": "2",
+              "description": "Queridos reyes magos, para estas navidades quiero los siguientes regalos",
+              "user": "Ana Ortiz Gomez",
+              "group": "Reyes Familia Ortiz",
+              "link": "http://localhost:8080/api/letters/2"
+            },
+            {
+              "id": "4",
+              "description": "Estimados reyes magos, aqui teneis algunas ideas ",
+              "user": "Carla Ortiz Mulero",
+              "group": "Reyes Familia Ortiz",
+              "link": "http://localhost:8080/api/letters/4"
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "name": "Cumples Romero",
+          "icon": "fa-regular fa-face-smile",
+          "users": [
+            "Maria Lopez Romero",
+            "Lucas Romero Perez"
+          ],
+          "link": "http://localhost:8080/api/groups/2"
+        }
+      ],
+      "username": "mariaLo",
+      "password": "mariaPass123",
+      "letters": [
+        {
+          "id": "1",
+          "description": "Querida familia mi cumple se acerca y os dejo unas ideas de regalos",
+          "user": "Maria Lopez Romero",
+          "group": "Cumples Romero",
+          "link": "http://localhost:8080/api/letters/1"
+        }
+      ],
+      "products": []
+    },
+    {
+      "id": "2",
+      "nameComplete": "Ana Ortiz Gomez",
+      "email": "ana_ort@example.com",
+      "birthDate": "1995-08-02",
+      "groups": [
+        {
+          "id": "1",
+          "name": "Reyes Familia Ortiz",
+          "icon": "fa-solid fa-face-smile",
+          "users": [
+            "Ana Ortiz Gomez",
+            "Carla Ortiz Mulero"
+          ],
+          "link": "http://localhost:8080/api/groups/1"
+        },
+        {
+          "id": "4",
+          "name": "Amigos del Senderismo",
+          "icon": "fa-solid fa-hiking",
+          "users": [
+            "Ana Ortiz Gomez",
+            "Luis Senderos",
+            "Clara Montaña"
+          ],
+          "link": "http://localhost:8080/api/groups/4"
+        },
+        {
+          "id": "5",
+          "name": "Navidad en Familia",
+          "icon": "fa-solid fa-tree",
+          "users": [
+            "Ana Ortiz Gomez",
+            "Carla Ortiz Mulero",
+            "Pedro Ortiz"
+          ],
+          "link": "http://localhost:8080/api/groups/5"
+        }
+      ],
+      "username": "ana_02",
+      "password": "anaPass123",
+      "letters": [
+        {
+          "id": "2",
+          "description": "Queridos reyes magos, para estas navidades quiero los siguientes regalos",
+          "user": "Ana Ortiz Gomez",
+          "group": "Reyes Familia Ortiz",
+          "link": "http://localhost:8080/api/letters/2"
+        },
+        {
+          "id": "5",
+          "description": "Ideas para el próximo viaje de senderismo",
+          "user": "Ana Ortiz Gomez",
+          "group": "Amigos del Senderismo",
+          "link": "http://localhost:8080/api/letters/5"
+        },
+        {
+          "id": "6",
+          "description": "Regalos para la cena de Navidad",
+          "user": "Ana Ortiz Gomez",
+          "group": "Navidad en Familia",
+          "link": "http://localhost:8080/api/letters/6"
+        }
+      ],
+      "products": [
+        {
+          "id": "p1",
+          "name": "Botas de senderismo",
+          "detail": "Botas impermeables para largas caminatas",
+          "url": "http://example.com/botas",
+          "state": "seleccionado",
+          "asignado": {
+            "id": "2",
+            "nameComplete": "Ana Ortiz Gomez",
+            "link": "http://localhost:8080/api/users/2"
+          }
+        },
+        {
+          "id": "p4",
+          "name": "Saco de dormir térmico",
+          "detail": "Saco de dormir para temperaturas extremas",
+          "url": "http://example.com/saco",
+          "state": "comprado",
+          "asignado": {
+            "id": "2",
+            "nameComplete": "Ana Ortiz Gomez",
+            "link": "http://localhost:8080/api/users/2"
+          }
+        },
+        {
+          "id": "p5",
+          "name": "Linterna frontal recargable",
+          "detail": "Linterna LED con batería recargable",
+          "url": "http://example.com/linterna",
+          "state": "seleccionado",
+          "asignado": {
+            "id": "2",
+            "nameComplete": "Ana Ortiz Gomez",
+            "link": "http://localhost:8080/api/users/2"
+          }
+        },
+        {
+          "id": "p7",
+          "name": "Juego de mesa",
+          "detail": "Juego de mesa para toda la familia",
+          "url": "http://example.com/juego-mesa",
+          "state": "comprado",
+          "asignado": {
+            "id": "2",
+            "nameComplete": "Ana Ortiz Gomez",
+            "link": "http://localhost:8080/api/users/3"
+          }
+        },
+        {
+          "id": "p9",
+          "name": "Set de cuchillos de cocina",
+          "detail": "Cuchillos de acero inoxidable de alta calidad",
+          "url": "http://example.com/cuchillos",
+          "state": "seleccionado",
+          "asignado": {
+            "id": "2",
+            "nameComplete": "Ana Ortiz Gomez",
+            "link": "http://localhost:8080/api/users/2"
+          }
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "nameComplete": "Luis Senderos",
+      "email": "luis_senderos@example.com",
+      "birthDate": "1988-03-15",
+      "groups": [
+        {
+          "id": "4",
+          "name": "Amigos del Senderismo",
+          "icon": "fa-solid fa-hiking",
+          "users": [
+            "Ana Ortiz Gomez",
+            "Luis Senderos",
+            "Clara Montaña"
+          ],
+          "link": "http://localhost:8080/api/groups/4"
+        }
+      ],
+      "username": "luis_s",
+      "password": "luisPass123",
+      "letters": [],
+      "products": []
+    },
+    {
+      "id": "4",
+      "nameComplete": "Clara Montaña",
+      "email": "clara_montana@example.com",
+      "birthDate": "1992-07-22",
+      "groups": [
+        {
+          "id": "4",
+          "name": "Amigos del Senderismo",
+          "icon": "fa-solid fa-hiking",
+          "users": [
+            "Ana Ortiz Gomez",
+            "Luis Senderos",
+            "Clara Montaña"
+          ],
+          "link": "http://localhost:8080/api/groups/4"
+        }
+      ],
+      "username": "clara_m",
+      "password": "claraPass123",
+      "letters": [],
+      "products": []
+    },
+    {
+      "id": "5",
+      "nameComplete": "Carlos Senderos",
+      "email": "carlos_senderos@example.com",
+      "birthDate": "1985-11-30",
+      "groups": [
+        {
+          "id": "4",
+          "name": "Amigos del Senderismo",
+          "icon": "fa-solid fa-hiking",
+          "users": [
+            "Ana Ortiz Gomez",
+            "Luis Senderos",
+            "Clara Montaña",
+            "Carlos Senderos"
+          ],
+          "link": "http://localhost:8080/api/groups/4"
+        }
+      ],
+      "username": "carlos_s",
+      "password": "carlosPass123",
+      "letters": [],
+      "products": []
+    }
+  ],
+  "groups": [
+    {
+      "id": "1",
+      "name": "Reyes Familia Ortiz",
+      "icon": "fa-solid fa-face-smile",
+      "theme": "3_wise_men",
+      "description": "Regalos de reyes de la familia Ortiz",
+      "users": [
+        "Ana Ortiz Gomez",
+        "Carla Ortiz Mulero",
+        "Pedro Ortiz"
+      ],
+      "letters": [
+        {
+          "id": "2",
+          "description": "Queridos reyes magos, para estas navidades quiero los siguientes regalos",
+          "user": "Ana Ortiz Gomez",
+          "group": "Reyes Familia Ortiz",
+          "link": "http://localhost:8080/api/letters/2"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "name": "Amigos del Senderismo",
+      "icon": "fa-solid fa-hiking",
+      "theme": "outdoor",
+      "description": "Grupo para organizar actividades de senderismo",
+      "users": [
+        "Ana Ortiz Gomez",
+        "Luis Senderos",
+        "Clara Montaña",
+        "Carlos Senderos"
+      ],
+      "letters": [
+        {
+          "id": "6",
+          "description": "Rutas recomendadas para principiantes",
+          "user": "Luis Senderos",
+          "group": "Amigos del Senderismo",
+          "link": "http://localhost:8080/api/letters/6"
+        },
+        {
+          "id": "7",
+          "description": "Equipo necesario para senderismo avanzado",
+          "user": "Clara Montaña",
+          "group": "Amigos del Senderismo",
+          "link": "http://localhost:8080/api/letters/7"
+        },
+        {
+          "id": "8",
+          "description": "Consejos para acampar durante rutas largas",
+          "user": "Carlos Senderos",
+          "group": "Amigos del Senderismo",
+          "link": "http://localhost:8080/api/letters/8"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "name": "Navidad en Familia",
+      "icon": "fa-solid fa-tree",
+      "theme": "christmas",
+      "description": "Organización de regalos para la cena de Navidad",
+      "users": [
+        "Ana Ortiz Gomez",
+        "Carla Ortiz Mulero",
+        "Pedro Ortiz",
+        "Lucia Ortiz"
+      ],
+      "letters": [
+        {
+          "id": "6",
+          "description": "Regalos para la cena de Navidad",
+          "user": "Ana Ortiz Gomez",
+          "group": "Navidad en Familia",
+          "link": "http://localhost:8080/api/letters/6"
+        }
+      ]
+    }
+  ],
+  "letters": [
+    {
+      "id": "6",
+      "description": "Rutas recomendadas para principiantes",
+      "creationDate": "2025-09-05",
+      "sendDate": "2025-09-15",
+      "expirationDate": "2025-12-31",
+      "user": "Luis Senderos",
+      "group": "Amigos del Senderismo",
+      "products": [
+        {
+          "id": "p1",
+          "name": "Botas de senderismo",
+          "detail": "Botas impermeables para largas caminatas",
+          "url": "http://example.com/botas",
+          "state": "seleccionado",
+          "asignado": {
+            "id": "2",
+            "nameComplete": "Ana Ortiz Gomez",
+            "link": "http://localhost:8080/api/users/2"
+          }
+        },
+        {
+          "id": "p2",
+          "name": "Bastones de trekking",
+          "detail": "Bastones ajustables de aluminio",
+          "url": "http://example.com/bastones",
+          "state": "disponible",
+          "asignado": {}
+        },
+        {
+          "id": "p5",
+          "name": "Linterna frontal recargable",
+          "detail": "Linterna LED con batería recargable",
+          "url": "http://example.com/linterna",
+          "state": "comprado",
+          "asignado": {
+            "id": "4",
+            "nameComplete": "Clara Montaña",
+            "link": "http://localhost:8080/api/users/4"
+          }
+        },
+        {
+          "id": "p6",
+          "name": "Filtro de agua portátil",
+          "detail": "Filtro compacto para purificar agua en rutas",
+          "url": "http://example.com/filtro",
+          "state": "seleccionado",
+          "asignado": {
+            "id": "5",
+            "nameComplete": "Carlos Senderos",
+            "link": "http://localhost:8080/api/users/5"
+          }
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "description": "Equipo necesario para senderismo avanzado",
+      "creationDate": "2025-09-10",
+      "sendDate": "2025-09-20",
+      "expirationDate": "2025-12-31",
+      "user": "Clara Montaña",
+      "group": "Amigos del Senderismo",
+      "products": [
+        {
+          "id": "p3",
+          "name": "Tienda de campaña ultraligera",
+          "detail": "Tienda para dos personas, fácil de transportar",
+          "url": "http://example.com/tienda",
+          "state": "seleccionado",
+          "asignado": {
+            "id": "3",
+            "nameComplete": "Luis Senderos",
+            "link": "http://localhost:8080/api/users/3"
+          }
+        },
+        {
+          "id": "p4",
+          "name": "Saco de dormir térmico",
+          "detail": "Saco de dormir para temperaturas extremas",
+          "url": "http://example.com/saco",
+          "state": "comprado",
+          "asignado": {
+            "id": "2",
+            "nameComplete": "Ana Ortiz Gomez",
+            "link": "http://localhost:8080/api/users/2"
+          }
+        }
+      ]
+    },
+    {
+      "id": "8",
+      "description": "Consejos para acampar durante rutas largas",
+      "creationDate": "2025-09-15",
+      "sendDate": "2025-09-25",
+      "expirationDate": "2025-12-31",
+      "user": "Carlos Senderos",
+      "group": "Amigos del Senderismo",
+      "products": [
+        {
+          "id": "p5",
+          "name": "Linterna frontal recargable",
+          "detail": "Linterna LED con batería recargable",
+          "url": "http://example.com/linterna",
+          "state": "seleccionado",
+          "asignado": {
+            "id": "2",
+            "nameComplete": "Ana Ortiz Gomez",
+            "link": "http://localhost:8080/api/users/2"
+          }
+        },
+        {
+          "id": "p6",
+          "name": "Filtro de agua portátil",
+          "detail": "Filtro compacto para purificar agua en rutas",
+          "url": "http://example.com/filtro",
+          "state": "disponible",
+          "asignado": {}
+        }
+      ]
+    },
+    {
+      "id": "9",
+      "description": "Ideas para regalos de Navidad",
+      "creationDate": "2025-11-01",
+      "sendDate": "2025-11-10",
+      "expirationDate": "2025-12-24",
+      "user": "Carla Ortiz Mulero",
+      "group": "Navidad en Familia",
+      "products": [
+        {
+          "id": "p7",
+          "name": "Juego de mesa",
+          "detail": "Juego de mesa para toda la familia",
+          "url": "http://example.com/juego-mesa",
+          "state": "comprado",
+          "asignado": {
+            "id": "2",
+            "nameComplete": "Ana Ortiz Gomez",
+            "link": "http://localhost:8080/api/users/3"
+          }
+        },
+        {
+          "id": "p8",
+          "name": "Caja de chocolates",
+          "detail": "Chocolates surtidos de alta calidad",
+          "url": "http://example.com/chocolates",
+          "state": "disponible",
+          "asignado": {}
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "description": "Regalos para la cena de Navidad",
+      "creationDate": "2025-11-05",
+      "sendDate": "2025-11-15",
+      "expirationDate": "2025-12-24",
+      "user": "Pedro Ortiz",
+      "group": "Navidad en Familia",
+      "products": [
+        {
+          "id": "p9",
+          "name": "Set de cuchillos de cocina",
+          "detail": "Cuchillos de acero inoxidable de alta calidad",
+          "url": "http://example.com/cuchillos",
+          "state": "seleccionado",
+          "asignado": {
+            "id": "2",
+            "nameComplete": "Ana Ortiz Gomez",
+            "link": "http://localhost:8080/api/users/2"
+          }
+        },
+        {
+          "id": "p10",
+          "name": "Botella de vino",
+          "detail": "Vino tinto reserva especial",
+          "url": "http://example.com/vino",
+          "state": "disponible",
+          "asignado": {}
+        }
+      ]
+    }
+  ]
+}

@@ -7,6 +7,6 @@ import java.util.Optional;
 
 public interface UserRepository extends GenericRepository<User> {
     ListWithCount<User> findAllByGroup(int page, int pageSize, String idGroup);
-
+    Optional<User> findByUsername(String username);
     Optional<User> findByProductId(String idProduct);
 }

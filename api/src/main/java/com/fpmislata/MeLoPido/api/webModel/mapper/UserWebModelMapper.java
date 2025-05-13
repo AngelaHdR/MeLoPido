@@ -29,7 +29,7 @@ public class UserWebModelMapper {
         return userBasicQueryList.stream().map(UserWebModelMapper::toUserBasicResponse).toList();
     }
 
-    public static UserDetailResponse toUserDetailQuery(UserQuery userQuery) {
+    public static UserDetailResponse toUserDetailResponse(UserQuery userQuery) {
         if (userQuery == null) {
             return null;
         }

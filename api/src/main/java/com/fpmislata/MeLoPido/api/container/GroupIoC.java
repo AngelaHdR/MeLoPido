@@ -8,10 +8,21 @@ import com.fpmislata.MeLoPido.domain.usecase.group.command.InsertGroup;
 import com.fpmislata.MeLoPido.domain.usecase.group.command.UpdateGroup;
 import com.fpmislata.MeLoPido.domain.usecase.group.query.FindAllGroupByCriterial;
 import com.fpmislata.MeLoPido.domain.usecase.group.query.FindGroupByCriterial;
+import com.fpmislata.MeLoPido.persistence.dao.GroupDao;
+import com.fpmislata.MeLoPido.persistence.dao.jpa.GroupDaoJpa;
+import com.fpmislata.MeLoPido.persistence.dao.jpa.repository.GroupJpaRepository;
+import com.fpmislata.MeLoPido.persistence.dao.jpa.repository.LetterJpaRepository;
 import com.fpmislata.MeLoPido.persistence.repository.impl.group.GroupRepositoryImpl;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import org.springframework.data.jpa.repository.support.JpaRepositoryFactory;
+
+import static com.fpmislata.MeLoPido.api.container.LetterIoC.getLetterRepository;
+import static com.fpmislata.MeLoPido.api.container.UserIoC.getUserRepository;
 
 public class GroupIoC {
-    private static GroupQueryService groupQueryService = new GroupQueryService(getGroupRepository());
+    private static GroupQueryService groupQueryService = new GroupQueryService(getGroupRepository(), getUserRepository(), getLetterRepository());
     private static GroupCommandService groupCommandService = new GroupCommandService(getGroupRepository());
 
     private static GroupRepository groupRepository;
@@ -38,9 +49,25 @@ public class GroupIoC {
 
     public static GroupRepository getGroupRepository() {
         if (groupRepository == null) {
-            groupRepository = new GroupRepositoryImpl();
+            //groupRepository = new GroupRepositoryImpl(getGroupJpaRepository());
+            groupRepository = new GroupRepositoryImpl(getGroupDao());
         }
         return groupRepository;
+    }
+
+    public static GroupJpaRepository getGroupJpaRepository() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("meLoPidoUnit");
+        EntityManager em = emf.createEntityManager();
+
+        JpaRepositoryFactory factory = new JpaRepositoryFactory(em);
+        return factory.getRepository(GroupJpaRepository.class);
+    }
+
+    public static GroupDao getGroupDao(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("meLoPidoUnit");
+        EntityManager em = emf.createEntityManager();
+
+        return new GroupDaoJpa(em);
     }
 
     public static void setGroupQueryService(GroupQueryService groupService) {

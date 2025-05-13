@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
@@ -25,12 +26,12 @@ public interface ChatJpaRepository extends JpaRepository<ChatEntity, String> {
                     WHERE l.id_user = :idUser OR p.assigned_to = :idUser
                     """,
             nativeQuery = true)
-    Page<ChatEntity> findAllByUser(Pageable pageable, String idUser);
+    Page<ChatEntity> findAllByUser(Pageable pageable, @Param("idUser") String idUser);
 
     @Query(value = "SELECT * FROM chat WHERE id_product= :idProduct",
             countQuery = "SELECT COUNT(*) FROM letters WHERE id_product= :idProduct",
             nativeQuery = true)
-    Optional<ChatEntity> findByIdProduct(String idProduct);
+    Optional<ChatEntity> findByIdProduct(@Param("idProduct") String idProduct);
 
 
 }

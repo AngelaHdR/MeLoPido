@@ -6,17 +6,14 @@
     <persistence-unit name="meLoPidoUnit">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-        <!-- Aquí puedes registrar manualmente las clases de entidad -->
         <class>com.fpmislata.MeLoPido.persistence.entity.LetterEntity</class>
         <class>com.fpmislata.MeLoPido.persistence.entity.UserEntity</class>
         <class>com.fpmislata.MeLoPido.persistence.entity.GroupEntity</class>
         <class>com.fpmislata.MeLoPido.persistence.entity.ChatEntity</class>
         <class>com.fpmislata.MeLoPido.persistence.entity.MessageEntity</class>
         <class>com.fpmislata.MeLoPido.persistence.entity.ProductEntity</class>
-        <!-- Puedes registrar más clases si tienes varias entidades -->
 
         <properties>
-            <!-- Configuración de conexión a MariaDB -->
             <property name="jakarta.persistence.jdbc.driver" value="org.mariadb.jdbc.Driver"/>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:mariadb://localhost:3306/melopido"/>
             <property name="jakarta.persistence.jdbc.user" value="root"/>
