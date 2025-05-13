@@ -34,6 +34,9 @@ public class UserEntityMapper {
         userEntity.setBirthDate(user.getBirthDate());
         userEntity.setUsername(user.getUsername());
         userEntity.setPassword(user.getPassword());
+        if(userEntity.getGroups() != null){
+            userEntity.setGroups(user.getGroups().stream().map(GroupEntityMapper::toGroupEntity).toList());
+        }
         return userEntity;
     }
 }

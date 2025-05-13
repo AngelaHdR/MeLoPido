@@ -15,8 +15,7 @@ import com.fpmislata.MeLoPido.domain.usecase.model.mapper.ProductQueryMapper;
 import com.fpmislata.MeLoPido.util.exception.RessourceNotFoundException;
 import com.fpmislata.MeLoPido.util.exception.UnauthorizedAccessException;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateLetter {
     private final LetterRepository letterRepository;
@@ -33,44 +32,59 @@ public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateL
     public void delete(String idLetter) {
         Letter letter = letterRepository.findById(idLetter).orElseThrow(() -> new RessourceNotFoundException("Letter not found"));
         verifyCurrentUser(letter.getUser().getIdUser());
-        letter.getProducts().forEach(product -> productRepository.delete(product.getIdProduct()));
         letterRepository.delete(idLetter);
+    }
+
+    @Override
+    public void removeFromGroup(String id, String idGroup) {
+        Letter letterExisting = letterRepository.findById(id).orElseThrow(() -> new RessourceNotFoundException("Letter not found"));
+        if(!letterExisting.getGroup().getIdGroup().equals(idGroup)){
+            throw new UnauthorizedAccessException("User doesn't belong to group");
+        }
+        letterExisting.setGroup(null);
+        letterExisting.setExpirationDate(null);
+        letterRepository.save(letterExisting);
     }
 
     @Override
     public void insert(LetterCommand letter) {
         verifyCurrentUser(letter.idUser());
-        letter.products().forEach(product -> productRepository.save(ProductQueryMapper.toProduct(product), letter.idLetter()));
-        Letter letter1 = LetterQueryMapper.toLetter(letter);
-        letter1.setProducts(List.of());
-        letterRepository.save(letter1);
+        letterRepository.save(LetterQueryMapper.toLetter(letter));
     }
 
     @Override
     public void update(String idLetter, LetterCommand letter) {
         Letter letterExisting = letterRepository.findById(idLetter).orElseThrow(() -> new RessourceNotFoundException("Letter not found"));
+        Letter newLetter = LetterQueryMapper.toLetter(letter);
+
         verifyCurrentUser(letterExisting.getUser().getIdUser());
 
-        if (!letterExisting.getDescription().equals(letter.description())) {
-            letterExisting.setDescription(letter.description());
+        boolean changed = false;
+
+        if (!letterExisting.getDescription().equals(newLetter.getDescription())) {
+            letterExisting.setDescription(newLetter.getDescription());
+            changed = true;
         }
-        if (diferentProducts(letterExisting.getProducts(), letter.products())) {
-            if (letterExisting.getGroup() != null) {
-                letterExisting.setProducts(addProducts(letterExisting.getProducts(), letter.products()));
-            } else {
-                letterExisting.setProducts(addProducts(letterExisting.getProducts(), letter.products()));
-                letterExisting.setProducts(removeProducts(letterExisting.getProducts(), letter.products()));
-            }
+
+        List<Product> incomingProducts = newLetter.getProducts();
+        List<Product> currentProducts = letterExisting.getProducts() != null
+                ? new ArrayList<>(letterExisting.getProducts())
+                : new ArrayList<>();
+
+        if (diferentProducts(currentProducts, incomingProducts)) {
+            List<Product> updatedProducts = mergeProducts(currentProducts, incomingProducts, letterExisting.getGroup() != null);
+            letterExisting.setProducts(updatedProducts);
+            changed = true;
         }
-        letterRepository.save(letterExisting);
+
+        if (changed){
+            letterRepository.save(letterExisting);
+        }
     }
 
-    private boolean diferentProducts(List<Product> productsExisting, List<ProductCommand> products) {
-        List<Product> newProducts = ProductQueryMapper.toProductList(products);
+    private boolean diferentProducts(List<Product> productsExisting, List<Product> newProducts) {
+        if (productsExisting.size() != newProducts.size()) return true;
 
-        if (productsExisting.size() != newProducts.size()) {
-            return true;
-        }
         for (Product product : newProducts) {
             if (productsExisting.stream().noneMatch(productExisting ->
                     productExisting.getIdProduct().equals(product.getIdProduct()))) {
@@ -80,27 +94,36 @@ public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateL
         return false;
     }
 
-    private List<Product> addProducts(List<Product> productsExisting, List<ProductCommand> products) {
-        List<Product> newProducts = ProductQueryMapper.toProductList(products);
-        newProducts.forEach(product -> {
-            if (productsExisting.stream().noneMatch(productExisting -> productExisting.getIdProduct().equals(product.getIdProduct()))) {
-                productsExisting.add(product);
-                productRepository.save(product);
+    private List<Product> mergeProducts(List<Product> existing, List<Product> incoming, boolean isGroupLetter) {
+        List<Product> result = new ArrayList<>(existing);
+
+        for (Product product : incoming) {
+            if (product.getIdProduct() == null || result.stream().noneMatch(p -> p.getIdProduct().equals(product.getIdProduct()))) {
+                result.add(product);
             }
-        });
-        return productsExisting;
+        }
+
+        if (!isGroupLetter) {
+            existing.forEach(product -> {
+                if (incoming.stream().noneMatch(productNew -> productNew.getIdProduct().equals(product.getIdProduct()))) {
+                    result.remove(product);
+                    //productRepository.delete(product.getIdProduct());
+                }
+            });
+            /*Iterator<Product> iterator = result.iterator();
+            while (iterator.hasNext()) {
+                Product product = iterator.next();
+                boolean stillExists = incoming.stream().anyMatch(p -> Objects.equals(p.getIdProduct(), product.getIdProduct()));
+                if (!stillExists && product.getIdProduct() != null) {
+                    iterator.remove();
+                    productRepository.delete(product.getIdProduct());
+                }
+            }*/
+        }
+
+        return result;
     }
 
-    private List<Product> removeProducts(List<Product> productsExisting, List<ProductCommand> products) {
-        List<Product> newProducts = ProductQueryMapper.toProductList(products);
-        productsExisting.forEach(product -> {
-            if (newProducts.stream().noneMatch(productNew -> productNew.getIdProduct().equals(product.getIdProduct()))) {
-                productsExisting.remove(product);
-                productRepository.delete(product.getIdProduct());
-            }
-        });
-        return productsExisting;
-    }
 
     @Override
     public void sendToGroup(String idLetter, String idGroup, String expirationDate) {

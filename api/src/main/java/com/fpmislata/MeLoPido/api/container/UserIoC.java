@@ -8,6 +8,8 @@ import com.fpmislata.MeLoPido.domain.usecase.user.command.InsertUser;
 import com.fpmislata.MeLoPido.domain.usecase.user.command.UpdateUser;
 import com.fpmislata.MeLoPido.domain.usecase.user.query.FindAllUserByCriterial;
 import com.fpmislata.MeLoPido.domain.usecase.user.query.FindUserByCriterial;
+import com.fpmislata.MeLoPido.persistence.dao.UserDao;
+import com.fpmislata.MeLoPido.persistence.dao.jpa.UserDaoJpa;
 import com.fpmislata.MeLoPido.persistence.dao.jpa.repository.UserJpaRepository;
 import com.fpmislata.MeLoPido.persistence.repository.impl.user.UserRepositoryImpl;
 import jakarta.persistence.EntityManager;
@@ -48,7 +50,8 @@ public class UserIoC {
 
     public static UserRepository getUserRepository() {
         if (userRepository == null) {
-            userRepository = new UserRepositoryImpl(getUserJpaRepository());
+            //userRepository = new UserRepositoryImpl(getUserJpaRepository());
+            userRepository = new UserRepositoryImpl(getUserDao());
         }
         return userRepository;
     }
@@ -59,6 +62,12 @@ public class UserIoC {
 
         JpaRepositoryFactory factory = new JpaRepositoryFactory(em);
         return factory.getRepository(UserJpaRepository.class);
+    }
+
+    public static UserDao getUserDao() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("meLoPidoUnit");
+        EntityManager em = emf.createEntityManager();
+        return new UserDaoJpa(em);
     }
 
     public static void setUserQueryService(UserQueryService userService) {

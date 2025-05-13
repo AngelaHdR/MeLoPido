@@ -8,6 +8,8 @@ import com.fpmislata.MeLoPido.domain.usecase.group.command.InsertGroup;
 import com.fpmislata.MeLoPido.domain.usecase.group.command.UpdateGroup;
 import com.fpmislata.MeLoPido.domain.usecase.group.query.FindAllGroupByCriterial;
 import com.fpmislata.MeLoPido.domain.usecase.group.query.FindGroupByCriterial;
+import com.fpmislata.MeLoPido.persistence.dao.GroupDao;
+import com.fpmislata.MeLoPido.persistence.dao.jpa.GroupDaoJpa;
 import com.fpmislata.MeLoPido.persistence.dao.jpa.repository.GroupJpaRepository;
 import com.fpmislata.MeLoPido.persistence.dao.jpa.repository.LetterJpaRepository;
 import com.fpmislata.MeLoPido.persistence.repository.impl.group.GroupRepositoryImpl;
@@ -47,7 +49,8 @@ public class GroupIoC {
 
     public static GroupRepository getGroupRepository() {
         if (groupRepository == null) {
-            groupRepository = new GroupRepositoryImpl(getGroupJpaRepository());
+            //groupRepository = new GroupRepositoryImpl(getGroupJpaRepository());
+            groupRepository = new GroupRepositoryImpl(getGroupDao());
         }
         return groupRepository;
     }
@@ -58,6 +61,13 @@ public class GroupIoC {
 
         JpaRepositoryFactory factory = new JpaRepositoryFactory(em);
         return factory.getRepository(GroupJpaRepository.class);
+    }
+
+    public static GroupDao getGroupDao(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("meLoPidoUnit");
+        EntityManager em = emf.createEntityManager();
+
+        return new GroupDaoJpa(em);
     }
 
     public static void setGroupQueryService(GroupQueryService groupService) {

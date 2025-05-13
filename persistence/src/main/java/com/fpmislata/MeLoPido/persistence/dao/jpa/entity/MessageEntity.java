@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "messages")
 public class MessageEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_message")
     private String idMessage;
     @Column(name = "send_date")

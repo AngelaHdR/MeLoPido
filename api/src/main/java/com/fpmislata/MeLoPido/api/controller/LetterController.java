@@ -77,13 +77,20 @@ public class LetterController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping("/{id}/group/{idGroup}")
+    @PutMapping("/{id}/groups/{idGroup}")
     public ResponseEntity<Void> sendoToGroup(
             @PathVariable String id,
             @PathVariable String idGroup,
             @RequestBody String expirationDate
     ) {
-        updateLetter.sendToGroup(id, idGroup, expirationDate);
+        updateLetter.sendToGroup(id, idGroup, expirationDate.replace("\"", ""));
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/{id}/groups/{idGroup}")
+    public ResponseEntity<Void> removeFromGroup(@PathVariable String id,
+                                                @PathVariable String idGroup){
+        deleteLetter.removeFromGroup(id,idGroup);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

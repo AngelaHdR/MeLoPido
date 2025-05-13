@@ -8,6 +8,7 @@ import java.util.List;
 @Table(name = "letters")
 public class LetterEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_letter")
     private String idLetter;
     private String description;
@@ -23,10 +24,14 @@ public class LetterEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_group")
     private GroupEntity group;
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "letter")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "letter", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductEntity> products;
 
     public LetterEntity() {
+    }
+
+    public LetterEntity(String idLetter) {
+        this.idLetter = idLetter;
     }
 
     public LetterEntity(String idLetter, String description, String creationDate, String sendDate, String expirationDate, UserEntity user, GroupEntity group, List<ProductEntity> products) {
