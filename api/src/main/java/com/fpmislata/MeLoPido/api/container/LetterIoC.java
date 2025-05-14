@@ -65,7 +65,6 @@ public class LetterIoC {
     public static LetterDao getLetterDao() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("meLoPidoUnit");
         EntityManager em = emf.createEntityManager();
-
         return new LetterDaoJpa(em);
     }
 
