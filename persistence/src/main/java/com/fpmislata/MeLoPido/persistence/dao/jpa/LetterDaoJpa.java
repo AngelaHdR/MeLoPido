@@ -115,12 +115,10 @@ public class LetterDaoJpa implements LetterDao {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
-
             LetterEntity letter = entityManager.find(LetterEntity.class, id);
             if (letter != null) {
                 entityManager.remove(letter);
             }
-
             transaction.commit();
         } catch (Exception e) {
             if (transaction.isActive()) {
