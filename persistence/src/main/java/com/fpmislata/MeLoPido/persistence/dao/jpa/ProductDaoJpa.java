@@ -1,8 +1,6 @@
 package com.fpmislata.MeLoPido.persistence.dao.jpa;
 
-import com.fpmislata.MeLoPido.domain.model.Product;
 import com.fpmislata.MeLoPido.persistence.dao.ProductDao;
-import com.fpmislata.MeLoPido.persistence.dao.jpa.entity.LetterEntity;
 import com.fpmislata.MeLoPido.persistence.dao.jpa.entity.ProductEntity;
 import com.fpmislata.MeLoPido.util.pagination.ListWithCount;
 import jakarta.persistence.EntityManager;
@@ -10,6 +8,8 @@ import jakarta.persistence.EntityTransaction;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
+import java.util.UUID;
 
 public class ProductDaoJpa implements ProductDao {
     private final EntityManager entityManager;
@@ -65,18 +65,18 @@ public class ProductDaoJpa implements ProductDao {
     }
 
     @Override
-    public void save(ProductEntity product) {
+    public String save(ProductEntity product) {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
 
-            if (product.getIdProduct() == null) {
-                entityManager.persist(product);
-            } else {
-                entityManager.merge(product);
+            if (product.getIdProduct() == null || product.getIdProduct().isEmpty()) {
+                product.setIdProduct(UUID.randomUUID().toString());
             }
+            ProductEntity managedProduct = entityManager.merge(product);
 
             transaction.commit();
+            return managedProduct.getIdProduct();
         } catch (Exception e) {
             if (transaction.isActive()) {
                 transaction.rollback();
