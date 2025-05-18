@@ -29,7 +29,7 @@ public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateL
     @Override
     public void delete(String idLetter) {
         Letter letter = letterRepository.findById(idLetter).orElseThrow(() -> new RessourceNotFoundException("Letter not found"));
-        verifyCurrentUser(letter.getUser().getIdUser());
+        //verifyCurrentUser(letter.getUser().getIdUser());
         letterRepository.delete(idLetter);
     }
 
@@ -46,7 +46,7 @@ public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateL
 
     @Override
     public String insert(LetterCommand letter) {
-        verifyCurrentUser(letter.idUser());
+        //verifyCurrentUser(letter.idUser());
         return letterRepository.save(LetterQueryMapper.toLetter(letter));
     }
 
@@ -55,7 +55,7 @@ public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateL
         Letter letterExisting = letterRepository.findById(idLetter).orElseThrow(() -> new RessourceNotFoundException("Letter not found"));
         Letter newLetter = LetterQueryMapper.toLetter(letter);
 
-        verifyCurrentUser(letterExisting.getUser().getIdUser());
+        //verifyCurrentUser(letterExisting.getUser().getIdUser());
 
         boolean changed = false;
 
@@ -117,7 +117,7 @@ public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateL
     @Override
     public void sendToGroup(String idLetter, String idGroup, String expirationDate) {
         Letter letter = letterRepository.findById(idLetter).orElseThrow(() -> new RessourceNotFoundException("Letter not found"));
-        verifyCurrentUser(letter.getUser().getIdUser());
+        //verifyCurrentUser(letter.getUser().getIdUser());
 
         if (letter.getGroup() != null) {
             throw new RuntimeException("The letter already has a group");

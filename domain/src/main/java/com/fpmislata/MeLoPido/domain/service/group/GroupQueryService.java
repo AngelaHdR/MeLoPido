@@ -51,7 +51,7 @@ public class GroupQueryService implements FindAllGroupByCriterial, FindGroupByCr
     @Override
     public GroupQuery findById(String idGroup) {
         GroupQuery groupQuery = GroupQueryMapper.toGroupQuery(groupRepository.findById(idGroup).orElseThrow(() -> new RessourceNotFoundException("Group not found")));
-        verifyAvailableGroup(groupQuery.getName());
+        //verifyAvailableGroup(groupQuery.getName());
 
         List<String> users = UserQueryMapper.toUserNameList(userRepository.findAllByGroup(0, 15, idGroup).getList());
         groupQuery.setUsers(users);

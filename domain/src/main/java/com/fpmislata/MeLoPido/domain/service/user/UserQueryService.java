@@ -58,7 +58,7 @@ public class UserQueryService implements FindAllUserByCriterial, FindUserByCrite
     public UserQuery findById(String idUser) {
         UserQuery userQuery = UserQueryMapper.toUserQuery(userRepository.findById(idUser).orElseThrow(() -> new RessourceNotFoundException("User not found")));
 
-        verifyCurrentUser(userQuery.getNameComplete());
+        //verifyCurrentUser(userQuery.getNameComplete());
 
         List<ProductBasicQuery> productsAssigned = ProductQueryMapper.toProductBasicQueryList(productRepository.findAllAssignedToUser( 0, 15, idUser).getList());
         userQuery.setProducts(productsAssigned);

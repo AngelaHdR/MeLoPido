@@ -22,7 +22,7 @@ public class GroupCommandService implements DeleteGroup, UpdateGroup, InsertGrou
 
     @Override
     public void deleteGroup(String groupId) {
-        verifyAvailableGroup(groupId);
+        //verifyAvailableGroup(groupId);
         groupRepository.delete(groupId);
     }
 
