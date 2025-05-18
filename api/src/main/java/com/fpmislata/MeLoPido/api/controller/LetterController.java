@@ -18,7 +18,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(LetterController.URL)
 public class LetterController {
     public static final String URL = "/api/letters";
@@ -66,9 +70,11 @@ public class LetterController {
     }
 
     @PostMapping()
-    public ResponseEntity<Void> insert(@RequestBody LetterRequest letterRequest) {
-        insertLetter.insert(LetterWebModelMapper.toLetterCommand(letterRequest));
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<Map<String, String>> insert(@RequestBody LetterRequest letterRequest) {
+        String id = insertLetter.insert(LetterWebModelMapper.toLetterCommand(letterRequest));
+        Map<String, String> response = new HashMap<>();
+        response.put("id", id);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
