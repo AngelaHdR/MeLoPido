@@ -34,8 +34,8 @@ public class GroupRepositoryImpl implements GroupRepository {
     }
 
     @Override
-    public void save(Group group) {
-        groupDao.save(GroupEntityMapper.toGroupEntity(group));
+    public String save(Group group) {
+        return groupDao.save(GroupEntityMapper.toGroupEntity(group));
     }
 
     @Override

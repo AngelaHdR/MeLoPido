@@ -9,9 +9,7 @@ import com.fpmislata.MeLoPido.domain.usecase.letter.command.DeleteLetter;
 import com.fpmislata.MeLoPido.domain.usecase.letter.command.InsertLetter;
 import com.fpmislata.MeLoPido.domain.usecase.letter.command.UpdateLetter;
 import com.fpmislata.MeLoPido.domain.usecase.model.command.LetterCommand;
-import com.fpmislata.MeLoPido.domain.usecase.model.command.ProductCommand;
 import com.fpmislata.MeLoPido.domain.usecase.model.mapper.LetterQueryMapper;
-import com.fpmislata.MeLoPido.domain.usecase.model.mapper.ProductQueryMapper;
 import com.fpmislata.MeLoPido.util.exception.RessourceNotFoundException;
 import com.fpmislata.MeLoPido.util.exception.UnauthorizedAccessException;
 
@@ -47,9 +45,9 @@ public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateL
     }
 
     @Override
-    public void insert(LetterCommand letter) {
+    public String insert(LetterCommand letter) {
         verifyCurrentUser(letter.idUser());
-        letterRepository.save(LetterQueryMapper.toLetter(letter));
+        return letterRepository.save(LetterQueryMapper.toLetter(letter));
     }
 
     @Override

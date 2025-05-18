@@ -49,8 +49,8 @@ public class UserCommandService implements DeleteUser, UpdateUser, InsertUser {
     }
 
     @Override
-    public void insert(UserCommand user) {
-        userRepository.save(UserQueryMapper.toUser(user));
+    public String insert(UserCommand user) {
+        return userRepository.save(UserQueryMapper.toUser(user));
     }
 
     @Override
