@@ -20,8 +20,8 @@ public class LetterWebModelMapper {
                 letterQuery.creationDate(),
                 letterQuery.sendDate(),
                 letterQuery.expirationDate(),
-                letterQuery.user(),
-                letterQuery.group(),
+                UserWebModelMapper.toUserBasicResponse(letterQuery.user()),
+                GroupWebModelMapper.toGroupBasicResponse(letterQuery.group()),
                 ProductWebModelMapper.toProductBasicResponseList(letterQuery.products())
         );
     }

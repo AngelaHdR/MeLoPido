@@ -13,15 +13,14 @@ public class LetterQueryMapper {
         if (letter == null) {
             return null;
         }
-        String groupName = letter.getGroup() != null ? letter.getGroup().getName() : null;
         return new LetterQuery(
                 letter.getIdLetter(),
                 letter.getDescription(),
                 letter.getCreationDate(),
                 letter.getSendDate(),
                 letter.getExpirationDate(),
-                letter.getUser().getNameComplete(),
-                groupName,
+                UserQueryMapper.toUserBasicQuery(letter.getUser()),
+                GroupQueryMapper.toGroupBasicQuery(letter.getGroup()),
                 ProductQueryMapper.toProductBasicQueryList(letter.getProducts())
         );
     }
