@@ -45,9 +45,16 @@ public class GroupQueryService implements FindAllGroupByCriterial, FindGroupByCr
         verifyPageAndSize(page, pageSize);
 
         ListWithCount<Group> groupList = groupRepository.findAllByUser(page, pageSize, idUser);
-        return new ListWithCount<>(groupList.getList().stream().map(GroupQueryMapper::toGroupBasicQuery).toList(), groupList.getCount());
+        return new ListWithCount<>(completeGroups(groupList.getList()), groupList.getCount());
     }
-
+    private List<GroupBasicQuery> completeGroups(List<Group> groups){
+        return groups.stream().map(group -> {
+            GroupBasicQuery groupBasicQuery = GroupQueryMapper.toGroupBasicQuery(group);
+            List<String> users = UserQueryMapper.toUserNameList(userRepository.findAllByGroup(0, 15, group.getIdGroup()).getList());
+            groupBasicQuery.setUsers(users);
+            return groupBasicQuery;
+        }).toList();
+    }
     @Override
     public GroupQuery findById(String idGroup) {
         GroupQuery groupQuery = GroupQueryMapper.toGroupQuery(groupRepository.findById(idGroup).orElseThrow(() -> new RessourceNotFoundException("Group not found")));

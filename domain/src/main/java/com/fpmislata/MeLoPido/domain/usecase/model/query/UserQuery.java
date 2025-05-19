@@ -83,6 +83,10 @@ public class UserQuery {
         return groups;
     }
 
+    public void setGroups(List<GroupBasicQuery> groups) {
+        this.groups = groups;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
