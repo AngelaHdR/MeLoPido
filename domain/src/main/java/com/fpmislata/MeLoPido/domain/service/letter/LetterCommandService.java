@@ -103,13 +103,20 @@ public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateL
 
         if (!isGroupLetter) {
             existing.forEach(product -> {
-                if (incoming.stream().noneMatch(productNew -> productNew.getIdProduct().equals(product.getIdProduct()))) {
+                String existingId = product.getIdProduct();
+                boolean existsInIncoming = incoming.stream()
+                        .map(Product::getIdProduct)
+                        .filter(Objects::nonNull)
+                        .anyMatch(id -> id.equals(existingId));
+
+                if (!existsInIncoming) {
                     result.remove(product);
-                    //productRepository.delete(product.getIdProduct());
+                    // productRepository.delete(product.getIdProduct());
                 }
             });
-        }
 
+
+        }
         return result;
     }
 
