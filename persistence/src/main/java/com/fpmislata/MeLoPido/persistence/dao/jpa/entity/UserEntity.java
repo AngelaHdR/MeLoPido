@@ -9,7 +9,6 @@ import java.util.List;
 @Entity
 public class UserEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_user")
     private String idUser;
     private String name;

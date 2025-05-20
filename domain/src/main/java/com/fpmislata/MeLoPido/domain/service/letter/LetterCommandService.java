@@ -9,9 +9,7 @@ import com.fpmislata.MeLoPido.domain.usecase.letter.command.DeleteLetter;
 import com.fpmislata.MeLoPido.domain.usecase.letter.command.InsertLetter;
 import com.fpmislata.MeLoPido.domain.usecase.letter.command.UpdateLetter;
 import com.fpmislata.MeLoPido.domain.usecase.model.command.LetterCommand;
-import com.fpmislata.MeLoPido.domain.usecase.model.command.ProductCommand;
 import com.fpmislata.MeLoPido.domain.usecase.model.mapper.LetterQueryMapper;
-import com.fpmislata.MeLoPido.domain.usecase.model.mapper.ProductQueryMapper;
 import com.fpmislata.MeLoPido.util.exception.RessourceNotFoundException;
 import com.fpmislata.MeLoPido.util.exception.UnauthorizedAccessException;
 
@@ -31,7 +29,7 @@ public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateL
     @Override
     public void delete(String idLetter) {
         Letter letter = letterRepository.findById(idLetter).orElseThrow(() -> new RessourceNotFoundException("Letter not found"));
-        verifyCurrentUser(letter.getUser().getIdUser());
+        //verifyCurrentUser(letter.getUser().getIdUser());
         letterRepository.delete(idLetter);
     }
 
@@ -47,9 +45,9 @@ public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateL
     }
 
     @Override
-    public void insert(LetterCommand letter) {
-        verifyCurrentUser(letter.idUser());
-        letterRepository.save(LetterQueryMapper.toLetter(letter));
+    public String insert(LetterCommand letter) {
+        //verifyCurrentUser(letter.idUser());
+        return letterRepository.save(LetterQueryMapper.toLetter(letter));
     }
 
     @Override
@@ -57,7 +55,7 @@ public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateL
         Letter letterExisting = letterRepository.findById(idLetter).orElseThrow(() -> new RessourceNotFoundException("Letter not found"));
         Letter newLetter = LetterQueryMapper.toLetter(letter);
 
-        verifyCurrentUser(letterExisting.getUser().getIdUser());
+        //verifyCurrentUser(letterExisting.getUser().getIdUser());
 
         boolean changed = false;
 
@@ -105,13 +103,20 @@ public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateL
 
         if (!isGroupLetter) {
             existing.forEach(product -> {
-                if (incoming.stream().noneMatch(productNew -> productNew.getIdProduct().equals(product.getIdProduct()))) {
+                String existingId = product.getIdProduct();
+                boolean existsInIncoming = incoming.stream()
+                        .map(Product::getIdProduct)
+                        .filter(Objects::nonNull)
+                        .anyMatch(id -> id.equals(existingId));
+
+                if (!existsInIncoming) {
                     result.remove(product);
-                    //productRepository.delete(product.getIdProduct());
+                    // productRepository.delete(product.getIdProduct());
                 }
             });
-        }
 
+
+        }
         return result;
     }
 
@@ -119,7 +124,7 @@ public class LetterCommandService implements DeleteLetter, InsertLetter, UpdateL
     @Override
     public void sendToGroup(String idLetter, String idGroup, String expirationDate) {
         Letter letter = letterRepository.findById(idLetter).orElseThrow(() -> new RessourceNotFoundException("Letter not found"));
-        verifyCurrentUser(letter.getUser().getIdUser());
+        //verifyCurrentUser(letter.getUser().getIdUser());
 
         if (letter.getGroup() != null) {
             throw new RuntimeException("The letter already has a group");

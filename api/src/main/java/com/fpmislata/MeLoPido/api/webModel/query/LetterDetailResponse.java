@@ -8,8 +8,8 @@ public record LetterDetailResponse(
         String creationDate,
         String sendDate,
         String expirationDate,
-        String user,
-        String group,
+        UserBasicResponse user,
+        GroupBasicResponse group,
         List<ProductBasicResponse> products
 ) {
 }

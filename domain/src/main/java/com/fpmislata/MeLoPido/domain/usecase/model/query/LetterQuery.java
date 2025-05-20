@@ -9,8 +9,8 @@ public record LetterQuery(
         String creationDate,
         String sendDate,
         String expirationDate,
-        String user,
-        String group,
+        UserBasicQuery user,
+        GroupBasicQuery group,
         List<ProductBasicQuery> products
 ) {
 }

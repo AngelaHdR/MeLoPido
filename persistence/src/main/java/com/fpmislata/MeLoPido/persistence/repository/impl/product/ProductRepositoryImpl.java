@@ -43,7 +43,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public void save(Product product) {
+    public String save(Product product) {
        throw new UnauthorizedAccessException("Product must be assigned to a letter");
     }
 
