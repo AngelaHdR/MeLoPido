@@ -44,8 +44,8 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void save(User user) {
-        userDao.save(UserEntityMapper.toUserEntity(user));
+    public String save(User user) {
+        return userDao.save(UserEntityMapper.toUserEntity(user));
     }
 
     @Override

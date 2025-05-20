@@ -8,7 +8,6 @@ import java.util.List;
 @Table(name = "groups_detail")
 public class GroupEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_group")
     private String idGroup;
     private String name;

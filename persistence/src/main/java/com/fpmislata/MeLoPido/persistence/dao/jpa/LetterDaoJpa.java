@@ -10,6 +10,7 @@ import jakarta.persistence.EntityTransaction;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class LetterDaoJpa implements LetterDao {
     private final EntityManager entityManager;
@@ -86,22 +87,25 @@ public class LetterDaoJpa implements LetterDao {
     }
 
     @Override
-    public void save(LetterEntity letter) {
+    public String save(LetterEntity letter) {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             UserEntity userEntity = entityManager.getReference(UserEntity.class, letter.getUser().getIdUser());
             letter.setUser(userEntity);
             for (ProductEntity product : letter.getProducts()) {
+                if (product.getIdProduct() == null || product.getIdProduct().isEmpty()) {
+                    product.setIdProduct(UUID.randomUUID().toString());
+                }
                 product.setLetter(letter);
             }
-            if (letter.getIdLetter() == null) {
-                entityManager.persist(letter);
-            } else {
-                entityManager.merge(letter);
+            if (letter.getIdLetter() == null || letter.getIdLetter().isEmpty()) {
+                letter.setIdLetter(UUID.randomUUID().toString());
             }
+            LetterEntity managedLetter = entityManager.merge(letter);
 
             transaction.commit();
+            return managedLetter.getIdLetter();
         } catch (Exception e) {
             if (transaction.isActive()) {
                 transaction.rollback();

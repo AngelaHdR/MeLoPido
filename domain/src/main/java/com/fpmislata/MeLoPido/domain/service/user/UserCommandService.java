@@ -27,13 +27,13 @@ public class UserCommandService implements DeleteUser, UpdateUser, InsertUser {
     }
     @Override
     public void delete(String idUser) {
-        verifyCurrentUser(idUser);
+        //verifyCurrentUser(idUser);
         userRepository.delete(idUser);
     }
 
     @Override
     public void removeFromGroup(String idUser, String idGroup) {
-        verifyCurrentUser(idUser);
+        //verifyCurrentUser(idUser);
         User user = userRepository.findById(idUser).orElseThrow(() -> new RessourceNotFoundException("User not found"));
         Group group = groupRepository.findById(idGroup).orElseThrow(() -> new RessourceNotFoundException("Group not found"));
         List<Group> currentGroups = new ArrayList<>();
@@ -49,13 +49,13 @@ public class UserCommandService implements DeleteUser, UpdateUser, InsertUser {
     }
 
     @Override
-    public void insert(UserCommand user) {
-        userRepository.save(UserQueryMapper.toUser(user));
+    public String insert(UserCommand user) {
+        return userRepository.save(UserQueryMapper.toUser(user));
     }
 
     @Override
     public void update(String idUser, UserCommand user) {
-        verifyCurrentUser(idUser);
+        //verifyCurrentUser(idUser);
         User userExisting = userRepository.findById(idUser).orElseThrow(() -> new RessourceNotFoundException("User not found"));
         if(user.password() != null) {
             verifyPassword(user.password());
@@ -106,7 +106,7 @@ public class UserCommandService implements DeleteUser, UpdateUser, InsertUser {
 
     @Override
     public void addToGroup(String idUser, String idGroup) {
-        verifyCurrentUser(idUser);
+        //verifyCurrentUser(idUser);
         User user = userRepository.findById(idUser).orElseThrow(() -> new RessourceNotFoundException("User not found"));
         Group group = groupRepository.findById(idGroup).orElseThrow(() -> new RessourceNotFoundException("Group not found"));
         List<Group> currentGroups = new ArrayList<>();

@@ -33,8 +33,8 @@ public class LetterRepositoryImpl implements LetterRepository {
     }
 
     @Override
-    public void save(Letter letter) {
-        letterDao.save(LetterEntityMapper.toLetterEntity(letter));
+    public String save(Letter letter) {
+        return letterDao.save(LetterEntityMapper.toLetterEntity(letter));
     }
 
     @Override
