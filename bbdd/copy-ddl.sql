@@ -19,7 +19,7 @@ CREATE TABLE groups_detail (
     id_group varchar(50) PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     icon VARCHAR(255) NULL,
-    theme ENUM('3_wise_men', 'birthday', 'secret_santa', 'general') NOT NULL,
+    theme VARCHAR(20) NOT NULL,
     description TEXT
 );
 

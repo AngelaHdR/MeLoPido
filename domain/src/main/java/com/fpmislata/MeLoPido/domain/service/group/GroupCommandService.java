@@ -22,13 +22,13 @@ public class GroupCommandService implements DeleteGroup, UpdateGroup, InsertGrou
 
     @Override
     public void deleteGroup(String groupId) {
-        verifyAvailableGroup(groupId);
+        //verifyAvailableGroup(groupId);
         groupRepository.delete(groupId);
     }
 
     @Override
-    public void insert(GroupCommand group) {
-        groupRepository.save(GroupQueryMapper.toGroup(group));
+    public String insert(GroupCommand group) {
+        return groupRepository.save(GroupQueryMapper.toGroup(group));
     }
 
     @Override

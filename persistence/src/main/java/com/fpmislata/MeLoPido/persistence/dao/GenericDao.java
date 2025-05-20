@@ -6,6 +6,6 @@ import java.util.Optional;
 public interface GenericDao<T>{
     ListWithCount<T> findAll(int page, int pageSize);
     Optional<T> findById(String id);
-    void save(T t);
+    String save(T t);
     void delete(String id);
 }

@@ -8,7 +8,6 @@ import java.util.List;
 @Table(name = "chats")
 public class ChatEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_chat")
     private String idChat;
     private String creationDate;

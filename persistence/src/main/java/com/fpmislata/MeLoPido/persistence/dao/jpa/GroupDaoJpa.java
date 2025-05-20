@@ -8,6 +8,7 @@ import jakarta.persistence.EntityTransaction;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class GroupDaoJpa implements GroupDao {
     private final EntityManager entityManager;
@@ -63,24 +64,26 @@ public class GroupDaoJpa implements GroupDao {
     }
 
     @Override
-    public void save(GroupEntity group) {
+    public String save(GroupEntity group) {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
 
-            if (group.getIdGroup() == null) {
-                entityManager.persist(group);
-            } else {
-                entityManager.merge(group);
+            if (group.getIdGroup() == null || group.getIdGroup().isEmpty()) {
+                group.setIdGroup(UUID.randomUUID().toString());
             }
+            GroupEntity managedGroup = entityManager.merge(group);
 
             transaction.commit();
+            System.out.println("Group saved: " + managedGroup.getIdGroup());
+            return managedGroup.getIdGroup();
         } catch (Exception e) {
             if (transaction.isActive()) {
                 transaction.rollback();
             }
             throw e;
         }
+
     }
 
     @Override

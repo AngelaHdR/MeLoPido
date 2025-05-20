@@ -1,15 +1,14 @@
 package com.fpmislata.MeLoPido.persistence.dao.jpa;
 
-import com.fpmislata.MeLoPido.domain.model.Chat;
 import com.fpmislata.MeLoPido.persistence.dao.ChatDao;
 import com.fpmislata.MeLoPido.persistence.dao.jpa.entity.ChatEntity;
-import com.fpmislata.MeLoPido.persistence.dao.jpa.entity.LetterEntity;
 import com.fpmislata.MeLoPido.util.pagination.ListWithCount;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class ChatDaoJpa implements ChatDao {
     private final EntityManager entityManager;
@@ -87,18 +86,19 @@ public class ChatDaoJpa implements ChatDao {
     }
 
     @Override
-    public void save(ChatEntity chat) {
+    public String save(ChatEntity chat) {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
 
-            if (chat.getIdChat() == null) {
-                entityManager.persist(chat);
-            } else {
-                entityManager.merge(chat);
+            if (chat.getIdChat() == null || chat.getIdChat().isEmpty()) {
+                chat.setIdChat(UUID.randomUUID().toString());
             }
+            ChatEntity managedChat = entityManager.merge(chat);
+
 
             transaction.commit();
+            return managedChat.getIdChat();
         } catch (Exception e) {
             if (transaction.isActive()) {
                 transaction.rollback();

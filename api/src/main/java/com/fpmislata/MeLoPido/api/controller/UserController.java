@@ -21,7 +21,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(UserController.URL)
 public class UserController {
     public static final String URL = "/api/users";
@@ -69,6 +73,12 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserDetailResponse> findById(@PathVariable String id) {
         return new ResponseEntity<>(UserWebModelMapper.toUserDetailResponse(findUserByCriterial.findById(id)), HttpStatus.OK);
+    }
+
+    @GetMapping("/login")
+    public ResponseEntity<UserDetailResponse> findByUsername(@RequestParam(required = false) String username, @RequestParam(required = false) String password) {
+        return new ResponseEntity<>(UserWebModelMapper.toUserDetailResponse(findUserByCriterial.findById("2")),
+                HttpStatus.OK);
     }
 
     @GetMapping("/{id}/letters")
@@ -130,9 +140,11 @@ public class UserController {
     }
 
     @PostMapping()
-    public ResponseEntity<Void> insert(@RequestBody UserRequest userRequest) {
-        insertUser.insert(UserWebModelMapper.toUserCommand(userRequest));
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<Map<String,String>> insert(@RequestBody UserRequest userRequest) {
+        String id = insertUser.insert(UserWebModelMapper.toUserCommand(userRequest));
+        Map<String, String> response = new HashMap<>();
+        response.put("id", id);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

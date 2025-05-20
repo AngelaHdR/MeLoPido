@@ -22,7 +22,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(GroupController.URL)
 public class GroupController {
     public static final String URL = "/api/groups";
@@ -85,9 +90,11 @@ public class GroupController {
     }
 
     @PostMapping()
-    public ResponseEntity<Void> insert(@RequestBody GroupRequest groupRequest) {
-        insertGroup.insert(GroupWebModelMapper.toGroupCommand(groupRequest));
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<Map<String, String>> insert(@RequestBody GroupRequest groupRequest) {
+        String id = insertGroup.insert(GroupWebModelMapper.toGroupCommand(groupRequest));
+        Map<String, String> response = new HashMap<>();
+        response.put("id", id);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

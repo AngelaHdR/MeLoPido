@@ -35,7 +35,7 @@ public class LetterQueryService implements FindAllLetterByCriterial, FindLetterB
     public ListWithCount<LetterBasicQuery> findAllByUser(int page, int pageSize, String idUser) {
         verifyPageAndSize(page, pageSize);
         ListWithCount<Letter> letterList = letterRepository.findAllByUser(page, pageSize, idUser);
-        verifyCurrentUser(letterList.getList().get(0).getUser().getNameComplete());
+       // verifyCurrentUser(letterList.getList().get(0).getUser().getNameComplete());
         return new ListWithCount<>(letterList.getList().stream().map(LetterQueryMapper::toLetterBasicQuery).toList(), letterList.getCount());
     }
 
@@ -43,14 +43,14 @@ public class LetterQueryService implements FindAllLetterByCriterial, FindLetterB
     public ListWithCount<LetterBasicQuery> findAllByGroup(int page, int pageSize, String idGroup) {
         verifyPageAndSize(page, pageSize);
         ListWithCount<Letter> letterList = letterRepository.findAllByGroup(page, pageSize, idGroup);
-        verifyAvailableGroup(letterList.getList().get(0).getGroup().getName());
+        //verifyAvailableGroup(letterList.getList().get(0).getGroup().getName());
         return new ListWithCount<>(letterList.getList().stream().map(LetterQueryMapper::toLetterBasicQuery).toList(), letterList.getCount());
     }
 
     @Override
     public LetterQuery findById(String idLetter) {
         LetterQuery letterQuery = LetterQueryMapper.toLetterQuery(letterRepository.findById(idLetter).orElseThrow(() -> new RessourceNotFoundException("Letter not found")));
-        verifyCurrentUserOrGroup(letterQuery.user(),letterQuery.group());
+        //verifyCurrentUserOrGroup(letterQuery.user(),letterQuery.group());
         return letterQuery;
 
     }

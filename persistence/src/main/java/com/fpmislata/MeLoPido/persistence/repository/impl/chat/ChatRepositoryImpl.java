@@ -42,8 +42,9 @@ public class ChatRepositoryImpl implements ChatRepository {
     }
 
     @Override
-    public void save(Chat chat) {
+    public String save(Chat chat) {
         chatDao.save(ChatEntityMapper.toChatEntity(chat));
+        return null;
     }
 
     @Override
