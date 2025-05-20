@@ -94,6 +94,9 @@ public class LetterDaoJpa implements LetterDao {
             UserEntity userEntity = entityManager.getReference(UserEntity.class, letter.getUser().getIdUser());
             letter.setUser(userEntity);
             for (ProductEntity product : letter.getProducts()) {
+                if (product.getIdProduct() == null || product.getIdProduct().isEmpty()) {
+                    product.setIdProduct(UUID.randomUUID().toString());
+                }
                 product.setLetter(letter);
             }
             if (letter.getIdLetter() == null || letter.getIdLetter().isEmpty()) {
