@@ -8,7 +8,7 @@ public record GroupDetailResponse(
         String icon,
         String theme,
         String description,
-        List<String> users,
+        List<UserBasicResponse> users,
         List<LetterBasicResponse> letters
 ) {
 }
