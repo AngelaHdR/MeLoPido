@@ -21,7 +21,7 @@ public class GroupWebModelMapper {
                 groupQuery.getIcon(),
                 groupQuery.getTheme(),
                 groupQuery.getDescription(),
-                groupQuery.getUsers(),
+                UserWebModelMapper.toUserBasicResponseList(groupQuery.getUsers()),
                 LetterWebModelMapper.toLetterBasicResponseList(groupQuery.getLetters())
         );
     }
@@ -40,8 +40,6 @@ public class GroupWebModelMapper {
         return new GroupBasicResponse(
                 groupBasicQuery.getIdGroup(),
                 groupBasicQuery.getName(),
-                groupBasicQuery.getIcon(),
-                groupBasicQuery.getUsers(),
                 generateLink(groupBasicQuery.getIdGroup())
         );
     }

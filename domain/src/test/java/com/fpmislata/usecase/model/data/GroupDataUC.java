@@ -9,9 +9,9 @@ import java.util.List;
 
 public class GroupDataUC {
     private static final List<GroupQuery> groupsQuery = List.of(
-            new GroupQuery("1", "Group 1", "Icon 1", "Theme 1", "Description 1", UserData.getUsersName(), LetterDataUC.getLettersBasicQuery()),
+            /*new GroupQuery("1", "Group 1", "Icon 1", "Theme 1", "Description 1", UserData.getUsersName(), LetterDataUC.getLettersBasicQuery()),
             new GroupQuery("2", "Group 2", "Icon 2", "Theme 2", "Description 2", UserData.getUsersName(), LetterDataUC.getLettersBasicQuery()),
-            new GroupQuery("3", "Group 3", "Icon 3", "Theme 3", "Description 3", UserData.getUsersName(), LetterDataUC.getLettersBasicQuery())
+            new GroupQuery("3", "Group 3", "Icon 3", "Theme 3", "Description 3", UserData.getUsersName(), LetterDataUC.getLettersBasicQuery())*/
     );
 
     private static final List<GroupBasicQuery> groupsBasicQuery = List.of(

@@ -57,23 +57,12 @@ public class UserQueryService implements FindAllUserByCriterial, FindUserByCrite
     public UserQuery findById(String idUser) {
         UserQuery userQuery = UserQueryMapper.toUserQuery(userRepository.findById(idUser).orElseThrow(() -> new RessourceNotFoundException("User not found")));
 
-        //verifyCurrentUser(userQuery.getNameComplete());
-
-        userQuery.setGroups(completeGroups(userQuery.getGroups()));
         List<ProductBasicQuery> productsAssigned = ProductQueryMapper.toProductBasicQueryList(productRepository.findAllAssignedToUser( 0, 15, idUser).getList());
         userQuery.setProducts(productsAssigned);
 
         List<LetterBasicQuery> letters = LetterQueryMapper.toLetterBasicQueryList(letterRepository.findAllByUser(0, 15, idUser).getList());
         userQuery.setLetters(letters);
         return userQuery;
-    }
-
-    private List<GroupBasicQuery> completeGroups(List<GroupBasicQuery> groups){
-        return groups.stream().map(group -> {
-            List<String> users = UserQueryMapper.toUserNameList(userRepository.findAllByGroup(0, 15, group.getIdGroup()).getList());
-            group.setUsers(users);
-            return group;
-        }).toList();
     }
 
     @Override

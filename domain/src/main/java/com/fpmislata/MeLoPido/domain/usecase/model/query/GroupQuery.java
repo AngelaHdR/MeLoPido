@@ -9,7 +9,7 @@ public class GroupQuery {
     String icon;
     String theme;
     String description;
-    List<String> users;
+    List<UserBasicQuery> users;
     List<LetterBasicQuery> letters;
 
     public GroupQuery() {
@@ -23,7 +23,7 @@ public class GroupQuery {
         this.description = description;
     }
 
-    public GroupQuery(String idGroup, String name, String icon, String theme, String description, List<String> users, List<LetterBasicQuery> letters) {
+    public GroupQuery(String idGroup, String name, String icon, String theme, String description, List<UserBasicQuery> users, List<LetterBasicQuery> letters) {
         this.idGroup = idGroup;
         this.name = name;
         this.icon = icon;
@@ -45,11 +45,11 @@ public class GroupQuery {
         return icon;
     }
 
-    public List<String> getUsers() {
+    public List<UserBasicQuery> getUsers() {
         return users;
     }
 
-    public void setUsers(List<String> users) {
+    public void setUsers(List<UserBasicQuery> users) {
         this.users = users;
     }
 

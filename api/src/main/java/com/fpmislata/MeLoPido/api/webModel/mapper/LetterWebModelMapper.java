@@ -40,8 +40,6 @@ public class LetterWebModelMapper {
         return new LetterBasicResponse(
                 letterBasicQuery.idLetter(),
                 letterBasicQuery.description(),
-                letterBasicQuery.user(),
-                letterBasicQuery.group(),
                 generateLink(letterBasicQuery.idLetter())
         );
     }

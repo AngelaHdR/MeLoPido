@@ -15,11 +15,7 @@ public class ProductWebModelMapper {
         return new ProductBasicResponse(
                 productBasicQuery.idProduct(),
                 productBasicQuery.name(),
-                productBasicQuery.detail(),
-                productBasicQuery.url(),
-                productBasicQuery.state(),
-                UserWebModelMapper.toUserBasicResponse(productBasicQuery.asignado()),
-                productBasicQuery.idChat()
+                generateLink(productBasicQuery.idProduct())
         );
     }
 
@@ -48,5 +44,9 @@ public class ProductWebModelMapper {
             return null;
         }
         return productRequestList.stream().map(ProductWebModelMapper::toProductCommand).toList();
+    }
+
+    private static String generateLink(String idProduct) {
+        return "http://localhost:8080/api/products/" + idProduct;
     }
 }

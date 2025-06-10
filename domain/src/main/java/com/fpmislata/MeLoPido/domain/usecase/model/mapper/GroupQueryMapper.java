@@ -36,8 +36,7 @@ public class GroupQueryMapper {
         }
         return new GroupBasicQuery(
                 group.getIdGroup(),
-                group.getName(),
-                group.getIcon()
+                group.getName()
         );
     }
 

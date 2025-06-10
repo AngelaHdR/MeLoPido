@@ -41,9 +41,7 @@ public class LetterQueryMapper {
         String groupName = letter.getGroup() != null ? letter.getGroup().getName() : null;
         return new LetterBasicQuery(
                 letter.getIdLetter(),
-                letter.getDescription(),
-                letter.getUser().getNameComplete(),
-                groupName
+                letter.getDescription()
         );
     }
 

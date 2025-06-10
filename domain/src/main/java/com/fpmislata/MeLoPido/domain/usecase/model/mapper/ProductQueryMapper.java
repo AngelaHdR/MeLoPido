@@ -3,23 +3,30 @@ package com.fpmislata.MeLoPido.domain.usecase.model.mapper;
 import com.fpmislata.MeLoPido.domain.model.Product;
 import com.fpmislata.MeLoPido.domain.usecase.model.command.ProductCommand;
 import com.fpmislata.MeLoPido.domain.usecase.model.query.ProductBasicQuery;
+import com.fpmislata.MeLoPido.domain.usecase.model.query.ProductQuery;
 
 import java.util.List;
 
 public class ProductQueryMapper {
-    public static ProductBasicQuery toProductBasicQuery(Product product) {
+    public static ProductQuery toProductQuery(Product product) {
         if (product == null) {
             return null;
         }
-        String idChat = product.getChat() != null ? product.getChat().getIdChat() : null;
-        return new ProductBasicQuery(
+        return new ProductQuery(
                 product.getIdProduct(),
                 product.getName(),
                 product.getDetail(),
                 product.getUrl(),
-                product.getState(),
-                UserQueryMapper.toUserBasicQuery(product.getAssigned()),
-                idChat
+                product.getState()
+        );
+    }
+    public static ProductBasicQuery toProductBasicQuery(Product product) {
+        if (product == null) {
+            return null;
+        }
+        return new ProductBasicQuery(
+                product.getIdProduct(),
+                product.getName()
         );
     }
 
