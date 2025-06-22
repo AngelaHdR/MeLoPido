@@ -38,9 +38,10 @@ public class LetterWebModelMapper {
             return null;
         }
         return new LetterBasicResponse(
-                letterBasicQuery.idLetter(),
-                letterBasicQuery.description(),
-                generateLink(letterBasicQuery.idLetter())
+                letterBasicQuery.getIdLetter(),
+                letterBasicQuery.getUserName(),
+                letterBasicQuery.getGroupName(),
+                generateLink(letterBasicQuery.getIdLetter())
         );
     }
 

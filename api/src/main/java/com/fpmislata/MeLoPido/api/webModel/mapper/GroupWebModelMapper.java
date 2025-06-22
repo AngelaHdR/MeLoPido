@@ -38,9 +38,10 @@ public class GroupWebModelMapper {
             return null;
         }
         return new GroupBasicResponse(
-                groupBasicQuery.getIdGroup(),
-                groupBasicQuery.getName(),
-                generateLink(groupBasicQuery.getIdGroup())
+                groupBasicQuery.idGroup(),
+                groupBasicQuery.name(),
+                groupBasicQuery.icon(),
+                generateLink(groupBasicQuery.idGroup())
         );
     }
 
