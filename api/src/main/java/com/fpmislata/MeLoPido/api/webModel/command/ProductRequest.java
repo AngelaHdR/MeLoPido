@@ -5,6 +5,7 @@ public record ProductRequest(
         String name,
         String detail,
         String url,
-        String state
+        String state,
+        String idLetter
 ) {
 }

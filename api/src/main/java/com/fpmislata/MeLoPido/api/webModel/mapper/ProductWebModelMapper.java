@@ -2,8 +2,10 @@ package com.fpmislata.MeLoPido.api.webModel.mapper;
 
 import com.fpmislata.MeLoPido.api.webModel.command.ProductRequest;
 import com.fpmislata.MeLoPido.api.webModel.query.ProductBasicResponse;
+import com.fpmislata.MeLoPido.api.webModel.query.ProductDetailResponse;
 import com.fpmislata.MeLoPido.domain.usecase.model.command.ProductCommand;
 import com.fpmislata.MeLoPido.domain.usecase.model.query.ProductBasicQuery;
+import com.fpmislata.MeLoPido.domain.usecase.model.query.ProductQuery;
 
 import java.util.List;
 
@@ -26,6 +28,22 @@ public class ProductWebModelMapper {
         return productBasicQueryList.stream().map(ProductWebModelMapper::toProductBasicResponse).toList();
     }
 
+    public static ProductDetailResponse toProductDetailResponse(ProductQuery productQuery){
+        if(productQuery == null){
+            return null;
+        }
+        return new ProductDetailResponse(
+                productQuery.getIdProduct(),
+                productQuery.getName(),
+                productQuery.getDetail(),
+                productQuery.getUrl(),
+                productQuery.getState(),
+                UserWebModelMapper.toUserBasicResponse(productQuery.getUser()),
+                UserWebModelMapper.toUserBasicResponse(productQuery.getAssigned()),
+                productQuery.getChatLink()
+        );
+    }
+
     public static ProductCommand toProductCommand(ProductRequest productRequest) {
         if (productRequest == null) {
             return null;
@@ -35,7 +53,8 @@ public class ProductWebModelMapper {
                 productRequest.name(),
                 productRequest.detail(),
                 productRequest.url(),
-                productRequest.state()
+                productRequest.state(),
+                productRequest.idLetter()
         );
     }
 

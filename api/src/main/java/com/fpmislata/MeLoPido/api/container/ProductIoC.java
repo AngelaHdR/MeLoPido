@@ -1,7 +1,11 @@
 package com.fpmislata.MeLoPido.api.container;
 
 import com.fpmislata.MeLoPido.domain.repository.ProductRepository;
+import com.fpmislata.MeLoPido.domain.service.product.ProductCommandService;
 import com.fpmislata.MeLoPido.domain.service.product.ProductQueryService;
+import com.fpmislata.MeLoPido.domain.usecase.product.command.DeleteProduct;
+import com.fpmislata.MeLoPido.domain.usecase.product.command.InsertProduct;
+import com.fpmislata.MeLoPido.domain.usecase.product.command.UpdateProduct;
 import com.fpmislata.MeLoPido.domain.usecase.product.query.FindAllProductByCriterial;
 import com.fpmislata.MeLoPido.persistence.dao.ProductDao;
 import com.fpmislata.MeLoPido.persistence.dao.jpa.ProductDaoJpa;
@@ -14,11 +18,24 @@ import org.springframework.data.jpa.repository.support.JpaRepositoryFactory;
 
 public class ProductIoC {
     private static ProductQueryService productQueryService = new ProductQueryService(getProductRepository());
+    private static ProductCommandService productCommandService = new ProductCommandService(getProductRepository());
 
     private static ProductRepository productRepository;
 
     public static FindAllProductByCriterial getFindAllProductByCriterial() {
         return productQueryService;
+    }
+
+    public static DeleteProduct getDeleteProduct() {
+        return productCommandService;
+    }
+
+    public static InsertProduct getInsertProduct() {
+        return productCommandService;
+    }
+
+    public static UpdateProduct getUpdateProduct() {
+        return productCommandService;
     }
 
     public static ProductRepository getProductRepository() {

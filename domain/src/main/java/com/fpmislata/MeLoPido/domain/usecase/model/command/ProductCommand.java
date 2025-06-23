@@ -5,6 +5,7 @@ public record ProductCommand (
         String name,
         String detail,
         String url,
-        String state
+        String state,
+        String idLetter
 ) {
 }

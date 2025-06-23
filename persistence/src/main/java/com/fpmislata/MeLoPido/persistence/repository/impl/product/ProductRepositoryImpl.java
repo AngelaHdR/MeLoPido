@@ -25,10 +25,10 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public void save(Product product, String idLetter) {
+    public String save(Product product, String idLetter) {
         ProductEntity productEntity = ProductEntityMapper.toProductEntity(product);
         productEntity.setLetter(new LetterEntity(idLetter));
-        productDao.save(productEntity);
+        return productDao.save(productEntity);
     }
 
     @Override
@@ -44,7 +44,11 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public String save(Product product) {
-       throw new UnauthorizedAccessException("Product must be assigned to a letter");
+        if (product.getIdProduct() == null) {
+            throw new UnauthorizedAccessException("Product must be assigned to a letter");
+        }
+        ProductEntity productEntity = ProductEntityMapper.toProductEntity(product);
+        return productDao.save(productEntity);
     }
 
     @Override
